@@ -1,26 +1,103 @@
 {
-  "name": "boilerplate-next14-hoc-recompose",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.15"
-  },
-  "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.15"
-  }
+	"name": "boilerplate-next14-hoc-recompose",
+	"version": "1.0.0",
+	"private": false,
+	"keywords": [
+		"boilerplate",
+		"next14",
+		"high-order-component",
+		"react-recompose"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sabo99/boilerplate-next14-hoc-recompose.git"
+	},
+	"author": "sabo99 <ofc.alvnstwan@gmail.com>",
+	"license": "MIT",
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"test": "jest",
+		"test:cov": "jest --coverage",
+		"husky:config": "cp -r .config/husky/* .husky",
+		"commitlint:config": "if not exist commitlint.config.ts cp .config/commitlint/commitlint.config.ts commitlint.config.ts",
+		"prepare": "rm -rf .husky && (husky || true) && npm run husky:config && npm run commitlint:config"
+	},
+	"dependencies": {
+		"next": "14.2.15",
+		"react": "^18",
+		"react-dom": "^18",
+		"react-recompose": "^0.33.0"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^19.6.1",
+		"@commitlint/config-conventional": "^19.6.0",
+		"@testing-library/dom": "^10.4.0",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/react": "^16.2.0",
+		"@types/node": "^20",
+		"@types/react": "^18",
+		"@types/react-dom": "^18",
+		"eslint": "^8",
+		"eslint-config-next": "14.2.15",
+		"husky": "^9.1.7",
+		"jest": "^29.7.0",
+		"jest-environment-jsdom": "^29.7.0",
+		"postcss": "^8",
+		"tailwindcss": "^3.4.1",
+		"ts-node": "^10.9.2",
+		"typescript": "^5"
+	},
+	"commitlint": {
+		"rules": {
+			"header-max-length": [
+				2,
+				"always",
+				100
+			],
+			"type-enum": [
+				2,
+				"always",
+				[
+					"chore",
+					"docs",
+					"feat",
+					"fix",
+					"refactor",
+					"revert",
+					"style",
+					"test"
+				]
+			],
+			"type-case": [
+				2,
+				"always",
+				"lowercase"
+			],
+			"type-empty": [
+				2,
+				"never"
+			],
+			"scope-case": [
+				2,
+				"always",
+				"kebab-case"
+			],
+			"scope-empty": [
+				2,
+				"never"
+			],
+			"subject-empty": [
+				2,
+				"never"
+			],
+			"subject-full-stop": [
+				2,
+				"never",
+				"."
+			]
+		}
+	}
 }
