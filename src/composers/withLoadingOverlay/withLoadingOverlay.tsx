@@ -6,7 +6,7 @@ import type { Props } from "./withLoadingOverlay.type";
 
 const SubmissionLoadingOverlay = (ComposedComponent: any) => {
   const HOCLoadingOverlay = (props: Props) => {
-    const { showLoadingOverlay } = props;
+    const { showLoadingOverlay = false } = props;
     return (
       <div>
         <ComposedComponent {...props} />
@@ -14,8 +14,6 @@ const SubmissionLoadingOverlay = (ComposedComponent: any) => {
       </div>
     );
   };
-
-  HOCLoadingOverlay.defaultProps = { showLoadingOverlay: false };
 
   return HOCLoadingOverlay;
 };

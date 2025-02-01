@@ -1,15 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { compose, withHandlers, withProps } from "react-recompose";
 
+import withLoadingOverlay from "../withLoadingOverlay";
 import { Options } from "./withPage.type";
 
 const withPage = (options: Options) => (Component: any) => {
   const {
     // connect: connectOptions = null,
     props: propsOptions = null,
-    handlers: handlersOptions = null
+    handlers: handlersOptions = null,
     // preventRefresh: preventRefreshOptions = null,
-    // loadingOverlay = false,
+    loadingOverlay = false
   } = options;
 
   const enhancers = [];
@@ -20,6 +20,10 @@ const withPage = (options: Options) => (Component: any) => {
 
   if (handlersOptions) {
     enhancers.push(withHandlers(handlersOptions));
+  }
+
+  if(loadingOverlay) {
+    enhancers.push(withLoadingOverlay());
   }
 
   return compose(...enhancers)(Component);

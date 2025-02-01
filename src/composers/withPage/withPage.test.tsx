@@ -1,9 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { compose, withHandlers, withProps } from "react-recompose";
 
+import withLoadingOverlay from "../withLoadingOverlay";
 import withPage from "./withPage";
 
-jest.mock('react-recompose');
+jest.mock('react-recompose')
+  .mock('../withLoadingOverlay');
 
 describe('withPage', () => {
   const component = 'Component';
@@ -70,6 +71,24 @@ describe('withPage', () => {
       withPage(options)(component);
 
       expect(withHandlers).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('loadingOverlay', () => {
+    it('should call withLoadingOverlay when `loadingOverlay` is true', () => {
+      const options = { loadingOverlay: true };
+
+      withPage(options)(component);
+
+      expect(withLoadingOverlay).toHaveBeenCalled();
+    });
+
+    it('should not call withLoadingOverlay when `loadingOverlay` is false', () => {
+      const options = { loadingOverlay: false };
+
+      withPage(options)(component);
+
+      expect(withLoadingOverlay).not.toHaveBeenCalled();
     });
   });
 });
