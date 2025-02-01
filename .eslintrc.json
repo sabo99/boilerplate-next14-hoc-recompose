@@ -1,3 +1,28 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "plugins": ["simple-import-sort"],
+  "rules": {
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "no-underscore-dangle": "off",
+    "no-use-before-define": "off",
+
+    // no console.log
+    "no-console":"error",
+
+    // More than 1 blank line not allowed
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1, "maxBOF": 0 }],
+
+    // e.g: const { a, b } = obj; ✅ | const { a, b, } = obj; ❌
+    "comma-dangle": ["error", "never"],
+
+    // e.g: const { key } = obj; ✅ | const { key} = obj; ❌
+    "object-curly-spacing": ["error", "always"],
+
+    // e.g: console.log(a + b); ✅ | console.log(a + b) ❌
+    "semi": ["error", "always"]
+
+    // Max len in one line code
+    // "max-len": ["error", { "code": 120, "tabWidth": 2, "ignoreComments": true }]
+  }
 }
