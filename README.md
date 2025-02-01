@@ -1,4 +1,120 @@
+# Next.js 14 with High Order Components (HOCs) using react-recompose
+
+## Overview
+
+[Next.js](https://nextjs.org) 14 is an advanced React framework that simplifies building fast, scalable web applications with features like server-side rendering and static site generation. When combined with React-Recompose, a library for creating Higher-Order Components (HOCs), developers can easily add extra functionality to components without altering their core logic. React-Recompose helps manage state and lifecycle methods in a clean and reusable way, making it easier to organize and enhance the behavior of components in a Next.js 14 application, leading to more maintainable and efficient code.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Features
+
+### ye
+
+### ESLint 
+- Rules
+  - `simple-import-sort`
+
+    This rule ensures that your imports and exports are sorted consistently, improving readability and maintainability.
+
+    ```ts
+    // simple-import-sort/imports
+
+    // Correct (✅): Imports are sorted alphabetically
+    import { b } from 'b';
+    import { a } from 'a';
+
+    // Incorrect (❌): Imports are not sorted
+    import { a } from 'a';
+    import { b } from 'b';
+    ```
+
+    ```ts
+    // simple-import-sort/export
+
+    // Correct (✅): Export order is consistent
+    export { a, b };
+
+    // Incorrect (❌): Exports are not ordered
+    export { b };
+    export { a };
+    ```
+
+  - `no-console`
+
+    Disallowing Console Statements (Error on console.log)
+
+    ```ts
+    // Correct (✅): No console.log
+    const a = 10;
+
+    // Incorrect (❌): using console.log (throws error)
+    const a = 10;
+    console.log(a); // disallowing
+    ```
+
+  - `no-multiple-empty-lines`
+
+    This rule restricts consecutive empty lines to improve code cleanliness:
+    - max: 1 — No more than 1 empty line between code blocks.
+    - maxEOF: 1 — One empty line allowed at the end of the file.
+    - maxBOF: 0 — No empty lines at the beginning of the file.
+
+    ```ts
+    // Correct (✅): Only 1 empty line between code blocks
+    const a = 5;
+
+    const b = 10;
+
+    // Incorrect (❌): More than 1 empty line between statements
+    const a = 5;
+
+
+    const b = 10; // ❌ Error: More than 1 empty line
+    ```
+
+  - `comma-dangle`
+
+    This rule enforces no trailing commas in your code (e.g., in object literals or function arguments).
+
+    ```ts
+    // Correct (✅): No trailing commas
+    const person = {
+      name: 'Alice',
+      age: 25
+    };
+
+    // Incorrect (❌): Trailing comma after last property
+    const person = {
+      name: 'Alice',
+      age: 25, // ❌ Error: Trailing comma
+    };
+    ```
+
+  - `object-curly-spacing`
+
+    You enforce spaces inside object braces.
+
+      ```ts
+      // Correct (✅): Space inside object braces
+      const person = { name: 'Alice', age: 25 };
+
+      // Incorrect (❌): No space inside object braces
+      const person = {name: 'Alice', age: 25}; // ❌ Error: No space inside object braces
+      ```
+
+  - `semi`
+
+    Enforces the use of semicolons at the end of statements.
+
+    ```ts
+    // Correct (✅): Semicolons are used at the end of each statement
+    const a = 10;
+    const b = 20;
+
+    // Incorrect (❌): Missing semicolon
+    const a = 10 ❌ Error: Missing semicolon
+    const b = 20 ❌ Error: Missing semicolon
+    ```
 
 ## Getting Started
 
