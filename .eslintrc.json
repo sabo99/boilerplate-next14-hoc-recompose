@@ -6,6 +6,8 @@
     "simple-import-sort/exports": "error",
     "no-underscore-dangle": "off",
     "no-use-before-define": "off",
+    "@typescript-eslint/no-unsafe-function-type ": "off",
+    "@typescript-eslint/no-explicit-any": "off",
 
     // no console.log
     "no-console":"error",
