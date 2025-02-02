@@ -2,19 +2,15 @@ import { fireEvent,render } from '@testing-library/react';
 
 import withLoadingOverlay from './withLoadingOverlay';
 
-// Mock component
-const MockComponent = ({ setShowLoadingOverlay }: any) => (
-  <div>
-    <p>Mock Component</p>
-    <button onClick={() => setShowLoadingOverlay(true)}>Show Overlay</button>
-  </div>
-);
-
-// Wrap MockComponent with HOC
-const WrappedComponent = withLoadingOverlay()(MockComponent);
-
-describe('withLoadingOverlay HOC', () => {
+describe('withLoadingOverlay', () => {
   let renderResult: ReturnType<typeof render>;
+  const Component = ({ setShowLoadingOverlay }: any) => (
+    <div>
+      <p>Mock Component</p>
+      <button onClick={() => setShowLoadingOverlay(true)}>Show Overlay</button>
+    </div>
+  );
+  const WrappedComponent = withLoadingOverlay()(Component);
 
   beforeEach(() => {
     renderResult = render(<WrappedComponent />);

@@ -4,7 +4,7 @@ import LoadingOverlay from "@/components/AppComponents/LoadingOverlay";
 
 import type { Props } from "./withLoadingOverlay.type";
 
-const SubmissionLoadingOverlay = (ComposedComponent: any) => {
+const SubmissionLoadingOverlay = (ComposedComponent: React.ComponentType<any>) => {
   const HOCLoadingOverlay = (props: Props) => {
     const { showLoadingOverlay = false } = props;
     return (
