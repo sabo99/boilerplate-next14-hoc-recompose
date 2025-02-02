@@ -101,10 +101,12 @@ const config: Config = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     // '^@/(.*)$': '<rootDir>/src/$1',
-    '@/components/ui/alert-dialog': '<rootDir>/src/components/ui/alert-dialog',
-    '@/components/ui/button': '<rootDir>/src/components/ui/button',
-    '@/components/ui/sonner': '<rootDir>/src/components/ui/sonner',
-    '@/lib/utils': '<rootDir>/src/lib/utils'
+    // '@/components/ui/alert-dialog': '<rootDir>/src/components/ui/alert-dialog',
+    // '@/components/ui/button': '<rootDir>/src/components/ui/button',
+    // '@/components/ui/sonner': '<rootDir>/src/components/ui/sonner',
+    // '@/lib/utils': '<rootDir>/src/lib/utils'
+    '^@/components/ui/(.*)$': '<rootDir>/src/components/ui/$1',
+    '^@/lib/(.*)$': '<rootDir>/src/lib/$1'
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
