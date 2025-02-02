@@ -1,13 +1,15 @@
 import { compose, withHandlers, withProps } from "react-recompose";
 
 import withLoadingOverlay from "../withLoadingOverlay";
+import withPreventRefresh from "../withPreventRefresh";
 import withPage from "./withPage";
 
 jest.mock('react-recompose')
-  .mock('../withLoadingOverlay');
+  .mock('../withLoadingOverlay')
+  .mock('../withPreventRefresh');
 
 describe('withPage', () => {
-  const component = 'Component';
+  const Component = () => <div>Component</div>;
   const composeCallback = jest.fn();
   const composeResult = {};
 
@@ -23,9 +25,9 @@ describe('withPage', () => {
   it('should invoke composeCallback and return composeResult', () => {
     const options = {};
 
-    const result = withPage(options)(component);
+    const result = withPage(options)(Component);
 
-    expect(composeCallback).toHaveBeenCalledWith(component);
+    expect(composeCallback).toHaveBeenCalledWith(Component);
     expect(result).toEqual(composeResult);
   });
 
@@ -33,7 +35,7 @@ describe('withPage', () => {
     const options = {};
     // const enhancers: any[] = [];
 
-    withPage(options)(component);
+    withPage(options)(Component);
 
     expect(compose).toHaveBeenCalled();
   });
@@ -42,7 +44,7 @@ describe('withPage', () => {
     it('should call withProps when `props` is present', () => {
       const options = { props: {} };
 
-      withPage(options)(component);
+      withPage(options)(Component);
 
       expect(withProps).toHaveBeenCalledWith(options.props);
     });
@@ -50,7 +52,7 @@ describe('withPage', () => {
     it('should not call withProps when `props` is not present', () => {
       const options = {};
 
-      withPage(options)(component);
+      withPage(options)(Component);
 
       expect(withProps).not.toHaveBeenCalled();
     });
@@ -60,7 +62,7 @@ describe('withPage', () => {
     it('should call withHandlers when `handlers` is present', () => {
       const options = { handlers: {} };
 
-      withPage(options)(component);
+      withPage(options)(Component);
 
       expect(withHandlers).toHaveBeenCalledWith(options.handlers);
     });
@@ -68,17 +70,35 @@ describe('withPage', () => {
     it('should not call withHandlers when `handlers` is not present', () => {
       const options = {};
 
-      withPage(options)(component);
+      withPage(options)(Component);
 
       expect(withHandlers).not.toHaveBeenCalled();
     });
   });
 
-  describe('loadingOverlay', () => {
+  describe('withPreventRefresh', () => {
+    it('should call withPreventRefresh when `preventRefresh` include redirectPath is present', () => {
+      const options = { preventRefresh: { redirectPath: '/home' } };
+
+      withPage(options)(Component);
+
+      expect(withPreventRefresh).toHaveBeenCalledWith(options.preventRefresh);
+    });
+
+    it('should not call withPreventRefresh when `preventRefresh` is not present', () => {
+      const options = {};
+
+      withPage(options)(Component);
+
+      expect(withPreventRefresh).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('withLoadingOverlay', () => {
     it('should call withLoadingOverlay when `loadingOverlay` is true', () => {
       const options = { loadingOverlay: true };
 
-      withPage(options)(component);
+      withPage(options)(Component);
 
       expect(withLoadingOverlay).toHaveBeenCalled();
     });
@@ -86,7 +106,7 @@ describe('withPage', () => {
     it('should not call withLoadingOverlay when `loadingOverlay` is false', () => {
       const options = { loadingOverlay: false };
 
-      withPage(options)(component);
+      withPage(options)(Component);
 
       expect(withLoadingOverlay).not.toHaveBeenCalled();
     });
