@@ -3,7 +3,7 @@ import { compose, withHandlers, withProps } from "react-recompose";
 import withLoadingOverlay from "../withLoadingOverlay";
 import { Options } from "./withPage.type";
 
-const withPage = (options: Options) => (Component: any) => {
+const withPage = (options: Options) => (Component: React.ComponentType<any>) => {
   const {
     // connect: connectOptions = null,
     props: propsOptions = null,
