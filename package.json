@@ -22,9 +22,8 @@
 		"lint:fix": "next lint --fix",
 		"test": "jest",
 		"test:cov": "jest --coverage",
-		"husky:config": "cp -r .config/husky/* .husky",
-		"commitlint:config": "cp -r .config/commitlint/commitlint.config.ts commitlint.config.ts",
-		"prepare": "rm -rf .husky && (husky || true) && npm run husky:config && npm run commitlint:config"
+		"clean:install": "bash shell/clean_install.sh",
+		"postinstall": "bash shell/setup_husky.sh"
 	},
 	"dependencies": {
 		"@radix-ui/react-alert-dialog": "^1.1.5",

@@ -177,7 +177,7 @@ const config: Config = {
     "<rootDir>/__tests__/",
     "<rootDir>/e2e/",
     "src/components/ui/"
-  ]
+  ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],
@@ -207,7 +207,7 @@ const config: Config = {
   // watchPathIgnorePatterns: [],
 
   // Whether to use watchman for file crawling
-  // watchman: true,
+  watchman: false
 };
 
 export default createJestConfig(config);
