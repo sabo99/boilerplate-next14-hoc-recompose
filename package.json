@@ -21,13 +21,12 @@
 		"lint": "next lint",
 		"lint:fix": "next lint --fix",
 		"test": "jest",
-		"test:cov": "jest --coverage",
-		"clean:install": "bash shell/clean_install.sh",
-		"postinstall": "bash shell/setup_husky.sh"
+		"test:cov": "jest --coverage"
 	},
 	"dependencies": {
 		"@radix-ui/react-alert-dialog": "^1.1.5",
 		"@radix-ui/react-slot": "^1.1.1",
+		"axios": "^1.7.9",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"lucide-react": "^0.474.0",
@@ -42,11 +41,12 @@
 		"tailwindcss-animate": "^1.0.7"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^19.6.1",
-		"@commitlint/config-conventional": "^19.6.0",
+		"@commitlint/cli": "^19.7.1",
+		"@commitlint/config-conventional": "^19.7.1",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/react": "^16.2.0",
+		"@types/axios": "^0.14.4",
 		"@types/jest": "^29.5.14",
 		"@types/node": "^20",
 		"@types/react": "^18",

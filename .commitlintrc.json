@@ -1,0 +1,27 @@
+{
+	"extends": ["@commitlint/config-conventional"],
+	"rules": {
+		"header-max-length": [2, "always", 100],
+		"type-enum": [
+			2,
+			"always",
+			["chore", "docs", "feat", "fix", "refactor", "revert", "style", "test"]
+		],
+		"type-case": [2, "always", "lowercase"],
+		"type-empty": [2, "never"],
+		"scope-case": [2, "always", "kebab-case"],
+		"scope-empty": [2, "never"],
+		"subject-empty": [2, "never"],
+		"subject-full-stop": [2, "never", "."]
+	},
+	"defaultIgnores": true,
+	"helpUrl": "https://github.com/conventional-changelog/commitlint/#what-is-commitlint",
+	"prompt": {
+		"messages": {},
+		"questions": {
+			"type": {
+				"description": "please input type:"
+			}
+		}
+	}
+}
