@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+. "$(dirname "$0")/_/husky.sh"
+
+# Uncomment this line if your project has a linting script
+yarn lint
