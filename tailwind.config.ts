@@ -12,11 +12,11 @@ const config: Config = {
       keyframes: {
         "dot-first": {
           "0%, 80%, 100%": { transform: "scale(0)" },
-          "40%": { transform: "scale(1)" }
+          "20%": { transform: "scale(1)" }
         },
         "dot-second": {
           "0%, 60%, 100%": { transform: "scale(0)" },
-          "20%": { transform: "scale(1)" }
+          "40%": { transform: "scale(1)" }
         },
         "dot-third": {
           "0%, 40%, 100%": { transform: "scale(0)" },
