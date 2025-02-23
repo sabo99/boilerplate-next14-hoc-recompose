@@ -1,8 +1,11 @@
-import { compose, withState } from "react-recompose";
+import React from "react";
+import { compose } from "react-recompose";
 
 import LoadingOverlay from "@/components/AppComponents/LoadingOverlay";
 
-import type { Props } from "./withLoadingOverlay.type";
+type Props = {
+  showLoadingOverlay: boolean
+};
 
 const SubmissionLoadingOverlay = (ComposedComponent: React.ComponentType<any>) => {
   const HOCLoadingOverlay = (props: Props) => {
@@ -19,7 +22,6 @@ const SubmissionLoadingOverlay = (ComposedComponent: React.ComponentType<any>) =
 };
 
 const withLoadingOverlay = () => compose(
-  withState('showLoadingOverlay', 'setShowLoadingOverlay', false),
   SubmissionLoadingOverlay
 );
 

@@ -17,8 +17,7 @@ const LoadingOverlay: React.FC = () => (
     className={LoadingOverlayContainer} >
     <div className={LoadingOverlayContent}>
       <LoadingDots
-        screenName={COMPONENT_NAME}
-        name='LoadingDots' />
+        screenName={COMPONENT_NAME} />
     </div>
   </div >
 );

@@ -11,22 +11,32 @@ const config: Config = {
     extend: {
       keyframes: {
         "dot-first": {
-          "0%, 80%, 100%": { transform: "scale(0)" },
+          "0%, 20%, 100%": { transform: "scale(0)" },
           "20%": { transform: "scale(1)" }
         },
         "dot-second": {
-          "0%, 60%, 100%": { transform: "scale(0)" },
+          "0%, 20%, 100%": { transform: "scale(0)" },
           "40%": { transform: "scale(1)" }
         },
         "dot-third": {
-          "0%, 40%, 100%": { transform: "scale(0)" },
+          "0%, 20%, 100%": { transform: "scale(0)" },
           "60%": { transform: "scale(1)" }
+        },
+        "dot-fourth": {
+          "0%, 20%, 100%": { transform: "scale(0)" },
+          "80%": { transform: "scale(1)" }
+        },
+        "dot-fifth": {
+          "0%, 20%, 100%": { transform: "scale(0)" },
+          "100%": { transform: "scale(1)" }
         }
       },
       animation: {
         "dot-first": "dot-first 1.5s ease-in-out infinite",
         "dot-second": "dot-second 1.5s ease-in-out infinite",
-        "dot-third": "dot-third 1.5s ease-in-out infinite"
+        "dot-third": "dot-third 1.5s ease-in-out infinite",
+        "dot-fourth": "dot-fourth 1.5s ease-in-out infinite",
+        "dot-fifth": "dot-fifth 1.5s ease-in-out infinite"
       },
       colors: {
         background: 'hsl(var(--background))',

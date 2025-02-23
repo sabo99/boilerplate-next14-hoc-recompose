@@ -1,4 +1,9 @@
-import { fireEvent,render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
+import { compose, withState } from 'react-recompose';
+import { connect } from 'react-redux';
+
+import Providers from '@/app/provider';
+import { loadingOverlayReducer } from '@/redux/reducers/LoadingOverlay';
 
 import withLoadingOverlay from './withLoadingOverlay';
 
@@ -10,10 +15,19 @@ describe('withLoadingOverlay', () => {
       <button onClick={() => setShowLoadingOverlay(true)}>Show Overlay</button>
     </div>
   );
-  const WrappedComponent = withLoadingOverlay()(Component);
+  const WrappedComponent = compose(
+    withState('showLoadingOverlay', 'setShowLoadingOverlay', false), // when using React-recompose withState
+    connect(loadingOverlayReducer), // when using Redux reducer
+    withLoadingOverlay()
+  )(Component);
 
   beforeEach(() => {
-    renderResult = render(<WrappedComponent />);
+    renderResult = render(
+      // ⚠️ Required add Providers when using Redux
+      <Providers>
+        <WrappedComponent />
+      </Providers>
+    );
   });
 
   afterEach(() => {
@@ -26,24 +40,18 @@ describe('withLoadingOverlay', () => {
     expect(getByText('Mock Component')).toBeInTheDocument();
   });
 
-  it('should does not show LoadingOverlay by default', () => {
+  it('should does not show LoadingOverlay by default or when state is false', () => {
     const { queryByTestId } = renderResult;
 
     expect(queryByTestId('LoadingOverlay')).not.toBeInTheDocument();
   });
 
-  it('should show LoadingOverlay when state is true', async () => {
+  it('should show LoadingOverlay when state is true', () => {
     const { getByRole, queryByTestId } = renderResult;
 
     const button = getByRole('button', { name: /show overlay/i });
-    await fireEvent.click(button);
+    fireEvent.click(button);
 
     expect(queryByTestId('LoadingOverlay')).toBeTruthy();
-  });
-
-  it('should hide LoadingOverlay when state is false', () => {
-    const { queryByTestId } = renderResult;
-
-    expect(queryByTestId('LoadingOverlay')).toBeFalsy();
   });
 });
