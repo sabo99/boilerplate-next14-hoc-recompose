@@ -1,10 +1,12 @@
-import { compose, withHandlers, withProps } from "react-recompose";
+import { compose, withHandlers, withProps, withState } from "react-recompose";
+import { connect } from "react-redux";
 
 import withLoadingOverlay from "../withLoadingOverlay";
 import withPreventRefresh from "../withPreventRefresh";
 import withPage from "./withPage";
 
 jest.mock('react-recompose')
+  .mock('react-redux')
   .mock('../withLoadingOverlay')
   .mock('../withPreventRefresh');
 
@@ -40,8 +42,8 @@ describe('withPage', () => {
     expect(compose).toHaveBeenCalled();
   });
 
-  describe('withProps', () => {
-    it('should call withProps when `props` is present', () => {
+  describe('#withProps', () => {
+    it('should invoke withProps when `props` is present', () => {
       const options = { props: {} };
 
       withPage(options)(Component);
@@ -49,7 +51,7 @@ describe('withPage', () => {
       expect(withProps).toHaveBeenCalledWith(options.props);
     });
 
-    it('should not call withProps when `props` is not present', () => {
+    it('should not invoke withProps when `props` is not present', () => {
       const options = {};
 
       withPage(options)(Component);
@@ -58,8 +60,69 @@ describe('withPage', () => {
     });
   });
 
-  describe('withHandlers', () => {
-    it('should call withHandlers when `handlers` is present', () => {
+  describe('#connectRedux', () => {
+    it('should invoke connect redux when `connect` is present and is object includes mapStateToProps and mapDispatchToProps', () => {
+      const options = {
+        connect: {
+          mapStateToProps: {
+            isLoading: true
+          },
+          mapDispatchToProps: {
+            setLoading: jest.fn()
+          }
+        }
+      };
+
+      withPage(options)(Component);
+
+      expect(connect).toHaveBeenCalled();
+    });
+
+    it('should not invoke connect redux when `connect` is present but empty object', () => {
+      const options = {
+        connect: {}
+      };
+
+      withPage(options)(Component);
+
+      expect(connect).not.toHaveBeenCalled();
+    });
+
+    it('should not invoke connect redux when `connect` is not present', () => {
+      const options = {};
+
+      withPage(options)(Component);
+
+      expect(connect).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('#withState', () => {
+    it('should invoke withState when `state` is present', () => {
+      const options: any = {
+        state: [
+          ['isLoading', 'setLoading', false]
+        ]
+      };
+
+      withPage(options)(Component);
+
+      expect(withState).toHaveBeenCalled();
+    });
+
+    it('should not invoke withState when `state` is present but empty array', () => {
+      const options: any = {
+        state: []
+      };
+
+      withPage(options)(Component);
+
+      expect(withState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('#withHandlers', () => {
+    it('should invoke withHandlers when `handlers` is present', () => {
       const options = { handlers: {} };
 
       withPage(options)(Component);
@@ -67,7 +130,7 @@ describe('withPage', () => {
       expect(withHandlers).toHaveBeenCalledWith(options.handlers);
     });
 
-    it('should not call withHandlers when `handlers` is not present', () => {
+    it('should not invoke withHandlers when `handlers` is not present', () => {
       const options = {};
 
       withPage(options)(Component);
@@ -76,8 +139,8 @@ describe('withPage', () => {
     });
   });
 
-  describe('withPreventRefresh', () => {
-    it('should call withPreventRefresh when `preventRefresh` include redirectPath is present', () => {
+  describe('#withPreventRefresh', () => {
+    it('should invoke withPreventRefresh when `preventRefresh` include redirectPath is present', () => {
       const options = { preventRefresh: { redirectPath: '/home' } };
 
       withPage(options)(Component);
@@ -85,7 +148,7 @@ describe('withPage', () => {
       expect(withPreventRefresh).toHaveBeenCalledWith(options.preventRefresh);
     });
 
-    it('should not call withPreventRefresh when `preventRefresh` is not present', () => {
+    it('should not invoke withPreventRefresh when `preventRefresh` is not present', () => {
       const options = {};
 
       withPage(options)(Component);
@@ -95,7 +158,7 @@ describe('withPage', () => {
   });
 
   describe('withLoadingOverlay', () => {
-    it('should call withLoadingOverlay when `loadingOverlay` is true', () => {
+    it('should invoke withLoadingOverlay when `loadingOverlay` is true', () => {
       const options = { loadingOverlay: true };
 
       withPage(options)(Component);
@@ -103,7 +166,7 @@ describe('withPage', () => {
       expect(withLoadingOverlay).toHaveBeenCalled();
     });
 
-    it('should not call withLoadingOverlay when `loadingOverlay` is false', () => {
+    it('should not invoke withLoadingOverlay when `loadingOverlay` is false', () => {
       const options = { loadingOverlay: false };
 
       withPage(options)(Component);

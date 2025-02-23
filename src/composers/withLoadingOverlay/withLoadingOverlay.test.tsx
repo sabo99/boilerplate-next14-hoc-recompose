@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { compose, withState } from 'react-recompose';
 import { connect } from 'react-redux';
 
-import Providers from '@/app/provider';
+import Providers from '@/app/providers';
 import { loadingOverlayReducer } from '@/redux/reducers/LoadingOverlay';
 
 import withLoadingOverlay from './withLoadingOverlay';
