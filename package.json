@@ -21,13 +21,14 @@
 		"lint": "next lint",
 		"lint:fix": "next lint --fix",
 		"test": "jest",
-		"test:cov": "jest --coverage"
+		"test:cov": "jest --coverage",
+		"clean:install": "sh ./makefile.sh clean_install"
 	},
 	"dependencies": {
 		"@radix-ui/react-alert-dialog": "^1.1.5",
 		"@radix-ui/react-slot": "^1.1.1",
 		"@reduxjs/toolkit": "^2.5.1",
-		"@sabo99/node-utils": "^1.0.4",
+		"@sabo99/node-utils": "^1.1.0",
 		"axios": "^1.7.9",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
