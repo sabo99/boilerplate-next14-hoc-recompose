@@ -2,13 +2,17 @@ import React from "react";
 import { compose } from "react-recompose";
 
 import LoadingOverlay from "@/components/AppComponents/LoadingOverlay";
+import {
+  withConnectorLoadingOverlay
+  // withStateLoadingOverlay
+} from '@/composers/withLoadingOverlay/withLoadingOverlay.config';
 
 type Props = {
   showLoadingOverlay: boolean
 };
 
-const SubmissionLoadingOverlay = (ComposedComponent: React.ComponentType<any>) => {
-  const HOCLoadingOverlay = (props: Props) => {
+const ComposedLoadingOverlay = (ComposedComponent: React.ComponentType<any>) => {
+  const HOC = (props: Props) => {
     const { showLoadingOverlay = false } = props;
     return (
       <div>
@@ -18,11 +22,13 @@ const SubmissionLoadingOverlay = (ComposedComponent: React.ComponentType<any>) =
     );
   };
 
-  return HOCLoadingOverlay;
+  return HOC;
 };
 
 const withLoadingOverlay = () => compose(
-  SubmissionLoadingOverlay
+  withConnectorLoadingOverlay, // using connector (react-redux)
+  // withStateLoadingOverlay,  // using withState (react-recompose)
+  ComposedLoadingOverlay
 );
 
 export default withLoadingOverlay;

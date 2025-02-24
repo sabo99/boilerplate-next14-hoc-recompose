@@ -24,22 +24,24 @@ describe('withPage', () => {
     jest.clearAllMocks();
   });
 
-  it('should invoke composeCallback and return composeResult', () => {
-    const options = {};
+  describe('#compose', () => {
+    it('should invoke composeCallback and return composeResult', () => {
+      const options = {};
 
-    const result = withPage(options)(Component);
+      const result = withPage(options)(Component);
 
-    expect(composeCallback).toHaveBeenCalledWith(Component);
-    expect(result).toEqual(composeResult);
-  });
+      expect(composeCallback).toHaveBeenCalledWith(Component);
+      expect(result).toEqual(composeResult);
+    });
 
-  it('should invoke compose with empty and without enhancers when enhancers is empty', () => {
-    const options = {};
-    // const enhancers: any[] = [];
+    it('should invoke compose with empty and without enhancers when enhancers is empty', () => {
+      const options = {};
+      // const enhancers: any[] = [];
 
-    withPage(options)(Component);
+      withPage(options)(Component);
 
-    expect(compose).toHaveBeenCalled();
+      expect(compose).toHaveBeenCalled();
+    });
   });
 
   describe('#withProps', () => {
@@ -157,7 +159,7 @@ describe('withPage', () => {
     });
   });
 
-  describe('withLoadingOverlay', () => {
+  describe('#withLoadingOverlay', () => {
     it('should invoke withLoadingOverlay when `loadingOverlay` is true', () => {
       const options = { loadingOverlay: true };
 

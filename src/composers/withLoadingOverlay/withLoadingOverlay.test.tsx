@@ -1,9 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
-import { compose, withState } from 'react-recompose';
-import { connect } from 'react-redux';
 
 import Providers from '@/app/providers';
-import { loadingOverlayReducer } from '@/redux/reducers/LoadingOverlay';
 
 import withLoadingOverlay from './withLoadingOverlay';
 
@@ -15,11 +12,13 @@ describe('withLoadingOverlay', () => {
       <button onClick={() => setShowLoadingOverlay(true)}>Show Overlay</button>
     </div>
   );
-  const WrappedComponent = compose(
-    withState('showLoadingOverlay', 'setShowLoadingOverlay', false), // when using React-recompose withState
-    connect(loadingOverlayReducer), // when using Redux reducer
-    withLoadingOverlay()
-  )(Component);
+  // const WrappedComponent = compose(
+  //   withState('showLoadingOverlay', 'setShowLoadingOverlay', false), // when using React-recompose withState
+  //   connect(loadingOverlayReducer), // when using Redux reducer
+  //   withLoadingOverlay()
+  // )(Component);
+
+  const WrappedComponent = withLoadingOverlay()(Component);
 
   beforeEach(() => {
     renderResult = render(
