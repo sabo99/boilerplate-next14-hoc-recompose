@@ -8,17 +8,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Features
 
-### ye
+### ESLint Rules
 
-### ESLint 
-- Rules
-  - `simple-import-sort`
-
-    This rule ensures that your imports and exports are sorted consistently, improving readability and maintainability.
-
+- **simple-import-sort**
+  - Ensures imports and exports are sorted consistently, improving readability and maintainability.
+  - Example:
     ```ts
-    // simple-import-sort/imports
-
     // Correct (✅): Imports are sorted alphabetically
     import { b } from 'b';
     import { a } from 'a';
@@ -28,21 +23,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
     import { b } from 'b';
     ```
 
-    ```ts
-    // simple-import-sort/export
-
-    // Correct (✅): Export order is consistent
-    export { a, b };
-
-    // Incorrect (❌): Exports are not ordered
-    export { b };
-    export { a };
-    ```
-
-  - `no-console`
-
-    Disallowing Console Statements (Error on console.log)
-
+- **no-console**
+  - Disallows console statements (Error on console.log).
+  - Example:
     ```ts
     // Correct (✅): No console.log
     const a = 10;
@@ -52,13 +35,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
     console.log(a); // disallowing
     ```
 
-  - `no-multiple-empty-lines`
-
-    This rule restricts consecutive empty lines to improve code cleanliness:
-    - max: 1 — No more than 1 empty line between code blocks.
-    - maxEOF: 1 — One empty line allowed at the end of the file.
-    - maxBOF: 0 — No empty lines at the beginning of the file.
-
+- **no-multiple-empty-lines**
+  - Restricts consecutive empty lines to improve code cleanliness.
+  - Example:
     ```ts
     // Correct (✅): Only 1 empty line between code blocks
     const a = 5;
@@ -72,10 +51,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
     const b = 10; // ❌ Error: More than 1 empty line
     ```
 
-  - `comma-dangle`
-
-    This rule enforces no trailing commas in your code (e.g., in object literals or function arguments).
-
+- **comma-dangle**
+  - Enforces no trailing commas in your code.
+  - Example:
     ```ts
     // Correct (✅): No trailing commas
     const person = {
@@ -90,22 +68,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
     };
     ```
 
-  - `object-curly-spacing`
+- **object-curly-spacing**
+  - Enforces spaces inside object braces.
+  - Example:
+    ```ts
+    // Correct (✅): Space inside object braces
+    const person = { name: 'Alice', age: 25 };
 
-    You enforce spaces inside object braces.
+    // Incorrect (❌): No space inside object braces
+    const person = {name: 'Alice', age: 25}; // ❌ Error: No space inside object braces
+    ```
 
-      ```ts
-      // Correct (✅): Space inside object braces
-      const person = { name: 'Alice', age: 25 };
-
-      // Incorrect (❌): No space inside object braces
-      const person = {name: 'Alice', age: 25}; // ❌ Error: No space inside object braces
-      ```
-
-  - `semi`
-
-    Enforces the use of semicolons at the end of statements.
-
+- **semi**
+  - Enforces the use of semicolons at the end of statements.
+  - Example:
     ```ts
     // Correct (✅): Semicolons are used at the end of each statement
     const a = 10;
@@ -118,7 +94,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+### Step 1: Initiate Git-Convention
+
+```bash
+npx @sabo99/git-convention init
+```
+
+### Step 2: Run the Development Server
 
 ```bash
 npm run dev
@@ -128,6 +110,42 @@ yarn dev
 pnpm dev
 # or
 bun dev
+```
+
+### Step 3: Run the Unit Tests
+
+```bash
+npm run test
+# or
+yarn test
+# or
+pnpm test
+# or
+bun test
+```
+
+### Step 4: Run the Linter
+
+```bash
+npm run lint
+# or
+yarn lint
+# or
+pnpm lint
+# or
+bun lint
+```
+
+### Step 5: Run the Linter with Fix Option
+
+```bash
+npm run lint:fix
+# or
+yarn lint:fix
+# or
+pnpm lint:fix
+# or
+bun lint:fix
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
