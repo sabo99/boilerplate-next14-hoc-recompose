@@ -9,9 +9,11 @@ const useSubmitWithLoading = async (props: Props, onSubmit: OnSubmit) => {
   setShowLoadingOverlay(true);
 
   try {
+    console.log('showLoadingOverlay:', true);
     return await onSubmit();
   } finally {
     setShowLoadingOverlay(false);
+    console.log('showLoadingOverlay:', false);
   }
 };
 

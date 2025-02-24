@@ -1,0 +1,1 @@
+export { default as useSubmitWithLoading } from '@/hooks/useSubmitWithLoading';
