@@ -1,0 +1,1 @@
+export { default as AppBase } from './AppBase.component';

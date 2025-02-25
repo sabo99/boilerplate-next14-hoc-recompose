@@ -1,0 +1,1 @@
+export const LinkIcon = (props: any) => <div {...props}>Content Icon</div>;
