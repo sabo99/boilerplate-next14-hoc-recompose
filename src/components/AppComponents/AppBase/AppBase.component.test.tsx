@@ -1,15 +1,19 @@
 import { cleanup, render } from "@testing-library/react";
 
+import { mergeTestIds } from "@/lib/utils";
+
 import AppBase from "./AppBase.component";
-import config from "./AppBase.config";
+import { componentName } from "./AppBase.config";
 
 describe('AppBase', () => {
   let renderResult: ReturnType<typeof render>;
-  const { screenName } = config;
+  const screenName = 'TestPage';
   const props = {
+    screenName,
     title: 'Title',
     description: 'Desc'
   };
+  const testId = mergeTestIds(screenName, componentName);
 
   beforeEach(() => {
     renderResult = render(
@@ -26,12 +30,12 @@ describe('AppBase', () => {
 
   describe('#render', () => {
     it('should be render component with testId correctly', () => {
-      const containerTestId = `${screenName}_StyledContainer`;
-      const cardTestId = `${screenName}_StyledCard`;
-      const cardTitleTestId = `${screenName}_CardTitle`;
-      const cardDescriptionTestId = `${screenName}_CardDescription`;
-      const iconTestId = `${screenName}_LinkIcon`;
-      const anchorTestId = `${screenName}_StyledAnchor`;
+      const containerTestId = `${testId}_StyledContainer`;
+      const cardTestId = `${testId}_StyledCard`;
+      const cardTitleTestId = `${testId}_CardTitle`;
+      const cardDescriptionTestId = `${testId}_CardDescription`;
+      const iconTestId = `${testId}_LinkIcon`;
+      const anchorTestId = `${testId}_StyledAnchor`;
 
       const { getByTestId } = renderResult;
 

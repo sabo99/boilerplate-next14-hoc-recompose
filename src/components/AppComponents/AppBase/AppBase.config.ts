@@ -1,5 +1,1 @@
-const config = {
-  screenName: 'AppBase'
-};
-
-export default config;
+export const componentName = 'AppBase';
