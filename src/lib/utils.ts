@@ -1,18 +1,14 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+export const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
 
-export function testProps(testId: string) {
-  return {
-    "data-testid": testId,
+export const testProps = (testId: string): Record<string, string> => (
+  {
+    ...(process.env.APP_ENV !== "prod" && { "data-testid": testId }),
     "aria-label": testId
-  };
-};
+  }
+);
 
-export function mergeTestIds(...args: string[]) {
-  return args.join("_");
-}
+export const mergeTestIds = (...args: string[]): string => args.join("_");
 
