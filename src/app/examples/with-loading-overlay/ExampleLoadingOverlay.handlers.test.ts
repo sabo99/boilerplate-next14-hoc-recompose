@@ -4,7 +4,7 @@ import handlers from "./ExampleLoadingOverlay.handlers";
 
 const { onHandleSubmit } = handlers;
 
-jest.mock('@/hooks/useSubmitWithLoading');
+jest.mock('@/hooks');
 
 describe('ExampleLoadingOverlayHandlers', () => {
 

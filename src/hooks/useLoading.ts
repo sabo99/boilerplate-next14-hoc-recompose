@@ -1,10 +1,10 @@
-/* eslint-disable no-console */
 type Props = {
   setShowLoadingOverlay: (value: boolean) => void;
 };
 type OnSubmit = () => Promise<void>;
 
-const useSubmitWithLoading = async (props: Props, onSubmit: OnSubmit) => {
+/* eslint-disable no-console */
+export const useSubmitWithLoading = async (props: Props, onSubmit: OnSubmit) => {
   const { setShowLoadingOverlay } = props;
   setShowLoadingOverlay(true);
 
@@ -16,5 +16,3 @@ const useSubmitWithLoading = async (props: Props, onSubmit: OnSubmit) => {
     console.log('showLoadingOverlay:', false);
   }
 };
-
-export default useSubmitWithLoading;

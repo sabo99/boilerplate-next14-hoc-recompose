@@ -1,5 +1,5 @@
 import { useSubmitWithLoading } from "@/hooks";
-describe('useSubmitWithLoading', () => {
+describe('useLoading', () => {
   const props = {
     setShowLoadingOverlay: jest.fn()
   };
@@ -10,7 +10,7 @@ describe('useSubmitWithLoading', () => {
   });
 
   describe('#useSubmitWithLoading', () => {
-    it('should call onSubmit and setShowLoadingOverlay with false when useSubmitWithLoading is invoked', async ()=>{
+    it('should call onSubmit and setShowLoadingOverlay with false when useSubmitWithLoading is invoked', async () => {
       await useSubmitWithLoading(props, onSubmit);
 
       expect(onSubmit).toHaveBeenCalled();
