@@ -22,7 +22,10 @@
     "object-curly-spacing": ["error", "always"],
 
     // e.g: console.log(a + b); ✅ | console.log(a + b) ❌
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+
+    // enforce the consistent use of double quotes
+    "quotes": ["error", "single", { "avoidEscape": true }]
 
     // Max len in one line code
     // "max-len": ["error", { "code": 120, "tabWidth": 2, "ignoreComments": true }]
