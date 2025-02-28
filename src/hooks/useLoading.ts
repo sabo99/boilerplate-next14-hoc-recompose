@@ -1,18 +1,18 @@
 type Props = {
-  setShowLoadingOverlay: (value: boolean) => void;
+  setLoadingOverlay: (value: boolean) => void;
 };
 type OnSubmit = () => Promise<void>;
 
 /* eslint-disable no-console */
 export const useSubmitWithLoading = async (props: Props, onSubmit: OnSubmit) => {
-  const { setShowLoadingOverlay } = props;
-  setShowLoadingOverlay(true);
+  const { setLoadingOverlay } = props;
+  setLoadingOverlay(true);
 
   try {
     console.log('showLoadingOverlay:', true);
     return await onSubmit();
   } finally {
-    setShowLoadingOverlay(false);
+    setLoadingOverlay(false);
     console.log('showLoadingOverlay:', false);
   }
 };
