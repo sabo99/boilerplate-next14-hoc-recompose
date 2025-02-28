@@ -6,10 +6,14 @@ import withLoadingOverlay from './withLoadingOverlay';
 
 describe('withLoadingOverlay', () => {
   let renderResult: ReturnType<typeof render>;
-  const Component = ({ setShowLoadingOverlay }: any) => (
+  const options = {
+    enabledLoadingOverlay: true,
+    setLoadingOverlay: jest.fn()
+  };
+  const Component = (options: any) => (
     <div>
       <p>Mock Component</p>
-      <button onClick={() => setShowLoadingOverlay(true)}>Show Overlay</button>
+      <button onClick={() => options.setLoadingOverlay(true)}>Show Overlay</button>
     </div>
   );
   // const WrappedComponent = compose(
@@ -18,7 +22,7 @@ describe('withLoadingOverlay', () => {
   //   withLoadingOverlay()
   // )(Component);
 
-  const WrappedComponent = withLoadingOverlay()(Component);
+  const WrappedComponent = withLoadingOverlay(options)(Component);
 
   beforeEach(() => {
     renderResult = render(

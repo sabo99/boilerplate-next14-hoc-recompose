@@ -1,23 +1,21 @@
-import React from "react";
-import { compose } from "react-recompose";
+import React from 'react';
+import { compose, withProps } from 'react-recompose';
 
-import LoadingOverlay from "@/components/AppComponents/LoadingOverlay";
+import LoadingOverlay from '@/components/AppComponents/LoadingOverlay';
 import {
   withConnectorLoadingOverlay
   // withStateLoadingOverlay
 } from '@/composers/withLoadingOverlay/withLoadingOverlay.config';
 
-type Props = {
-  showLoadingOverlay: boolean
-};
+import type { Options, Props } from './withLoadingOverlay.types';
 
 const ComposedLoadingOverlay = (ComposedComponent: React.ComponentType<any>) => {
   const HOC = (props: Props) => {
-    const { showLoadingOverlay = false } = props;
+    const { isLoadingOverlay = false, loadingVariant = 'DOTS' } = props;
     return (
       <div>
         <ComposedComponent {...props} />
-        {showLoadingOverlay && <LoadingOverlay />}
+        {isLoadingOverlay && <LoadingOverlay variant={loadingVariant} />}
       </div>
     );
   };
@@ -25,9 +23,12 @@ const ComposedLoadingOverlay = (ComposedComponent: React.ComponentType<any>) => 
   return HOC;
 };
 
-const withLoadingOverlay = () => compose(
-  withConnectorLoadingOverlay, // using connector (react-redux)
-  // withStateLoadingOverlay,  // using withState (react-recompose)
+const StateLoadingOverlay = () => withConnectorLoadingOverlay; // using connector (react-redux)
+// const StateLoadingOverlay = () => withStateLoadingOverlay; // using withState (react-recompose)
+
+const withLoadingOverlay = (options: Options) => compose(
+  withProps(options),
+  StateLoadingOverlay(),
   ComposedLoadingOverlay
 );
 

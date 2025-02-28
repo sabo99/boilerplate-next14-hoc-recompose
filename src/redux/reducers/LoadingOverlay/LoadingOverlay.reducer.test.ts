@@ -2,7 +2,7 @@ import reducer, { actions } from './LoadingOverlay.reducer';
 
 describe('LoadingOverlay Reducer', () => {
   const initialState = {
-    showLoadingOverlay: false
+    isLoadingOverlay: false
   };
 
   describe('#setShowLoadingOverlay', () => {
@@ -15,8 +15,8 @@ describe('LoadingOverlay Reducer', () => {
     });
 
     it('should return showLoadingOverlay is true', () => {
-      const action = { type: actions.setShowLoadingOverlay.type, payload: true };
-      const expectedResult = { showLoadingOverlay: true };
+      const action = { type: actions.setLoadingOverlay.type, payload: true };
+      const expectedResult = { isLoadingOverlay: true };
 
       const result = reducer(initialState, action);
 

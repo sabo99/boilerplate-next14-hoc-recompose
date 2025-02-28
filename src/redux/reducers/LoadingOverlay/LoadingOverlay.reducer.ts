@@ -1,16 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  showLoadingOverlay: false
+  isLoadingOverlay: false
 };
 
 export const loadingOverlaySlice = createSlice({
-  name: "loadingOverlay",
+  name: 'loadingOverlay',
   initialState,
   reducers: {
-    setShowLoadingOverlay: (state, action) => ({
+    setLoadingOverlay: (state, action) => ({
       ...state,
-      showLoadingOverlay: action.payload
+      isLoadingOverlay: action.payload
     })
   }
 });

@@ -1,1 +1,1 @@
-export { default } from "./withLoadingOverlay";
+export { default } from './withLoadingOverlay';
