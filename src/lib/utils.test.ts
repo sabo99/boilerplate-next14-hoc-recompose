@@ -1,4 +1,4 @@
-import { cn, mergeTestIds, testProps } from './utils';
+import { cn, joinWith, testProps, tid } from './utils';
 
 describe('utils', () => {
 
@@ -41,17 +41,33 @@ describe('utils', () => {
     });
   });
 
-  describe('#mergeTestIds', () => {
+  describe('#joinWith', () => {
+    it('should join strings using a custom separator', () => {
+      const args = ['arg1', 'arg2', 'arg3'];
+      const result = joinWith(args, '_');
+
+      expect(result).toBe('arg1_arg2_arg3');
+    });
+
+    it('should join strings using the default separator when none is provided', () => {
+      const args = ['arg1', 'arg2', 'arg3'];
+      const result = joinWith(args);
+
+      expect(result).toBe('arg1-arg2-arg3');
+    });
+  });
+
+  describe('#createTestId', () => {
     it('should merge test ids correctly with multiple arguments', () => {
       const args = ['arg1', 'arg2', 'arg3'];
-      const result = mergeTestIds(...args);
+      const result = tid(...args);
 
       expect(result).toBe('arg1_arg2_arg3');
     });
 
     it('should merge test ids correctly with empty arguments', () => {
       const args = ['arg1', '', 'arg3'];
-      const result = mergeTestIds(...args);
+      const result = tid(...args);
 
       expect(result).toBe('arg1__arg3');
     });
