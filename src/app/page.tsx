@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   const renderContent = () => (
     <StyledOrderList>
       {examples.map((data, index) => (
-        <StyledListItem key={index}>
+        <StyledListItem key={index} >
           Example for using
           <StyledAnchor href={data.path}>
             {data.title}
