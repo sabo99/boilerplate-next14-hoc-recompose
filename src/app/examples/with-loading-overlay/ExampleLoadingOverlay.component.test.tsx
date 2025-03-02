@@ -1,8 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
-import { Provider } from 'react-redux';
 
-import { loadingOverlayReducer } from '@/redux/reducers/LoadingOverlay';
+import Providers from '@/app/providers';
 
 import ExampleLoadingOverlay from './ExampleLoadingOverlay.component';
 import ExampleLoadingOverlayConfig from './ExampleLoadingOverlay.config';
@@ -13,7 +11,6 @@ jest.useFakeTimers();
 
 describe('ExampleLoadingOverlay component', () => {
   let renderResult: ReturnType<typeof render>;
-  let store: any;
   const messages = ['default message...'];
   const progress = 0;
   const props = {
@@ -30,19 +27,10 @@ describe('ExampleLoadingOverlay component', () => {
   };
 
   beforeEach(() => {
-    store = configureStore({
-      reducer: {
-        loadingOverlay: loadingOverlayReducer
-      },
-      preloadedState: {
-        loadingOverlay: { isLoadingOverlay: false }
-      }
-    });
-
     renderResult = render(
-      <Provider store={store}>
+      <Providers>
         <ExampleLoadingOverlay {...props} />
-      </Provider>
+      </Providers>
     );
   });
 
@@ -115,9 +103,9 @@ describe('ExampleLoadingOverlay component', () => {
       const { getByTestId, rerender } = renderResult;
 
       rerender(
-        <Provider store={store}>
+        <Providers>
           <ExampleLoadingOverlay {...mockProps} />
-        </Provider>
+        </Providers>
       );
 
       waitFor(() => {
@@ -158,9 +146,9 @@ describe('ExampleLoadingOverlay component', () => {
       const { rerender } = renderResult;
 
       rerender(
-        <Provider store={store}>
+        <Providers>
           <ExampleLoadingOverlay {...mockProps} />
-        </Provider>
+        </Providers>
       );
 
       // Move time forward

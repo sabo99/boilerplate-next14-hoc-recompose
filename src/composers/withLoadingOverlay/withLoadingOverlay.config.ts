@@ -1,7 +1,7 @@
 import { withState } from 'react-recompose';
 import { connect } from 'react-redux';
 
-import { ReduxRootState } from '@/redux/createStore';
+import { ReduxRootState } from '@/redux';
 import { actions as loadingOverlayActions } from '@/redux/reducers/LoadingOverlay';
 
 const mapStateToProps = (state: ReduxRootState) => ({
