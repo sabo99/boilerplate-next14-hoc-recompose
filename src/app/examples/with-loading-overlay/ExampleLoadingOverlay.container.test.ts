@@ -1,4 +1,4 @@
-import { stateList } from "./ExampleLoadingOverlay.container";
+import { stateList } from './ExampleLoadingOverlay.container';
 
 describe('ExampleLoadingOverlayContainer', () => {
   describe('#stateList', () => {

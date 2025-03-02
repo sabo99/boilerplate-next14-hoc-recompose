@@ -20,7 +20,7 @@ export type Props = {
   setMessages: React.Dispatch<React.SetStateAction<string[]>>;
   progress: number;
   setProgress: React.Dispatch<React.SetStateAction<number>>;
-  showLoadingOverlay: boolean;
-  setShowLoadingOverlay: (value: boolean) => void;
+  isLoadingOverlay: boolean;
+  setLoadingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
   onHandleSubmit: OnHandleCallback;
 }

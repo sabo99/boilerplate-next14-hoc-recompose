@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Table, TableHead } from "@/components/ui/table";
+import { TableCell, TableHead } from '@/components/ui/table';
 
-export const StyledContainer = (props: any) =>
+export const StyledContainer: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) =>
   React.createElement(
     'div',
     {
@@ -12,7 +12,7 @@ export const StyledContainer = (props: any) =>
     props.children
   );
 
-export const StyledForm = (props: any) =>
+export const StyledForm: React.FC<React.HTMLAttributes<HTMLFormElement>> = (props) =>
   React.createElement(
     'form',
     {
@@ -22,9 +22,9 @@ export const StyledForm = (props: any) =>
     props.children
   );
 
-export const StyledTable = (props: any) =>
+export const StyledTableContainer: React.FC<React.HTMLAttributes<HTMLElement>> = (props) =>
   React.createElement(
-    Table,
+    'div',
     {
       ...props,
       className: 'col-span-2'
@@ -32,7 +32,7 @@ export const StyledTable = (props: any) =>
     props.children
   );
 
-export const StyledTableHead = (props: any) =>
+export const StyledTableHead: React.FC<React.ThHTMLAttributes<HTMLTableCellElement>> = (props) =>
   React.createElement(
     TableHead,
     {
@@ -42,9 +42,9 @@ export const StyledTableHead = (props: any) =>
     props.children
   );
 
-export const StyledTableCell = (props: any) =>
+export const StyledTableCell: React.FC<React.TdHTMLAttributes<HTMLTableCellElement>> = (props) =>
   React.createElement(
-    TableHead,
+    TableCell,
     {
       ...props,
       className: 'font-medium text-center'

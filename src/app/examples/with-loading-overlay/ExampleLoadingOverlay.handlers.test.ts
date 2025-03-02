@@ -1,6 +1,6 @@
-import { useSubmitWithLoading } from "@/hooks";
+import { useSubmitWithLoading } from '@/hooks';
 
-import handlers from "./ExampleLoadingOverlay.handlers";
+import handlers from './ExampleLoadingOverlay.handlers';
 
 const { onHandleSubmit } = handlers;
 
@@ -20,7 +20,7 @@ describe('ExampleLoadingOverlayHandlers', () => {
       };
       const payloadValues = {
         message: 'Test123',
-        delay: 1000
+        delay: 3 // in seconds
       };
       const payloadCallback = {
         onBefore: jest.fn(),

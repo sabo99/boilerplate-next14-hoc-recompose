@@ -1,12 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
-import { mergeTestIds } from '@/lib/utils';
 import { loadingOverlayReducer } from '@/redux/reducers/LoadingOverlay';
 
 import ExampleLoadingOverlay from './ExampleLoadingOverlay.component';
-import { DELAY, screenName } from './ExampleLoadingOverlay.config';
+import ExampleLoadingOverlayConfig from './ExampleLoadingOverlay.config';
+
+const { delay: DELAY, screenName } = ExampleLoadingOverlayConfig;
+
+jest.useFakeTimers();
 
 describe('ExampleLoadingOverlay component', () => {
   let renderResult: ReturnType<typeof render>;
@@ -18,11 +21,11 @@ describe('ExampleLoadingOverlay component', () => {
     setMessages: jest.fn(),
     progress,
     setProgress: jest.fn(),
-    setShowLoadingOverlay: jest.fn(),
-    showLoadingOverlay: false,
+    setLoadingOverlay: jest.fn(),
+    isLoadingOverlay: false,
     onHandleSubmit: jest.fn((values, { onBefore, onAfter }) => {
       onBefore();
-      onAfter({ message: values.message });
+      onAfter({ message: values.message, delay: 3 });
     })
   };
 
@@ -32,7 +35,7 @@ describe('ExampleLoadingOverlay component', () => {
         loadingOverlay: loadingOverlayReducer
       },
       preloadedState: {
-        loadingOverlay: { showLoadingOverlay: false }
+        loadingOverlay: { isLoadingOverlay: false }
       }
     });
 
@@ -43,6 +46,12 @@ describe('ExampleLoadingOverlay component', () => {
     );
   });
 
+  afterEach(() => {
+    cleanup();
+    jest.clearAllTimers();
+    jest.clearAllMocks();
+  });
+
   describe('#render', () => {
     it('should render without crashing', () => {
       const { container } = renderResult;
@@ -51,7 +60,7 @@ describe('ExampleLoadingOverlay component', () => {
     });
 
     it('should be render container with correct testId', () => {
-      const styledContainerTestId = mergeTestIds(screenName, 'StyledContainer');
+      const styledContainerTestId = `${screenName}_StyledContainer`;
 
       const { getByTestId } = renderResult;
 
@@ -59,45 +68,44 @@ describe('ExampleLoadingOverlay component', () => {
     });
 
     it('should be render form with correct testId', () => {
-      const styledFormTestId = mergeTestIds(screenName, 'StyledForm');
-      const formLabelTestId = mergeTestIds(screenName, 'FormLabel');
-      const inputTestId = mergeTestIds(screenName, 'Input');
-      const formDescriptionTestId = mergeTestIds(screenName, 'FormDescription');
-      const buttonTestId = mergeTestIds(screenName, 'SubmitButton');
+      const styledFormTestId = `${screenName}_StyledForm`;
+      const formLabelMessageTestId = `${screenName}_FormLabel_message`;
+      const inputMessageTestId = `${screenName}_Input_message`;
+      const formDescriptionMessageTestId = `${screenName}_FormDescription_message`;
+      const buttonTestId = `${screenName}_SubmitButton`;
 
       const { getByTestId } = renderResult;
 
       expect(getByTestId(styledFormTestId)).toBeTruthy();
-      expect(getByTestId(formLabelTestId)).toBeTruthy();
-      expect(getByTestId(formLabelTestId)).toHaveTextContent('Message');
-      expect(getByTestId(inputTestId)).toBeTruthy();
-      expect(getByTestId(inputTestId)).toHaveAttribute('placeholder', 'Input your message');
-      expect(getByTestId(formDescriptionTestId)).toBeTruthy();
-      expect(getByTestId(formDescriptionTestId)).toHaveTextContent('This is your public message.');
+      expect(getByTestId(formLabelMessageTestId)).toBeTruthy();
+      expect(getByTestId(formLabelMessageTestId)).toHaveTextContent('Message');
+      expect(getByTestId(inputMessageTestId)).toBeTruthy();
+      expect(getByTestId(inputMessageTestId)).toHaveAttribute('placeholder', 'Input your message');
+      expect(getByTestId(formDescriptionMessageTestId)).toBeTruthy();
+      expect(getByTestId(formDescriptionMessageTestId)).toHaveTextContent('This is your public message.');
       expect(getByTestId(buttonTestId)).toBeTruthy();
       expect(getByTestId(buttonTestId)).toHaveAttribute('type', 'submit');
     });
 
     it('should be render table with correct testId', () => {
-      const styledTableTestId = mergeTestIds(screenName, 'StyledTable');
-      const tableCaptionTestId = mergeTestIds(screenName, 'TableCaption');
-      const styledTableHeadTestId = mergeTestIds(screenName, 'StyledTableHead');
-      const styledTableCellTestId = mergeTestIds(screenName, 'StyledTableCell', '0');
+      const styledTableContainerTestId = `${screenName}_StyledTableContainer`;
+      const tableCaptionTestId = `${screenName}_TableCaption`;
+      const styledTableHeadTestId = `${screenName}_StyledTableHead`;
+      const styledTableCellTestId = `${screenName}_StyledTableCell_0`;
 
       const { getByTestId } = renderResult;
 
       expect(getByTestId(tableCaptionTestId)).toBeTruthy();
-      expect(getByTestId(styledTableTestId)).toBeTruthy();
-      expect(getByTestId(styledTableTestId)).toHaveTextContent('A list of your recent messages.');
+      expect(getByTestId(styledTableContainerTestId)).toBeTruthy();
+      expect(getByTestId(styledTableContainerTestId)).toHaveTextContent('A list of your recent messages.');
       expect(getByTestId(styledTableHeadTestId)).toBeTruthy();
       expect(getByTestId(styledTableHeadTestId)).toHaveTextContent(/List Message/i);
-
       expect(getByTestId(styledTableCellTestId)).toBeTruthy();
       expect(getByTestId(styledTableCellTestId)).toHaveTextContent(messages[0]);
     });
 
     it('should render progress bar when progress is between 0 and 100', () => {
-      const progressTestId = mergeTestIds(screenName, 'Progress');
+      const progressTestId = `${screenName}_Progress`;
       const progress = 50;
       const maxProgress = 100;
       const mockProps = {
@@ -112,43 +120,94 @@ describe('ExampleLoadingOverlay component', () => {
         </Provider>
       );
 
+      waitFor(() => {
+        expect(mockProps.setProgress).toHaveBeenCalled();
+      });
       expect(getByTestId(progressTestId)).toBeTruthy();
       expect(getByTestId(progressTestId).children[0]).toHaveAttribute('style', `transform: translateX(-${maxProgress - progress}%);`);
+    });
+
+    it('should start progress at 5 when onBefore it called', () => {
+      act(() => {
+        props.setProgress(5);
+      });
+
+      expect(props.setProgress).toHaveBeenCalledWith(5);
+    });
+
+    it('should increment progress gradually until it reaches 100', () => {
+      // Simulate total time until it reaches 100%
+      act(() => {
+        jest.advanceTimersByTime(1000);
+        const updateFn = props.setProgress.mock.calls[0][0]; // Get function passed to setProgress
+        updateFn(0); // Simulate initial progress = 0
+
+        jest.advanceTimersByTime(2000);
+        const updateFn2 = props.setProgress.mock.calls[1][0]; // Get second update
+        updateFn2(100);
+      });
+
+      expect(props.setProgress).toHaveBeenCalledWith(expect.any(Function));
+    });
+
+    it('should stop incrementing progress once it reaches 100', () => {
+      const mockProps = {
+        ...props,
+        progress: 100
+      };
+      const { rerender } = renderResult;
+
+      rerender(
+        <Provider store={store}>
+          <ExampleLoadingOverlay {...mockProps} />
+        </Provider>
+      );
+
+      // Move time forward
+      act(() => {
+        jest.advanceTimersByTime(5000);
+      });
+
+      expect(mockProps.setProgress).not.toHaveBeenCalled();
     });
   });
 
   describe('#onClick', () => {
     it('should invoke setMessages, setProgress and onHandleSubmit when on form submission button is clicked', async () => {
-      const inputTestId = mergeTestIds(screenName, 'Input');
-      const buttonTestId = mergeTestIds(screenName, 'SubmitButton');
+      const inputMessageTestId = `${screenName}_Input_message`;
+      const inputDelayTestId = `${screenName}_Input_delay`;
+      const buttonTestId = `${screenName}_SubmitButton`;
       const payload = {
         values: { message: 'Open console.log to check sequential process', delay: DELAY },
         callbacks: { onBefore: expect.any(Function), onAfter: expect.any(Function) }
       };
       const { getByTestId } = renderResult;
 
-      fireEvent.change(getByTestId(inputTestId), { target: { value: 'Test message' } });
+      fireEvent.change(getByTestId(inputMessageTestId), { target: { value: 'Test message' } });
+      fireEvent.change(getByTestId(inputDelayTestId), { target: { value: 3 } });
       fireEvent.click(getByTestId(buttonTestId));
 
       await waitFor(() => {
         expect(props.onHandleSubmit).toHaveBeenCalledTimes(1);
         expect(props.onHandleSubmit).toHaveBeenCalledWith(payload.values, payload.callbacks);
-        expect(props.setProgress).toHaveBeenCalledWith(25); // onBefore call
-        expect(props.setProgress).toHaveBeenCalledWith(100); // onAfter call
+        expect(props.setProgress).toHaveBeenCalledWith(5); // onBefore call
         expect(props.setMessages).toHaveBeenCalledWith(expect.any(Function)); // onAfter updates messages
       });
     });
 
     it('should invoke reset form after submission', async () => {
-      const inputTestId = mergeTestIds(screenName, 'Input');
-      const buttonTestId = mergeTestIds(screenName, 'SubmitButton');
+      const inputMessageTestId = `${screenName}_Input_message`;
+      const inputDelayTestId = `${screenName}_Input_delay`;
+      const buttonTestId = `${screenName}_SubmitButton`;
       const { getByTestId } = renderResult;
 
-      fireEvent.change(getByTestId(inputTestId), 'Another test');
+      fireEvent.change(getByTestId(inputMessageTestId), { target: { value: 'Test message' } });
+      fireEvent.change(getByTestId(inputDelayTestId), { target: { value: 3 } });
       fireEvent.click(getByTestId(buttonTestId));
 
       await waitFor(() => {
-        expect(getByTestId(inputTestId)).toHaveValue('');
+        expect(getByTestId(inputMessageTestId)).toHaveValue('');
+        expect(getByTestId(inputDelayTestId)).toHaveValue(0);
       });
     });
   });

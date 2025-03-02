@@ -1,7 +1,7 @@
-import withPage from "@/composers/withPage";
+import withPage from '@/composers/withPage';
 
-import WithLoadingOverlay from "./ExampleLoadingOverlay.component";
-import WithLoadingOverlayHandlers from "./ExampleLoadingOverlay.handlers";
+import WithLoadingOverlay from './ExampleLoadingOverlay.component';
+import WithLoadingOverlayHandlers from './ExampleLoadingOverlay.handlers';
 
 export const stateList: [string, string, any][] = [
   ['messages', 'setMessages', ['default message...']],
@@ -11,5 +11,10 @@ export const stateList: [string, string, any][] = [
 export default withPage({
   state: stateList,
   handlers: WithLoadingOverlayHandlers,
-  loadingOverlay: true
+  uiSettings: {
+    loadingOverlay: {
+      enabledLoadingOverlay: true,
+      loadingVariant: 'SPINNER'
+    }
+  }
 })(WithLoadingOverlay);
