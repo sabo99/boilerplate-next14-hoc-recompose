@@ -1,57 +1,57 @@
-import React from "react";
+import React from 'react';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardFooter } from "@/components/ui/card";
+import { Button } from '@/components/ui/button';
+import { Card, CardFooter } from '@/components/ui/card';
 
-export const StyledContainer = (props: any) =>
+export const StyledContainer: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) =>
   React.createElement(
-    "div",
+    'div',
     {
       ...props,
-      className: "grid grid-rows-[100px_1fr_100px] items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]"
+      className: 'grid grid-rows-[100px_1fr_100px] items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'
     },
     props.children
   );
 
-export const StyledCard = (props: any) =>
+export const StyledCard: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) =>
   React.createElement(
     Card,
     {
       ...props,
-      className: "flex flex-col gap-2 row-start-2 items-center sm:items-stretch"
+      className: 'flex flex-col gap-2 row-start-2 items-center sm:items-stretch'
     },
     props.children
   );
 
-export const StyledCardFooter = (props: any) =>
+export const StyledCardFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) =>
   React.createElement(
     CardFooter,
     {
       ...props,
-      className: "flex font-semibold leading-none tracking-tight"
+      className: 'flex font-semibold leading-none tracking-tight'
     },
     props.children
   );
 
-export const StyledButton = (props: any) =>
+export const StyledButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = (props) =>
   React.createElement(
     Button,
     {
       ...props,
-      className: "flex items-start",
-      type: "button",
-      variant: "link"
+      className: 'flex items-start',
+      type: 'button',
+      variant: 'link'
     },
     props.children
   );
 
-export const StyledAnchor = (props: any) =>
+export const StyledAnchor: React.FC<React.AnchorHTMLAttributes<HTMLAnchorElement>> = (props) =>
   React.createElement(
-    "a",
+    'a',
     {
       ...props,
-      href: "https://ui.shadcn.com/",
-      target: "_blank"
+      href: 'https://ui.shadcn.com/',
+      target: '_blank'
     },
     props.children
   );

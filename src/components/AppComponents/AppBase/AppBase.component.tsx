@@ -1,22 +1,24 @@
-import { LinkIcon } from "lucide-react";
-import React from "react";
+import { LinkIcon } from 'lucide-react';
+import React from 'react';
 
-import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { mergeTestIds, testProps } from "@/lib/utils";
+import { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { testProps,tid } from '@/lib/utils';
 
-import { componentName }  from "./AppBase.config";
-import { StyledAnchor, StyledButton, StyledCard, StyledCardFooter, StyledContainer } from "./AppBase.styles";
-import { Props } from "./AppBase.types";
+import AppBaseConfig from './AppBase.config';
+import { StyledAnchor, StyledButton, StyledCard, StyledCardFooter, StyledContainer } from './AppBase.styles';
+import type { Props } from './AppBase.types';
+
+const { componentName } = AppBaseConfig;
 
 const AppBase: React.FC<Props> = ({ screenName, title, description, children }) => {
-  const testId = mergeTestIds(screenName, componentName);
+  const testId = tid(screenName, componentName);
 
   const renderCardHeader = () => (
     <CardHeader>
-      <CardTitle {...testProps(`${testId}_CardTitle`)}>
+      <CardTitle {...testProps(tid(testId, 'CardTitle'))}>
         {title}
       </CardTitle>
-      <CardDescription {...testProps(`${testId}_CardDescription`)}>
+      <CardDescription {...testProps(tid(testId, 'CardDescription'))}>
         {description}
       </CardDescription>
     </CardHeader>
@@ -25,8 +27,8 @@ const AppBase: React.FC<Props> = ({ screenName, title, description, children }) 
   const renderCardFooter = () => (
     <StyledCardFooter>
       <StyledButton>
-        <LinkIcon {...testProps(`${testId}_LinkIcon`)} />
-        <StyledAnchor {...testProps(`${testId}_StyledAnchor`)}>
+        <LinkIcon {...testProps(tid(testId, 'LinkIcon'))} />
+        <StyledAnchor {...testProps(tid(testId, 'StyledAnchor'))}>
           @shadcn/ui
         </StyledAnchor>
       </StyledButton>
@@ -34,8 +36,8 @@ const AppBase: React.FC<Props> = ({ screenName, title, description, children }) 
   );
 
   return (
-    <StyledContainer {...testProps(`${testId}_StyledContainer`)}>
-      <StyledCard {...testProps(`${testId}_StyledCard`)}>
+    <StyledContainer {...testProps(tid(testId, 'StyledContainer'))}>
+      <StyledCard {...testProps(tid(testId, 'StyledCard'))}>
         {renderCardHeader()}
         <CardContent>
           {children}

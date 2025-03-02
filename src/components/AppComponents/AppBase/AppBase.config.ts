@@ -1,1 +1,5 @@
-export const componentName = 'AppBase';
+const config = {
+  componentName: 'AppBase'
+};
+
+export default config;
