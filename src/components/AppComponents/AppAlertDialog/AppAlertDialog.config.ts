@@ -1,5 +1,5 @@
 const config = {
-  COMPONENT_NAME: 'AppAlertDialog',
+  componentName: 'AppAlertDialog',
   defaultProps: {
     open: true,
     title: 'Are you absolutely sure?',

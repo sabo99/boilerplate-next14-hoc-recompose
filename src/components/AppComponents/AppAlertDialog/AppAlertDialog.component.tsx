@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   AlertDialog,
@@ -9,13 +9,13 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle
-} from "@/components/ui/alert-dialog";
-import { mergeTestIds, testProps } from "@/lib/utils";
+} from '@/components/ui/alert-dialog';
+import { testProps,tid } from '@/lib/utils';
 
-import config from "./AppAlertDialog.config";
-import type { Props } from "./AppAlertDialog.type";
+import config from './AppAlertDialog.config';
+import type { Props } from './AppAlertDialog.types';
 
-const { COMPONENT_NAME, defaultProps } = config;
+const { componentName, defaultProps } = config;
 
 const AppAlertDialog: React.FC<Props> = (props) => {
   const {
@@ -32,12 +32,12 @@ const AppAlertDialog: React.FC<Props> = (props) => {
   const renderAlertDialogHeader = () => (
     <AlertDialogHeader>
       <AlertDialogTitle
-        {...testProps(mergeTestIds(screenName, COMPONENT_NAME, 'Title'))}
+        {...testProps(tid(screenName, componentName, 'Title'))}
       >
         {title}
       </AlertDialogTitle>
       <AlertDialogDescription
-        {...testProps(mergeTestIds(screenName, COMPONENT_NAME, 'Description'))}
+        {...testProps(tid(screenName, componentName, 'Description'))}
       >
         {description}
       </AlertDialogDescription>
@@ -47,13 +47,13 @@ const AppAlertDialog: React.FC<Props> = (props) => {
   const renderAlertDialogFooter = () => (
     <AlertDialogFooter>
       <AlertDialogCancel
-        {...testProps(mergeTestIds(screenName, COMPONENT_NAME, 'Cancel'))}
+        {...testProps(tid(screenName, componentName, 'Cancel'))}
         onClick={onCancel}
       >
         {cancelText}
       </AlertDialogCancel>
       <AlertDialogAction
-        {...testProps(mergeTestIds(screenName, COMPONENT_NAME, 'Action'))}
+        {...testProps(tid(screenName, componentName, 'Action'))}
         onClick={onAction}
       >
         {actionText}

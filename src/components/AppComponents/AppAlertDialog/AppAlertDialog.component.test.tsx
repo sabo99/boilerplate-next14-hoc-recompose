@@ -1,14 +1,14 @@
 import { cleanup, render } from '@testing-library/react';
 
-import AppAlertDialog from "./AppAlertDialog.component";
+import AppAlertDialog from './AppAlertDialog.component';
 import config from './AppAlertDialog.config';
 
-const { COMPONENT_NAME } = config;
+const { componentName } = config;
 
 describe('AppAlertDialog', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'Screen';
-  const testId = `${screenName}_${COMPONENT_NAME}`;
+  const testId = `${screenName}_${componentName}`;
   const titleTestId = `${testId}_Title`;
   const descTestId = `${testId}_Description`;
   const cancelTestId = `${testId}_Cancel`;
