@@ -3,13 +3,13 @@ import { cleanup, render } from '@testing-library/react';
 import Dot from './Dot.component';
 import config from './Dot.config';
 
-const { COMPONENT_NAME } = config;
+const { componentName } = config;
 
 describe('Dot', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'LoadingOverlay';
   const name = 'LoadingDots';
-  const testId = `${screenName}_${name}_${COMPONENT_NAME}`;
+  const testId = `${screenName}_${name}_${componentName}`;
   const props = {
     screenName,
     name
@@ -52,7 +52,7 @@ describe('Dot', () => {
 
       expect(dot).toHaveStyle('width: 25px');
       expect(dot).toHaveStyle('height: 25px');
-      expect(dot).toHaveStyle(`margin: 0 7.5px`);
+      expect(dot).toHaveStyle('margin: 0 7.5px');
     });
 
     it('should renders with custom size and margin', () => {
@@ -63,7 +63,7 @@ describe('Dot', () => {
 
       expect(dot).toHaveStyle('width: 50px');
       expect(dot).toHaveStyle('height: 50px');
-      expect(dot).toHaveStyle(`margin: 0 15px`);
+      expect(dot).toHaveStyle('margin: 0 15px');
     });
   });
 
