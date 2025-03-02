@@ -1,10 +1,10 @@
-import { redirect, usePathname, useRouter } from "next/navigation";
-import React from "react";
-import { useBeforeunload } from "react-beforeunload";
+import { redirect, usePathname, useRouter } from 'next/navigation';
+import React from 'react';
+import { useBeforeunload } from 'react-beforeunload';
 
-import AppAlertDialog from "@/components/AppComponents/AppAlertDialog";
+import AppAlertDialog from '@/components/AppComponents/AppAlertDialog';
 
-import type { Options } from "./withPreventRefresh.type";
+import type { Options } from './withPreventRefresh.types';
 
 const withPreventRefresh = (options: Options) => (ComposedComponent: React.ComponentType<any>) => {
   const HOCPreventRefresh = (props: any) => {
@@ -26,9 +26,9 @@ const withPreventRefresh = (options: Options) => (ComposedComponent: React.Compo
         <AppAlertDialog
           screenName="PreventRefresh"
           open={true}
-          title={alertDialogOption?.title ?? "Warning"}
-          description={alertDialogOption?.description ?? "Are you sure you want to leave this page?"}
-          actionText={alertDialogOption?.actionText ?? "Leave"}
+          title={alertDialogOption?.title ?? 'Warning'}
+          description={alertDialogOption?.description ?? 'Are you sure you want to leave this page?'}
+          actionText={alertDialogOption?.actionText ?? 'Leave'}
           onAction={alertDialogOption?.onAction}
         />
       );

@@ -1,16 +1,16 @@
-import { cleanup, render } from "@testing-library/react";
-import { redirect, usePathname, useRouter } from "next/navigation";
-import { useBeforeunload } from "react-beforeunload";
+import { cleanup, render } from '@testing-library/react';
+import { redirect, usePathname, useRouter } from 'next/navigation';
+import { useBeforeunload } from 'react-beforeunload';
 
-import withPreventRefresh from "./withPreventRefresh";
+import withPreventRefresh from './withPreventRefresh';
 
 jest
-  .mock("next/navigation", () => ({
+  .mock('next/navigation', () => ({
     useRouter: jest.fn(),
     usePathname: jest.fn(),
     redirect: jest.fn()
   }))
-  .mock("react-beforeunload", () => ({
+  .mock('react-beforeunload', () => ({
     useBeforeunload: jest.fn()
   }));
 
@@ -74,7 +74,7 @@ describe('withPreventRefresh', () => {
 
   it('should not invoke prevent unload when alertDialogOption is provided with default options', () => {
     const options = {
-      redirectPath: "/test",
+      redirectPath: '/test',
       alertDialogOption: {
         onAction: jest.fn()
       }
@@ -98,7 +98,7 @@ describe('withPreventRefresh', () => {
 
   it('should not invoke prevent unload when alertDialogOption is provided with custom options', () => {
     const options = {
-      redirectPath: "/test",
+      redirectPath: '/test',
       alertDialogOption: {
         title: 'Title',
         description: 'Description',
