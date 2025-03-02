@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const StyledOrderList: React.FC<React.OlHTMLAttributes<HTMLOListElement>> = (props) =>
+export const StyledOrderList: React.FC<React.ComponentProps<'ol'>> = (props) =>
   React.createElement(
     'ol',
     {
@@ -10,10 +10,10 @@ export const StyledOrderList: React.FC<React.OlHTMLAttributes<HTMLOListElement>>
     props.children
   );
 
-export const StyledListItem: React.FC<React.LiHTMLAttributes<HTMLLIElement>> = (props) =>
+export const StyledListItem: React.FC<React.ComponentProps<'li'>> = (props) =>
   React.createElement('li', props, props.children);
 
-export const StyledAnchor: React.FC<React.AnchorHTMLAttributes<HTMLAnchorElement>> = (props) =>
+export const StyledAnchor: React.FC<React.ComponentProps<'a'>> = (props) =>
   React.createElement(
     'a',
     {

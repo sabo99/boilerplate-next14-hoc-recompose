@@ -1,26 +1,9 @@
 import { AppBase } from '@/components/AppComponents/AppBase';
 import Paths from '@/constants/Paths';
 
-import { StyledAnchor, StyledListItem, StyledOrderList } from './styles';
-
-const examples = [
-  { title: 'WithLoadingOverlay', path: Paths.Examples.WithLoadingOverlay }
-];
+import { StyledAnchor } from './styles';
 
 const Home: React.FC = () => {
-
-  const renderContent = () => (
-    <StyledOrderList>
-      {examples.map((data, index) => (
-        <StyledListItem key={index} >
-          Example for using
-          <StyledAnchor href={data.path}>
-            {data.title}
-          </StyledAnchor>
-        </StyledListItem>
-      ))}
-    </StyledOrderList>
-  );
 
   return (
     <AppBase
@@ -28,7 +11,7 @@ const Home: React.FC = () => {
       title="Home"
       description="Home page"
     >
-      {renderContent()}
+      Go to the <StyledAnchor href={Paths.Dashboard}> Dashboard </StyledAnchor>
     </AppBase>
   );
 };
