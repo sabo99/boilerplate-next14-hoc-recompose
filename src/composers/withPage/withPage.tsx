@@ -1,21 +1,25 @@
-import { isEmptyObject, isNonEmptyArray, isObject, isPresent } from "@sabo99/node-utils";
-import { compose, withHandlers, withProps, withState } from "react-recompose";
-import { connect } from "react-redux";
+import { isEmptyObject, isNonEmptyArray, isObject, isPresent } from '@sabo99/node-utils';
+import { compose, withHandlers, withProps, withState } from 'react-recompose';
+import { connect } from 'react-redux';
 
-import withLoadingOverlay from "../withLoadingOverlay";
-import withPreventRefresh from "../withPreventRefresh";
-import type { Options } from "./withPage.type";
+import withLoadingOverlay from '../withLoadingOverlay';
+import withPreventRefresh from '../withPreventRefresh';
+import type { Options } from './withPage.types';
 
 /**
- * Higher-order component (HOC) to enhance a React component with various options.
+ * Higher-order component (HOC) that enhances a given component with various options.
  *
- * @param {object} options - Configuration options for the HOC, The options object containing various configuration setting.
- * @param {object|null} options.props - (Optional) Additional props to be passed. Default is null.
- * @param {object|null} options.connect - (Optional) Manages state from React-Redux. Default is null.
- * @param {Array<Array<[string, string, any]>>|null} options.state - (Optional) Array of state options to manage state from React-recompose. Default is an empty array.
- * @param options.handlers - (Optional) Handlers for various events. Default is null.
- * @param options.preventRefresh - (Optional) Prevents page refresh. Default is null.
- * @param options.loadingOverlay - (Optional) Displays a loading overlay. Default is false.
+ * @param {Options} options - Configuration options for the HOC.
+ * @param {Object} options.props - Custom props to be added to the component.
+ * @param {Object} options.connect - Redux connection options.
+ * @param {Object} options.connect.mapStateToProps - Function to map state to props.
+ * @param {Object} options.connect.mapDispatchToProps - Function to map dispatch to props.
+ * @param {Array} options.state - State options for the component.
+ * @param {Object} options.uiSettings - UI settings options.
+ * @param {Object} options.uiSettings.loadingOverlay - Loading overlay settings.
+ * @param {boolean} options.uiSettings.loadingOverlay.enabledLoadingOverlay - Flag to enable loading overlay.
+ * @param {Object} options.uiSettings.preventRefresh - Prevent refresh settings.
+ * @param {Object} options.handlers - Handlers to be added to the component.
  *
  * @description
  * This HOC enhances a React component with the following capabilities:
@@ -34,20 +38,22 @@ import type { Options } from "./withPage.type";
  *   connect: { mapStateToProps, mapDispatchToProps },
  *   state: [['stateName', 'setStateName', initialState]],
  *   handlers: { handleClick: () => {} },
-//  *   preventRefresh: { someCondition: true },
- *   loadingOverlay: true
+ *   uiSettings: {
+ *     loadingOverlay: { enabledLoadingOverlay: true },
+ *     preventRefresh: { someCondition: true }
+ *   }
  * };
  *
  * const EnhancedComponent = withPage(options)(MyComponent);
  */
+
 const withPage = (options: Options) => (Component: React.ComponentType<any>) => {
   const {
     props: propsOptions = null,
     connect: connectOptions = null,
     state: stateOptions = [],
-    handlers: handlersOptions = null,
-    preventRefresh: preventRefreshOptions = null, // Next feature will be implement
-    loadingOverlay = false
+    uiSettings: uiSettingsOptions = null,
+    handlers: handlersOptions = null
   } = options;
 
   const enhancers = [];
@@ -70,17 +76,22 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
     });
   }
 
-  // ✅ 4. Handle prevent refresh
-  if (preventRefreshOptions && !isEmptyObject(preventRefreshOptions)) {
-    enhancers.push(withPreventRefresh(preventRefreshOptions));
+  // ✅ 4. Handle uiSettings
+  if (isObject(uiSettingsOptions) && uiSettingsOptions) {
+    const { loadingOverlay = null, preventRefresh = null } = uiSettingsOptions;
+
+    // ✅ 4.1. Handle loading overlay
+    if (loadingOverlay && loadingOverlay.enabledLoadingOverlay) {
+      enhancers.push(withLoadingOverlay(loadingOverlay));
+    }
+
+    // ✅ 4.2. Handle prevent refresh
+    if (preventRefresh) {
+      enhancers.push(withPreventRefresh(preventRefresh));
+    }
   }
 
-  // ✅ 5. Handle loading overlay
-  if (loadingOverlay) {
-    enhancers.push(withLoadingOverlay());
-  }
-
-  // ✅ 6. Handle handlers using React-recompose withHandlers
+  // ✅ 5. Handle handlers using React-recompose withHandlers
   if (isObject(handlersOptions)) {
     enhancers.push(withHandlers(handlersOptions));
   }

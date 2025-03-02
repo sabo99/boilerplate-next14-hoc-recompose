@@ -1,9 +1,9 @@
-import { compose, withHandlers, withProps, withState } from "react-recompose";
-import { connect } from "react-redux";
+import { compose, withHandlers, withProps, withState } from 'react-recompose';
+import { connect } from 'react-redux';
 
-import withLoadingOverlay from "../withLoadingOverlay";
-import withPreventRefresh from "../withPreventRefresh";
-import withPage from "./withPage";
+import withLoadingOverlay from '../withLoadingOverlay';
+import withPreventRefresh from '../withPreventRefresh';
+import withPage from './withPage';
 
 jest.mock('react-recompose')
   .mock('react-redux')
@@ -142,15 +142,19 @@ describe('withPage', () => {
   });
 
   describe('#withPreventRefresh', () => {
-    it('should invoke withPreventRefresh when `preventRefresh` include redirectPath is present', () => {
-      const options = { preventRefresh: { redirectPath: '/home' } };
+    it('should invoke withPreventRefresh when uiSettings has `preventRefresh` include redirectPath is present', () => {
+      const options = {
+        uiSettings: {
+          preventRefresh: { redirectPath: '/home' }
+        }
+      };
 
       withPage(options)(Component);
 
-      expect(withPreventRefresh).toHaveBeenCalledWith(options.preventRefresh);
+      expect(withPreventRefresh).toHaveBeenCalledWith(options.uiSettings.preventRefresh);
     });
 
-    it('should not invoke withPreventRefresh when `preventRefresh` is not present', () => {
+    it('should not invoke withPreventRefresh when uiSettings has `preventRefresh` is not present', () => {
       const options = {};
 
       withPage(options)(Component);
@@ -160,16 +164,30 @@ describe('withPage', () => {
   });
 
   describe('#withLoadingOverlay', () => {
-    it('should invoke withLoadingOverlay when `loadingOverlay` is true', () => {
-      const options = { loadingOverlay: true };
+    it('should invoke withLoadingOverlay when uiSettings has `loadingOverlay` includes enabled loading overlay is true', () => {
+      const options: any = {
+        uiSettings: {
+          loadingOverlay: {
+            enabledLoadingOverlay: true,
+            loadingVariant: 'DOTS'
+          }
+        }
+      };
 
       withPage(options)(Component);
 
       expect(withLoadingOverlay).toHaveBeenCalled();
     });
 
-    it('should not invoke withLoadingOverlay when `loadingOverlay` is false', () => {
-      const options = { loadingOverlay: false };
+    it('should not invoke withLoadingOverlay when uiSettings has `loadingOverlay` includes enabled loading overlay is true', () => {
+      const options: any = {
+        uiSettings: {
+          loadingOverlay: {
+            enabledLoadingOverlay: false,
+            loadingVariant: 'DOTS'
+          }
+        }
+      };
 
       withPage(options)(Component);
 
