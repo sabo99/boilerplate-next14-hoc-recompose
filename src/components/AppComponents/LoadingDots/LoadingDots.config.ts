@@ -1,4 +1,4 @@
-const COMPONENT_NAME = 'LoadingDots';
+const componentName = 'LoadingDots';
 const Dots = [
   { name: 'first', className: 'bg-blue-300 animate-dot-first' },
   { name: 'second', className: 'bg-blue-400 animate-dot-second' },
@@ -8,7 +8,7 @@ const Dots = [
 ];
 
 const config = {
-  COMPONENT_NAME,
+  componentName,
   Dots
 };
 

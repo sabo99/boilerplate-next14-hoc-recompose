@@ -1,17 +1,16 @@
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render } from '@testing-library/react';
 
-import LoadingDots from "./LoadingDots.component";
-import config from "./LoadingDots.config";
+import LoadingDots from './LoadingDots.component';
+import config from './LoadingDots.config';
 
-const { COMPONENT_NAME } = config;
+const { componentName } = config;
 
 describe('LoadingDots', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'LoadingOverlay';
-  const testId = `${screenName}_${COMPONENT_NAME}`;
+  const testId = `${screenName}_${componentName}`;
   const props = {
-    screenName,
-    name
+    screenName
   };
 
   beforeEach(() => {
@@ -25,15 +24,16 @@ describe('LoadingDots', () => {
 
   describe('#render', () => {
     it('should render loading dots component with props', () => {
+      const styledContainer = `${testId}_StyledContainer`;
       const { getByTestId } = renderResult;
 
-      expect(getByTestId(testId)).toBeTruthy();
+      expect(getByTestId(styledContainer)).toBeTruthy();
     });
 
     it('should render loading dots component with 3 dots', () => {
-      const firstTestId = `${screenName}_${COMPONENT_NAME}_first_Dot`;
-      const secondTestId = `${screenName}_${COMPONENT_NAME}_second_Dot`;
-      const thirdTestId = `${screenName}_${COMPONENT_NAME}_third_Dot`;
+      const firstTestId = `${testId}_first_Dot`;
+      const secondTestId = `${testId}_second_Dot`;
+      const thirdTestId = `${testId}_third_Dot`;
 
       const { getByTestId } = renderResult;
 
