@@ -1,5 +1,5 @@
 const config = {
-  COMPONENT_NAME: 'LoadingOverlay'
+  componentName: 'LoadingOverlay'
 };
 
 export default config;

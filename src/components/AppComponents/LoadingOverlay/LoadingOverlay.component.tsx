@@ -3,23 +3,28 @@ import * as React from 'react';
 import { testProps } from '@/lib/utils';
 
 import LoadingDots from '../LoadingDots';
-import config from './LoadingOverlay.config';
+import { LoadingSpinner } from '../LoadingSpinner';
+import LoadingOverlayConfig from './LoadingOverlay.config';
 import {
-  LoadingOverlayContainer,
-  LoadingOverlayContent
-} from './LoadingOverlay.style';
+  StyledContainer,
+  StyledContent
+} from './LoadingOverlay.styles';
+import type { Props } from './LoadingOverlay.types';
 
-const { COMPONENT_NAME } = config;
+const { componentName } = LoadingOverlayConfig;
 
-const LoadingOverlay: React.FC = () => (
-  <div
-    {...testProps(COMPONENT_NAME)}
-    className={LoadingOverlayContainer} >
-    <div className={LoadingOverlayContent}>
-      <LoadingDots
-        screenName={COMPONENT_NAME} />
-    </div>
-  </div >
-);
+const LoadingOverlay: React.FC<Props> = ({ variant }) => {
+  return (
+    <StyledContainer {...testProps(componentName)}>
+      <StyledContent>
+        {(
+          variant === 'DOTS'
+            ? <LoadingDots screenName={componentName} />
+            : <LoadingSpinner screenName={componentName} />
+        )}
+      </StyledContent>
+    </StyledContainer>
+  );
+};
 
 export default LoadingOverlay;
