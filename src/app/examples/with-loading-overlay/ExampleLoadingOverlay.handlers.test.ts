@@ -8,6 +8,10 @@ jest.mock('@/hooks');
 
 describe('ExampleLoadingOverlayHandlers', () => {
 
+  beforeEach(() => {
+    global.alert = jest.fn();
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });

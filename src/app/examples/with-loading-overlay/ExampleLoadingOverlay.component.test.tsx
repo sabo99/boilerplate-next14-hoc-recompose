@@ -9,7 +9,7 @@ const { delay: DELAY, screenName } = ExampleLoadingOverlayConfig;
 
 jest.useFakeTimers();
 
-describe('ExampleLoadingOverlay component', () => {
+describe('ExampleLoadingOverlayComponent', () => {
   let renderResult: ReturnType<typeof render>;
   const messages = ['default message...'];
   const progress = 0;

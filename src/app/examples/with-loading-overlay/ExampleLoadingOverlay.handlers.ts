@@ -2,7 +2,6 @@ import { useSubmitWithLoading } from '@/hooks';
 
 import type { OnHandleCallback, Props } from './ExampleLoadingOverlay.types';
 
-/* eslint-disable no-console */
 const doHandle = (props: Props): OnHandleCallback => async (
   values, callbacks
 ) => {
@@ -12,7 +11,6 @@ const doHandle = (props: Props): OnHandleCallback => async (
 
   alert(message);
   onBefore();
-  console.log('Simulate data fetching process in:', `${delay} seconds`);
 
   // Simulate data fetching process
   await new Promise((resolve: any) => {
@@ -27,7 +25,6 @@ const doHandle = (props: Props): OnHandleCallback => async (
 const onHandleSubmit = (props: Props): OnHandleCallback => async (
   values, callbacks
 ) => {
-  console.clear();
   await useSubmitWithLoading(
     props, async () => doHandle(props)(values, callbacks),
   );
