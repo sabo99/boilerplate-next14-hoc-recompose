@@ -1,9 +1,10 @@
-import { isEmptyObject, isNonEmptyArray, isObject, isPresent } from '@sabo99/node-utils';
+import { isEmptyObject, isNonEmptyArray } from '@sabo99/node-utils';
 import { compose, withHandlers, withProps, withState } from 'react-recompose';
 import { connect } from 'react-redux';
 
-import withLoadingOverlay from '../withLoadingOverlay';
+import withOverlay from '../withOverlay';
 import withPreventRefresh from '../withPreventRefresh';
+import withSidebar from '../withSidebar';
 import type { Options } from './withPage.types';
 
 /**
@@ -12,10 +13,12 @@ import type { Options } from './withPage.types';
  * @param {Options} options - Configuration options for the HOC.
  * @param {Object} options.props - Custom props to be added to the component.
  * @param {Object} options.connect - Redux connection options.
- * @param {Object} options.connect.mapStateToProps - Function to map state to props.
- * @param {Object} options.connect.mapDispatchToProps - Function to map dispatch to props.
+ * @param {Function} options.connect.mapStateToProps - Function to map state to props.
+ * @param {Function} options.connect.mapDispatchToProps - Function to map dispatch to props.
  * @param {Array} options.state - State options for the component.
  * @param {Object} options.uiSettings - UI settings options.
+ * @param {Object} options.uiSettings.sidebar - Sidebar settings.
+ * @param {boolean} options.uiSettings.sidebar.enabledSidebar - Flag to enable sidebar.
  * @param {Object} options.uiSettings.loadingOverlay - Loading overlay settings.
  * @param {boolean} options.uiSettings.loadingOverlay.enabledLoadingOverlay - Flag to enable loading overlay.
  * @param {Object} options.uiSettings.preventRefresh - Prevent refresh settings.
@@ -26,27 +29,30 @@ import type { Options } from './withPage.types';
  * 1. Custom props using `withProps` from React-recompose.
  * 2. Redux connection using `connect`.
  * 3. State management using `withState` from React-recompose.
- * 4. Prevent refresh functionality using `withPreventRefresh`.
- * 5. Loading overlay functionality using `withLoadingOverlay`.
- * 6. Custom handlers using `withHandlers` from React-recompose.
+ * 4. Screen configuration using `withProps`.
+ * 5. Sidebar functionality using `withSidebar`.
+ * 6. Loading overlay functionality using `withLoadingOverlay`.
+ * 7. Prevent refresh functionality using `withPreventRefresh`.
+ * 8. Custom handlers using `withHandlers` from React-recompose.
  *
- * The last `enhancers.push` call adds the `withHandlers` enhancer to the list of enhancers if `handlersOptions` is provided and is an object. This allows the component to handle custom event handlers defined in the `handlersOptions`.
+ * The last `enhancers.push` call adds the `withHandlers` enhancer to the list of enhancers if `handlersOptions` is provided and is an object.
+ * This allows the component to handle custom event handlers defined in the `handlersOptions`.
  *
  * @example
  * const options = {
- *   props: { someProp: 'value' },
+ *   props: { screenName: 'Home', pageTitle: 'Home Page', permissions: ['VIEW_MENU']  },
  *   connect: { mapStateToProps, mapDispatchToProps },
  *   state: [['stateName', 'setStateName', initialState]],
  *   handlers: { handleClick: () => {} },
  *   uiSettings: {
- *     loadingOverlay: { enabledLoadingOverlay: true },
- *     preventRefresh: { someCondition: true }
+ *     sidebar: { isFilteredByPermission: true },
+ *     overlay: { overlayState: 'LOADING', loaderType: 'DOTS' },
+//  *     preventRefresh: { someCondition: true }
  *   }
  * };
  *
  * const EnhancedComponent = withPage(options)(MyComponent);
  */
-
 const withPage = (options: Options) => (Component: React.ComponentType<any>) => {
   const {
     props: propsOptions = null,
@@ -55,16 +61,16 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
     uiSettings: uiSettingsOptions = null,
     handlers: handlersOptions = null
   } = options;
-
   const enhancers = [];
 
+  // ✅ 0. Handle default and required enhancers for the component uiSettingsOptions.screenConfig (screenName, pageTitle)
   // ✅ 1. Handle custom props using React-recompose withProps
-  if (isPresent(propsOptions)) {
+  if (!isEmptyObject(propsOptions) && propsOptions) {
     enhancers.push(withProps(propsOptions));
   }
 
   // ✅ 2. Handle Redux connection
-  if (!isEmptyObject(connectOptions) && connectOptions !== null) {
+  if (!isEmptyObject(connectOptions) && connectOptions) {
     const { mapStateToProps = null, mapDispatchToProps = null } = connectOptions;
     enhancers.push(connect(mapStateToProps, mapDispatchToProps));
   }
@@ -77,22 +83,32 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
   }
 
   // ✅ 4. Handle uiSettings
-  if (isObject(uiSettingsOptions) && uiSettingsOptions) {
-    const { loadingOverlay = null, preventRefresh = null } = uiSettingsOptions;
+  if (!isEmptyObject(uiSettingsOptions) && uiSettingsOptions) {
+    const {
+      sidebar: sidebarOptions = null,
+      overlay: overlayOptions = null,
+      // loadingOverlay: loadingOverlayOptions = null,
+      preventRefresh: preventRefreshOptions = null
+    } = uiSettingsOptions;
 
-    // ✅ 4.1. Handle loading overlay
-    if (loadingOverlay && loadingOverlay.enabledLoadingOverlay) {
-      enhancers.push(withLoadingOverlay(loadingOverlay));
+    // ✅ 4.1. Handle ui settings for sidebar
+    if (!isEmptyObject(sidebarOptions) && sidebarOptions) {
+      enhancers.push(withSidebar(sidebarOptions));
     }
 
-    // ✅ 4.2. Handle prevent refresh
-    if (preventRefresh) {
-      enhancers.push(withPreventRefresh(preventRefresh));
+    // ✅ 4.2. Handle ui settings for overlay
+    if (!isEmptyObject(overlayOptions) && overlayOptions) {
+      enhancers.push(withOverlay(overlayOptions));
+    }
+
+    // ✅ 4.3. Handle ui settings for prevent refresh
+    if (!isEmptyObject(preventRefreshOptions) && preventRefreshOptions) {
+      enhancers.push(withPreventRefresh(preventRefreshOptions));
     }
   }
 
   // ✅ 5. Handle handlers using React-recompose withHandlers
-  if (isObject(handlersOptions)) {
+  if (!isEmptyObject(handlersOptions) && handlersOptions) {
     enhancers.push(withHandlers(handlersOptions));
   }
 

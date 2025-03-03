@@ -1,19 +1,33 @@
 import { compose, withHandlers, withProps, withState } from 'react-recompose';
 import { connect } from 'react-redux';
 
-import withLoadingOverlay from '../withLoadingOverlay';
+import withOverlay from '../withOverlay';
 import withPreventRefresh from '../withPreventRefresh';
 import withPage from './withPage';
 
 jest.mock('react-recompose')
   .mock('react-redux')
-  .mock('../withLoadingOverlay')
+  .mock('../withOverlay')
   .mock('../withPreventRefresh');
 
 describe('withPage', () => {
   const Component = () => <div>Component</div>;
   const composeCallback = jest.fn();
   const composeResult = {};
+  const uiSettings = {
+    sidebar: {
+      isFilteredByPermission: true
+    },
+    overlay: {
+      overlayState: 'LOADING',
+      loaderType: 'DOTS'
+    }
+  };
+  const defaultProps = {
+    screenName: 'ScreenName',
+    pageTitle: 'PageTitle',
+    permissions: ['VIEW_MENU']
+  };
 
   beforeEach(() => {
     composeCallback.mockReturnValue(composeResult);
@@ -36,7 +50,6 @@ describe('withPage', () => {
 
     it('should invoke compose with empty and without enhancers when enhancers is empty', () => {
       const options = {};
-      // const enhancers: any[] = [];
 
       withPage(options)(Component);
 
@@ -46,7 +59,7 @@ describe('withPage', () => {
 
   describe('#withProps', () => {
     it('should invoke withProps when `props` is present', () => {
-      const options = { props: {} };
+      const options = { props: defaultProps };
 
       withPage(options)(Component);
 
@@ -64,7 +77,8 @@ describe('withPage', () => {
 
   describe('#connectRedux', () => {
     it('should invoke connect redux when `connect` is present and is object includes mapStateToProps and mapDispatchToProps', () => {
-      const options = {
+      const options: any = {
+        uiSettings,
         connect: {
           mapStateToProps: {
             isLoading: true
@@ -123,9 +137,56 @@ describe('withPage', () => {
     });
   });
 
+  describe('#withOverlay', () => {
+    it('should invoke withOverlay when uiSettings has `overlay` includes overlayState and loaderType', () => {
+      const options: any = {
+        uiSettings: {
+          overlay: uiSettings.overlay
+        }
+      };
+
+      withPage(options)(Component);
+
+      expect(withOverlay).toHaveBeenCalled();
+    });
+
+    it('should not invoke withOverlay when uiSettings does not have overlay', () => {
+      const options = {
+        uiSettings: { }
+      };
+
+      withPage(options)(Component);
+
+      expect(withOverlay).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('#withPreventRefresh', () => {
+    it('should invoke withPreventRefresh when uiSettings has `preventRefresh` include redirectPath is present', () => {
+      const options: any = {
+        uiSettings: {
+          ...uiSettings,
+          preventRefresh: { redirectPath: '/home' }
+        }
+      };
+
+      withPage(options)(Component);
+
+      expect(withPreventRefresh).toHaveBeenCalledWith(options.uiSettings.preventRefresh);
+    });
+
+    it('should not invoke withPreventRefresh when uiSettings has `preventRefresh` is not present', () => {
+      const options: any = { uiSettings };
+
+      withPage(options)(Component);
+
+      expect(withPreventRefresh).not.toHaveBeenCalled();
+    });
+  });
+
   describe('#withHandlers', () => {
     it('should invoke withHandlers when `handlers` is present', () => {
-      const options = { handlers: {} };
+      const options = { handlers: { setLoading: jest.fn() } };
 
       withPage(options)(Component);
 
@@ -138,60 +199,6 @@ describe('withPage', () => {
       withPage(options)(Component);
 
       expect(withHandlers).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('#withPreventRefresh', () => {
-    it('should invoke withPreventRefresh when uiSettings has `preventRefresh` include redirectPath is present', () => {
-      const options = {
-        uiSettings: {
-          preventRefresh: { redirectPath: '/home' }
-        }
-      };
-
-      withPage(options)(Component);
-
-      expect(withPreventRefresh).toHaveBeenCalledWith(options.uiSettings.preventRefresh);
-    });
-
-    it('should not invoke withPreventRefresh when uiSettings has `preventRefresh` is not present', () => {
-      const options = {};
-
-      withPage(options)(Component);
-
-      expect(withPreventRefresh).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('#withLoadingOverlay', () => {
-    it('should invoke withLoadingOverlay when uiSettings has `loadingOverlay` includes enabled loading overlay is true', () => {
-      const options: any = {
-        uiSettings: {
-          loadingOverlay: {
-            enabledLoadingOverlay: true,
-            loadingVariant: 'DOTS'
-          }
-        }
-      };
-
-      withPage(options)(Component);
-
-      expect(withLoadingOverlay).toHaveBeenCalled();
-    });
-
-    it('should not invoke withLoadingOverlay when uiSettings has `loadingOverlay` includes enabled loading overlay is true', () => {
-      const options: any = {
-        uiSettings: {
-          loadingOverlay: {
-            enabledLoadingOverlay: false,
-            loadingVariant: 'DOTS'
-          }
-        }
-      };
-
-      withPage(options)(Component);
-
-      expect(withLoadingOverlay).not.toHaveBeenCalled();
     });
   });
 });

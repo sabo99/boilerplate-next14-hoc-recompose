@@ -1,4 +1,6 @@
-const Paths = {
+const Paths =
+{
+  Dashboard: '/dashboard',
   Examples: {
     WithLoadingOverlay: '/examples/with-loading-overlay'
   }

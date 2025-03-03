@@ -1,11 +1,11 @@
 import reducer, { actions } from './LoadingOverlay.reducer';
 
-describe('LoadingOverlay Reducer', () => {
+describe('LoadingOverlayReducer', () => {
   const initialState = {
     isLoadingOverlay: false
   };
 
-  describe('#setShowLoadingOverlay', () => {
+  describe('#setLoadingOverlay', () => {
     it('should return the initial state when no action is passed', () => {
       const action = { type: '' };
 
@@ -14,7 +14,7 @@ describe('LoadingOverlay Reducer', () => {
       expect(result).toEqual(initialState);
     });
 
-    it('should return showLoadingOverlay is true', () => {
+    it('should return isLoadingOverlay is true', () => {
       const action = { type: actions.setLoadingOverlay.type, payload: true };
       const expectedResult = { isLoadingOverlay: true };
 
