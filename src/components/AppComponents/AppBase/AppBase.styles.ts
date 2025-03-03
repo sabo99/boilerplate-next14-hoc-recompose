@@ -8,7 +8,7 @@ export const StyledContainer: React.FC<React.HTMLAttributes<HTMLDivElement>> = (
     'div',
     {
       ...props,
-      className: 'grid grid-rows-[100px_1fr_100px] items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'
+      className: 'items-center p-8 pb-20 gap-16 sm:p-8 font-[family-name:var(--font-geist-sans)]'
     },
     props.children
   );
@@ -18,7 +18,7 @@ export const StyledCard: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props
     Card,
     {
       ...props,
-      className: 'flex flex-col gap-2 row-start-2 items-center sm:items-stretch'
+      className: 'flex flex-col gap-2 items-center sm:items-stretch'
     },
     props.children
   );
