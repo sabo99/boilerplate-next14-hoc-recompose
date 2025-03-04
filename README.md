@@ -1,4 +1,4 @@
-# Next.js 14 with High Order Components (HOCs) using react-recompose
+*# Next.js 14 with High Order Components (HOCs) using react-recompose
 
 ## Overview
 
@@ -13,6 +13,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - **simple-import-sort**
   - Ensures imports and exports are sorted consistently, improving readability and maintainability.
   - Example:
+
     ```ts
     // Correct (✅): Imports are sorted alphabetically
     import { b } from 'b';
@@ -26,6 +27,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - **no-console**
   - Disallows console statements (Error on console.log).
   - Example:
+
     ```ts
     // Correct (✅): No console.log
     const a = 10;
@@ -38,6 +40,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - **no-multiple-empty-lines**
   - Restricts consecutive empty lines to improve code cleanliness.
   - Example:
+
     ```ts
     // Correct (✅): Only 1 empty line between code blocks
     const a = 5;
@@ -54,6 +57,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - **comma-dangle**
   - Enforces no trailing commas in your code.
   - Example:
+
     ```ts
     // Correct (✅): No trailing commas
     const person = {
@@ -71,6 +75,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - **object-curly-spacing**
   - Enforces spaces inside object braces.
   - Example:
+
     ```ts
     // Correct (✅): Space inside object braces
     const person = { name: 'Alice', age: 25 };
@@ -82,6 +87,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - **semi**
   - Enforces the use of semicolons at the end of statements.
   - Example:
+
     ```ts
     // Correct (✅): Semicolons are used at the end of each statement
     const a = 10;
@@ -94,13 +100,19 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-### Step 1: Initiate Git-Convention
+### Step 1: Copy Environment Variables
+
+```bash
+cp .env.example .env
+```
+
+### Step 2: Initiate Git-Convention
 
 ```bash
 npx @sabo99/git-convention init
 ```
 
-### Step 2: Run the Development Server
+### Step 3: Run the Development Server
 
 ```bash
 npm run dev
@@ -112,7 +124,7 @@ pnpm dev
 bun dev
 ```
 
-### Step 3: Run the Unit Tests
+### Step 4: Run the Unit Tests
 
 ```bash
 npm run test
@@ -124,7 +136,7 @@ pnpm test
 bun test
 ```
 
-### Step 4: Run the Linter
+### Step 5: Run the Linter
 
 ```bash
 npm run lint
@@ -136,7 +148,7 @@ pnpm lint
 bun lint
 ```
 
-### Step 5: Run the Linter with Fix Option
+### Step 6: Run the Linter with Fix Option
 
 ```bash
 npm run lint:fix
@@ -168,3 +180,5 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*
+````
