@@ -39,24 +39,26 @@ describe('withOverlay', () => {
     jest.clearAllMocks();
   });
 
-  it('should renders wrapped component correctly', () => {
-    const { getByText } = renderResult;
+  describe('#render', () => {
+    it('should renders wrapped component correctly', () => {
+      const { getByText } = renderResult;
 
-    expect(getByText('Mock Component')).toBeInTheDocument();
-  });
+      expect(getByText('Mock Component')).toBeInTheDocument();
+    });
 
-  it('should not called Overlay by default or when isOpen (isLoadingOverlay or isIdleOverlay) is false', () => {
-    const { queryByTestId } = renderResult;
+    it('should not called Overlay by default or when isOpen (isLoadingOverlay or isIdleOverlay) is false', () => {
+      const { queryByTestId } = renderResult;
 
-    expect(queryByTestId('TestScreen_Overlay_StyledContainer')).not.toBeInTheDocument();
-  });
+      expect(queryByTestId('TestScreen_Overlay_StyledContainer')).not.toBeInTheDocument();
+    });
 
-  it('should called Overlay when isOpen (isLoadingOverlay or isIdleOverlay) is true', () => {
-    const { getByRole, queryByTestId } = renderResult;
+    it('should called Overlay when isOpen (isLoadingOverlay or isIdleOverlay) is true', () => {
+      const { getByRole, queryByTestId } = renderResult;
 
-    const button = getByRole('button', { name: /show overlay/i });
-    fireEvent.click(button);
+      const button = getByRole('button', { name: /show overlay/i });
+      fireEvent.click(button);
 
-    expect(queryByTestId('TestScreen_Overlay_StyledContainer')).toBeTruthy();
+      expect(queryByTestId('TestScreen_Overlay_StyledContainer')).toBeTruthy();
+    });
   });
 });

@@ -1,7 +1,5 @@
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 
-import Providers from '@/app/providers';
-
 import ExampleLoadingOverlay from './ExampleLoadingOverlay.component';
 import ExampleLoadingOverlayConfig from './ExampleLoadingOverlay.config';
 
@@ -28,9 +26,7 @@ describe('ExampleLoadingOverlayComponent', () => {
 
   beforeEach(() => {
     renderResult = render(
-      <Providers>
-        <ExampleLoadingOverlay {...props} />
-      </Providers>
+      <ExampleLoadingOverlay {...props} />
     );
   });
 
@@ -102,11 +98,7 @@ describe('ExampleLoadingOverlayComponent', () => {
       };
       const { getByTestId, rerender } = renderResult;
 
-      rerender(
-        <Providers>
-          <ExampleLoadingOverlay {...mockProps} />
-        </Providers>
-      );
+      rerender(<ExampleLoadingOverlay {...mockProps} />);
 
       waitFor(() => {
         expect(mockProps.setProgress).toHaveBeenCalled();
@@ -145,11 +137,7 @@ describe('ExampleLoadingOverlayComponent', () => {
       };
       const { rerender } = renderResult;
 
-      rerender(
-        <Providers>
-          <ExampleLoadingOverlay {...mockProps} />
-        </Providers>
-      );
+      rerender(<ExampleLoadingOverlay {...mockProps} />);
 
       // Move time forward
       act(() => {

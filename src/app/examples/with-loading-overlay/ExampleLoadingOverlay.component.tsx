@@ -12,6 +12,7 @@ import {
   Table,
   TableBody,
   TableCaption,
+  TableCell,
   TableHeader,
   TableRow
 } from '@/components/ui/table';
@@ -123,6 +124,14 @@ const ExampleLoadingOverlay: React.FC<Props> = (props) => {
     </Form>
   );
 
+  const renderProgress = () => progress > 0 && progress < 100 && (
+    <TableRow>
+      <TableCell>
+        <Progress {...testProps(tid(screenName, 'Progress'))} value={progress} />
+      </TableCell>
+    </TableRow>
+  );
+
   const renderTable = () => (
     <StyledTableContainer {...testProps(tid(screenName, 'StyledTableContainer'))}>
       <Table>
@@ -137,17 +146,14 @@ const ExampleLoadingOverlay: React.FC<Props> = (props) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {progress > 0 && progress < 100 ? (
-            <Progress {...testProps(tid(screenName, 'Progress'))} value={progress} />
-          ) : (
-            messages.map((message, index) => (
-              <TableRow key={index}>
-                <StyledTableCell {...testProps(tid(screenName, 'StyledTableCell', index.toString()))}>
-                  {message}
-                </StyledTableCell>
-              </TableRow>
-            ))
-          )}
+          {renderProgress()}
+          {messages.map((message, index) => (
+            <TableRow key={index}>
+              <StyledTableCell {...testProps(tid(screenName, 'StyledTableCell', index.toString()))}>
+                {message}
+              </StyledTableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </StyledTableContainer>
