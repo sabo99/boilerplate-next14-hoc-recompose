@@ -3,12 +3,17 @@ import {
   CommandIcon,
   DatabaseZapIcon,
   GalleryVerticalEndIcon,
+  LayoutDashboardIcon,
   LoaderIcon,
+  MonitorDotIcon,
   RefreshCwOffIcon,
-  SquareTerminalIcon
+  SquareTerminalIcon,
+  ViewIcon
 } from 'lucide-react';
 
-import Paths from '@/constants/Paths';
+import Constants from '@/constants';
+
+const { Paths } = Constants;
 
 const appSidebarData = {
   user: {
@@ -35,6 +40,20 @@ const appSidebarData = {
   ],
   navMain: [
     {
+      title: 'Overviews',
+      url: Paths.Dashboard,
+      icon: ViewIcon,
+      isActive: true,
+      subItems: [
+        {
+          title: 'Dashboard',
+          url: Paths.Dashboard,
+          icon: LayoutDashboardIcon,
+          permission: 'VIEW_DASHBOARD'
+        }
+      ]
+    },
+    {
       title: 'Examples',
       url: '#',
       icon: SquareTerminalIcon,
@@ -45,6 +64,12 @@ const appSidebarData = {
           url: Paths.Examples.WithLoadingOverlay,
           icon: LoaderIcon,
           permission: 'VIEW_LOADING_OVERLAY'
+        },
+        {
+          title: 'withIdleOverlay',
+          url: Paths.Examples.WithIdleOverlay,
+          icon: MonitorDotIcon,
+          permission: 'VIEW_IDLE_OVERLAY'
         },
         {
           title: 'withPreventRefresh',
