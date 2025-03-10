@@ -9,17 +9,6 @@ export type DefaultPropsOptions = {
   isAuthenticatedPage?: boolean;
 }
 
-// TODO: This new Options
-// type LoadingVariant = 'SPINNER' | 'CIRCULAR' | 'LINEAR' | 'DOTS';
-// type OverlayOptions = {
-//   isLoading: boolean;
-//   variant: LoadingVariant;
-// }
-// export type DefaultUiSettingOptions = {
-//   overlayOptions: boolean;
-// }
-// TODO: This new Options
-
 export type ConnectOptions = {
   mapStateToProps?: any;
   mapDispatchToProps?: any;
