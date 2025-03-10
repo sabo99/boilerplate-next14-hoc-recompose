@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { testProps,tid } from '@/lib/utils';
+import { testProps, tid } from '@/lib/utils';
 
 import config from './Dot.config';
 import { StyledDot } from './Dot.styles';

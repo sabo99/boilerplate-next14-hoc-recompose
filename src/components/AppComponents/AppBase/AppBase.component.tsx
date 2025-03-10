@@ -2,7 +2,7 @@ import { LinkIcon } from 'lucide-react';
 import React from 'react';
 
 import { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { testProps,tid } from '@/lib/utils';
+import { testProps, tid } from '@/lib/utils';
 
 import AppBaseConfig from './AppBase.config';
 import { StyledAnchor, StyledButton, StyledCard, StyledCardFooter, StyledContainer } from './AppBase.styles';
