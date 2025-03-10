@@ -10,36 +10,36 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
-import { testProps,tid } from '@/lib/utils';
+import { testProps, tid } from '@/lib/utils';
 
 import config from './AppAlertDialog.config';
 import type { Props } from './AppAlertDialog.types';
 
 const { componentName, defaultProps } = config;
 
-const AppAlertDialog: React.FC<Props> = (props) => {
-  const {
-    screenName,
-    open = defaultProps.open,
-    title = defaultProps.title,
-    description = defaultProps.description,
-    actionText = defaultProps.actionText,
-    cancelText = defaultProps.cancelText,
-    onAction,
-    onCancel
-  } = props;
+const AppAlertDialog: React.FC<Props> = ({
+  screenName,
+  open = defaultProps.open,
+  title = defaultProps.title,
+  message = defaultProps.message,
+  confirmText = defaultProps.confirmText,
+  cancelText = defaultProps.cancelText,
+  onConfirm,
+  onCancel
+}) => {
+  const testId = tid(screenName, componentName);
 
   const renderAlertDialogHeader = () => (
     <AlertDialogHeader>
       <AlertDialogTitle
-        {...testProps(tid(screenName, componentName, 'Title'))}
+        {...testProps(tid(testId, 'AlertDialogTitle'))}
       >
         {title}
       </AlertDialogTitle>
       <AlertDialogDescription
-        {...testProps(tid(screenName, componentName, 'Description'))}
+        {...testProps(tid(testId, 'AlertDialogDescription'))}
       >
-        {description}
+        {message}
       </AlertDialogDescription>
     </AlertDialogHeader>
   );
@@ -47,16 +47,16 @@ const AppAlertDialog: React.FC<Props> = (props) => {
   const renderAlertDialogFooter = () => (
     <AlertDialogFooter>
       <AlertDialogCancel
-        {...testProps(tid(screenName, componentName, 'Cancel'))}
+        {...testProps(tid(testId, 'AlertDialogCancel'))}
         onClick={onCancel}
       >
         {cancelText}
       </AlertDialogCancel>
       <AlertDialogAction
-        {...testProps(tid(screenName, componentName, 'Action'))}
-        onClick={onAction}
+        {...testProps(tid(testId, 'AlertDialogAction'))}
+        onClick={onConfirm}
       >
-        {actionText}
+        {confirmText}
       </AlertDialogAction>
     </AlertDialogFooter>
   );
@@ -70,6 +70,7 @@ const AppAlertDialog: React.FC<Props> = (props) => {
 
   return (
     <AlertDialog
+      {...testProps(tid(testId, 'AlertDialog'))}
       open={open}
     >
       {renderAlertDialogContent()}

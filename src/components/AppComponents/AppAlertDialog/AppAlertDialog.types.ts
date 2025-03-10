@@ -1,10 +1,17 @@
 export type Props = {
   screenName: string;
-  open?: boolean;
-  title?: string;
-  description?: string;
-  actionText?: string;
-  cancelText?: string;
-  onAction?: () => void;
+} & Options
+
+export type Callbacks = {
+  onConfirm?: () => void;
   onCancel?: () => void;
 }
+
+export type Options = {
+  open?: boolean;
+  title?: string;
+  message?: string;
+  confirmText?: string;
+  cancelText?: string;
+} & Callbacks
+

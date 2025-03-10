@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { compose, withProps } from 'react-recompose';
 
@@ -7,6 +6,7 @@ import {
   withConnectorOverlay,
   withStateOverlay
 } from '@/composers/withOverlay/withOverlay.config';
+import { useIdleTimeout } from '@/hooks';
 
 import type { Options, Props } from './withOverlay.types';
 
@@ -16,10 +16,18 @@ const ComposedOverlay = (ComposedComponent: React.ComponentType<Props>) => {
       screenName,
       isLoadingOverlay,
       isIdleOverlay,
+      setIdleOverlay,
       overlayState,
-      loaderType = 'DOTS'
+      alertDialog,
+      loaderType = 'DOTS',
+      idleTimeout = 5000
     } = props;
     const isOpen = isLoadingOverlay || isIdleOverlay;
+    const callbacks = {
+      setIdleOverlay
+    };
+
+    useIdleTimeout({ overlayState, timeout: idleTimeout, ...callbacks });
 
     return (
       <>
@@ -28,7 +36,10 @@ const ComposedOverlay = (ComposedComponent: React.ComponentType<Props>) => {
           <Overlay
             screenName={screenName}
             overlayState={overlayState}
-            loaderType={loaderType} />
+            loaderType={loaderType}
+            callbacks={callbacks}
+            alertDialog={alertDialog}
+          />
         }
       </>
     );

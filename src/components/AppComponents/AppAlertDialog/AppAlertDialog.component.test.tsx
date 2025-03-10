@@ -9,10 +9,10 @@ describe('AppAlertDialog', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'Screen';
   const testId = `${screenName}_${componentName}`;
-  const titleTestId = `${testId}_Title`;
-  const descTestId = `${testId}_Description`;
-  const cancelTestId = `${testId}_Cancel`;
-  const actionTestId = `${testId}_Action`;
+  const titleTestId = `${testId}_AlertDialogTitle`;
+  const descTestId = `${testId}_AlertDialogDescription`;
+  const cancelTestId = `${testId}_AlertDialogCancel`;
+  const confirmTestId = `${testId}_AlertDialogAction`;
 
   beforeEach(() => {
     renderResult = render(<AppAlertDialog screenName={screenName}/>);
@@ -24,52 +24,52 @@ describe('AppAlertDialog', () => {
   });
 
   describe('#render', () => {
-    it('should open alert dialog with title, description, cancel button and action button when with default props', () => {
+    it('should open alert dialog with title, description, cancel button and confirm button when with default props', () => {
       const { getByTestId, queryAllByTestId } = renderResult;
 
       expect(queryAllByTestId(/AppAlertDialog/i)).toBeTruthy();
       expect(getByTestId(titleTestId)).toBeTruthy();
       expect(getByTestId(descTestId)).toBeTruthy();
       expect(getByTestId(cancelTestId)).toBeTruthy();
-      expect(getByTestId(actionTestId)).toBeTruthy();
+      expect(getByTestId(confirmTestId)).toBeTruthy();
     });
 
-    it('should open alert dialog with custom title, description, cancel button and action button when with custom props', () => {
+    it('should open alert dialog with custom title, message, cancel button and confirm button when with custom props', () => {
       const title = 'Custom Title';
-      const description = 'Custom Description';
+      const message = 'Custom Description';
       const cancelText = 'Custom Cancel';
-      const actionText = 'Custom Action';
+      const confirmText = 'Custom Confirm';
 
       renderResult.rerender(
         <AppAlertDialog
           screenName={screenName}
           title={title}
-          description={description}
+          message={message}
           cancelText={cancelText}
-          actionText={actionText}
+          confirmText={confirmText}
         />
       );
 
       const { getByTestId } = renderResult;
 
       expect(getByTestId(titleTestId)).toHaveTextContent(title);
-      expect(getByTestId(descTestId)).toHaveTextContent(description);
+      expect(getByTestId(descTestId)).toHaveTextContent(message);
       expect(getByTestId(cancelTestId)).toHaveTextContent(cancelText);
-      expect(getByTestId(actionTestId)).toHaveTextContent(actionText);
+      expect(getByTestId(confirmTestId)).toHaveTextContent(confirmText);
     });
 
-    it('should call onAction when action button is clicked', () => {
-      const onAction = jest.fn();
+    it('should call onConfirm when confirm button is clicked', () => {
+      const onConfirm = jest.fn();
 
       renderResult.rerender(
         <AppAlertDialog
           screenName={screenName}
-          onAction={onAction}
+          onConfirm={onConfirm}
         />
       );
-      renderResult.getByTestId(actionTestId).click();
+      renderResult.getByTestId(confirmTestId).click();
 
-      expect(onAction).toHaveBeenCalled();
+      expect(onConfirm).toHaveBeenCalled();
     });
 
     it('should call onCancel when cancel button is clicked', () => {

@@ -1,17 +1,23 @@
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
+
+import { LoadingTypeOptions, OverlayStateOptions } from '@/composers/withOverlay/withOverlay.types';
 
 import Overlay from './Overlay.component';
-import config from './Overlay.config';
+import OverlayConfig from './Overlay.config';
+import { Props } from './Overlay.types';
 
-const { componentName } = config;
+const { componentName } = OverlayConfig;
 
 describe('Overlay', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'TestScreen';
-  const props: any = {
+  const props: Props = {
     screenName,
     overlayState: 'LOADING',
-    loaderType: 'DOTS'
+    loaderType: 'DOTS',
+    callbacks: {
+      setIdleOverlay: jest.fn()
+    }
   };
   const testId = `${screenName}_${componentName}`;
 
@@ -47,7 +53,7 @@ describe('Overlay', () => {
         const loadingSpinnerTestId = `${testId}_LoadingSpinner_StyledContainer`;
         const mockProps = {
           ...props,
-          loaderType: 'SPINNER'
+          loaderType: 'SPINNER' as LoadingTypeOptions
         };
         const { getByTestId, rerender } = renderResult;
 
@@ -58,20 +64,58 @@ describe('Overlay', () => {
     });
 
     describe('#Idle', () => {
-      it('should render idle content component when props overlayState is IDLE', () => {
-        const contentTestId = `${testId}_StyledContent`;
+      it('should render idle content with AppAlertDialog component when props overlayState is IDLE', () => {
+        const contentTestId = `${testId}_AppAlertDialog_AlertDialogTitle`;
         const mockProps = {
           ...props,
-          overlayState: 'IDLE'
+          overlayState: 'IDLE' as OverlayStateOptions
         };
         const { getByTestId, rerender } = renderResult;
 
         rerender(<Overlay {...mockProps} />);
 
         expect(getByTestId(contentTestId)).toBeTruthy();
-        expect(getByTestId(contentTestId)).toHaveTextContent(/IDLE/i);
+      });
+
+      it('should render idle content with AppAlertDialog component when props alertDialog is provide', () => {
+        const contentTestId = `${testId}_AppAlertDialog_AlertDialogTitle`;
+        const mockProps = {
+          ...props,
+          overlayState: 'IDLE' as OverlayStateOptions,
+          alertDialog: {
+            title: 'Title',
+            message: 'Message'
+          }
+        };
+        const { getByTestId, rerender } = renderResult;
+
+        rerender(<Overlay {...mockProps} />);
+
+        expect(getByTestId(contentTestId)).toBeTruthy();
+        expect(getByTestId(contentTestId)).toHaveTextContent('Title');
       });
     });
+  });
 
+  describe('#onClick', () => {
+    describe('#Idle', () => {
+      it('should be invoke setIdleOverlay when AppAlertDialog button onclick', () => {
+        const confirmButtonTestId = `${testId}_AppAlertDialog_AlertDialogAction`;
+        const cancelButtonTestId = `${testId}_AppAlertDialog_AlertDialogCancel`;
+        const mockProps = {
+          ...props,
+          overlayState: 'IDLE' as OverlayStateOptions
+        };
+        const { getByTestId, rerender } = renderResult;
+
+        rerender(<Overlay {...mockProps} />);
+        fireEvent.click(getByTestId(confirmButtonTestId));
+        fireEvent.click(getByTestId(cancelButtonTestId));
+
+        expect(props.callbacks.setIdleOverlay).toHaveBeenCalledTimes(2);
+        expect(props.callbacks.setIdleOverlay).toHaveBeenNthCalledWith(1, false);
+        expect(props.callbacks.setIdleOverlay).toHaveBeenNthCalledWith(2, false);
+      });
+    });
   });
 });

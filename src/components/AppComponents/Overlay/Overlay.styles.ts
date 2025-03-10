@@ -5,7 +5,17 @@ export const StyledContainer: React.FC<React.HTMLAttributes<HTMLDivElement>> = (
     'div',
     {
       ...props,
-      className: 'flex w-full h-full justify-center items-center bg-black bg-opacity-70 fixed top-0 left-0 z-50'
+      className: 'flex w-full h-full justify-center items-center bg-black bg-opacity-80 fixed top-0 left-0 z-50'
+    },
+    props.children
+  );
+
+export const StyledContainerWithoutOpacity: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) =>
+  React.createElement(
+    'div',
+    {
+      ...props,
+      className: 'flex w-full h-full justify-center items-center fixed top-0 left-0 z-50'
     },
     props.children
   );

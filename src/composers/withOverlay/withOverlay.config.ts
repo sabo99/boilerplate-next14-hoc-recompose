@@ -1,6 +1,7 @@
 import { withState } from 'react-recompose';
 import { connect } from 'react-redux';
 
+import { Options as AppAlertDialogOptions } from '@/components/AppComponents/AppAlertDialog/AppAlertDialog.types';
 import { ReduxRootState } from '@/redux';
 import { actions as idleOverlayActions } from '@/redux/reducers/IdleOverlay';
 import { actions as loadingOverlayActions } from '@/redux/reducers/LoadingOverlay';
@@ -19,6 +20,7 @@ export const withConnectorOverlay = connect(mapStateToProps, mapDispatchToProps)
 // using withState (react-recompose)
 const stateOptions = [
   ['isLoadingOverlay', 'setLoadingOverlay', false],
-  ['isIdleOverlay', 'setIdleOverlay', false]
+  ['isIdleOverlay', 'setIdleOverlay', false],
+  ['alertDialog', 'setAlertDialog', {}] as [string, string, AppAlertDialogOptions]
 ];
 export const withStateOverlay = stateOptions.map((stateOption) => withState(...(stateOption as [string, string, any])));
