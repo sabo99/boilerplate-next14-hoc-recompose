@@ -2,12 +2,14 @@ import type { Options as OverlayOptions } from '../withOverlay/withOverlay.types
 import type { Options as PreventRefreshOptions } from '../withPreventRefresh/withPreventRefresh.types';
 import type { Options as SidebarOptions } from '../withSidebar/withSidebar.types';
 
-export type DefaultPropsOptions = {
+export type DefaultPropsOptions =  {
+  params?: object;
+  searchParams?: object;
   screenName: string;
   pageTitle: string;
   permissions: string[];
   isAuthenticatedPage?: boolean;
-}
+};
 
 export type ConnectOptions = {
   mapStateToProps?: any;

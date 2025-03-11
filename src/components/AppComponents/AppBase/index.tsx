@@ -1,1 +1,1 @@
-export { default as AppBase } from './AppBase.component';
+export { default } from './AppBase.component';
