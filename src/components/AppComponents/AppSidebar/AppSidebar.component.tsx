@@ -39,7 +39,7 @@ const AppSidebar: React.FC<React.ComponentProps<typeof Sidebar> & {
         <TeamSwitcher teams={appSidebarData.teams} />
       </SidebarHeader>
       <SidebarContent {...testProps(tid(screenName, 'SidebarContent'))}>
-        <AppNavMain items={navMain} />
+        <AppNavMain screenName={screenName} items={navMain} />
       </SidebarContent>
       <SidebarFooter {...testProps(tid(screenName, 'SidebarFooter'))}>
         <NavUser user={appSidebarData.user} />
