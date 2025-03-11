@@ -1,7 +1,9 @@
-import { AppBase } from '@/components/AppComponents/AppBase';
-import Paths from '@/constants/Paths';
+import AppBase from '@/components/AppComponents/AppBase';
+import Constants from '@/constants';
 
 import { StyledAnchor } from './styles';
+
+const { Paths } = Constants;
 
 const Home: React.FC = () => {
 

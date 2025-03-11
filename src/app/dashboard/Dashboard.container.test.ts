@@ -1,4 +1,8 @@
+import Constants from '@/constants';
+
 import { defaultProps, uiSettings } from './Dashboard.container';
+
+const { Permissions } = Constants;
 
 describe('DashboardContainer', () => {
 
@@ -8,7 +12,7 @@ describe('DashboardContainer', () => {
       const expected = {
         screenName: 'Dashboard',
         pageTitle: 'Dashboard',
-        permissions: ['VIEW_LOADING_OVERLAY'],
+        permissions: Permissions,
         isAuthenticatedPage: true
       };
       // Act
