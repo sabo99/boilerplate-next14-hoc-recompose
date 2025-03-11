@@ -1,4 +1,8 @@
+import Constants from '@/constants';
+
 import { defaultProps, stateList, uiSettings } from './ExampleLoadingOverlay.container';
+
+const { Permissions } = Constants;
 
 describe('ExampleLoadingOverlayContainer', () => {
 
@@ -7,7 +11,7 @@ describe('ExampleLoadingOverlayContainer', () => {
       const expectedResult = {
         screenName: 'ExampleLoadingOverlay',
         pageTitle: 'Example with Loading Overlay',
-        permissions: ['VIEW_LOADING_OVERLAY'],
+        permissions: Permissions,
         isAuthenticatedPage: true
       };
 

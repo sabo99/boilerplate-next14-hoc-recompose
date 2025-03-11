@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
-import { AppBase } from '@/components/AppComponents/AppBase';
+import AppBase from '@/components/AppComponents/AppBase';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -22,10 +22,13 @@ import ExampleLoadingOverlayConfig from './ExampleLoadingOverlay.config';
 import { StyledContainer, StyledForm, StyledTableCell, StyledTableContainer, StyledTableHead } from './ExampleLoadingOverlay.styles';
 import type { Props } from './ExampleLoadingOverlay.types';
 
-const { FormSchema, screenName } = ExampleLoadingOverlayConfig;
+const { FormSchema } = ExampleLoadingOverlayConfig;
 
-const ExampleLoadingOverlay: React.FC<Props> = (props) => {
-  const { onHandleSubmit, messages, setMessages, progress, setProgress } = props;
+const ExampleLoadingOverlay: React.FC<Props> = ({
+  screenName,
+  messages, setMessages, progress, setProgress,
+  onHandleSubmit
+}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

@@ -3,7 +3,6 @@ import { DefaultPropsOptions } from '@/composers/withPage/withPage.types';
 
 export type Props = {
   idleTimeout: number;
-  timeout: number;
   countdown: number;
   setCountdown: React.Dispatch<React.SetStateAction<number>>;
   setIdleOverlay: React.Dispatch<React.SetStateAction<boolean>>;

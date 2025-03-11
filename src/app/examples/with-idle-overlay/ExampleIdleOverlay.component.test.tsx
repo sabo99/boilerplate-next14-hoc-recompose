@@ -1,17 +1,22 @@
-import { act, cleanup, render } from '@testing-library/react';
+import { act, cleanup, fireEvent, render } from '@testing-library/react';
 
 import ExampleIdleOverlay from './ExampleIdleOverlay.component';
 import Config from './ExampleIdleOverlay.config';
+import { Props } from './ExampleIdleOverlay.types';
 
 const { screenName, defaultValue, delayInterval } = Config;
 
 describe('ExampleIdleOverlay', () => {
   let renderResult: ReturnType<typeof render>;
-  const props = {
+  const props: Props = {
     screenName,
+    pageTitle: 'ExampleIdleOverlay',
+    permissions: [],
     idleTimeout: 5000,
     countdown: 5,
     setCountdown: jest.fn(),
+    setIdleOverlay: jest.fn(),
+    setAlertDialog: jest.fn(),
     onHandleSetAlertDialogOptions: jest.fn(),
     onHandleIdleCountdown: jest.fn()
   };
@@ -20,7 +25,7 @@ describe('ExampleIdleOverlay', () => {
     jest.useFakeTimers();
 
     renderResult = render(
-      <ExampleIdleOverlay {...props as any} />
+      <ExampleIdleOverlay {...props} />
     );
   });
 
@@ -41,20 +46,6 @@ describe('ExampleIdleOverlay', () => {
       expect(getByTestId(cardDescriptionTestId)).toHaveTextContent(defaultValue.idleCountdownDescription(props.countdown));
       expect(getByTestId(buttonTestId)).toBeTruthy();
       expect(getByTestId(buttonTestId)).toHaveTextContent('Run Idle Again');
-    });
-
-    it('should render idle description when countdown is zero', () => {
-      const cardDescriptionTestId = `${screenName}_AppBase_CardDescription`;
-      const mockProps = {
-      ...props,
-      countdown: 0
-      };
-
-      const { getByTestId, rerender } = renderResult;
-      rerender(<ExampleIdleOverlay {...mockProps as any} />);
-
-      expect(getByTestId(cardDescriptionTestId)).toBeTruthy();
-      expect(getByTestId(cardDescriptionTestId)).toHaveTextContent(defaultValue.idleDescription);
     });
 
     it('should call onHandleSetAlertDialogOptions with expected options on mount', () => {
@@ -78,5 +69,47 @@ describe('ExampleIdleOverlay', () => {
       expect(props.setCountdown).toHaveBeenCalledWith(expect.any(Function));
     });
 
+    it('should render idle description when countdown is zero', () => {
+      const cardDescriptionTestId = `${screenName}_AppBase_CardDescription`;
+      const mockProps = {
+        ...props,
+        countdown: 0
+      };
+
+      const { getByTestId, rerender } = renderResult;
+      rerender(<ExampleIdleOverlay {...mockProps as any} />);
+
+      expect(getByTestId(cardDescriptionTestId)).toBeTruthy();
+      expect(getByTestId(cardDescriptionTestId)).toHaveTextContent(defaultValue.idleDescription);
+    });
+
+    it('should disabled button when countdown greater than zero', () => {
+      const buttonTestId = `${screenName}_IdleCountdownButton`;
+
+      const { getByTestId } = renderResult;
+
+      expect(getByTestId(buttonTestId)).toBeTruthy();
+      expect(getByTestId(buttonTestId)).toHaveTextContent('Run Idle Again');
+      expect(getByTestId(buttonTestId)).toHaveAttribute('disabled');
+    });
+  });
+
+  describe('#onClick', () => {
+    it('should call onHandleIdleCountdown when button is clicked', () => {
+      const buttonTestId = `${screenName}_IdleCountdownButton`;
+      const timeout = 5;
+      const mockProps = {
+        ...props,
+        countdown: 0
+      };
+
+      const { getByTestId, rerender } = renderResult;
+      rerender(<ExampleIdleOverlay {...mockProps} />);
+      fireEvent.click(getByTestId(buttonTestId));
+
+      expect(getByTestId(buttonTestId)).toBeTruthy();
+      expect(getByTestId(buttonTestId)).toHaveTextContent('Run Idle Again');
+      expect(props.onHandleIdleCountdown).toHaveBeenCalledWith({ timeout });
+    });
   });
 });

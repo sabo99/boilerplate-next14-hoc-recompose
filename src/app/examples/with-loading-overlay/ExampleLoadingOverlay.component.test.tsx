@@ -5,13 +5,12 @@ import ExampleLoadingOverlayConfig from './ExampleLoadingOverlay.config';
 
 const { delay: DELAY, screenName } = ExampleLoadingOverlayConfig;
 
-jest.useFakeTimers();
-
 describe('ExampleLoadingOverlayComponent', () => {
   let renderResult: ReturnType<typeof render>;
   const messages = ['default message...'];
   const progress = 0;
   const props = {
+    screenName,
     messages,
     setMessages: jest.fn(),
     progress,
@@ -25,8 +24,10 @@ describe('ExampleLoadingOverlayComponent', () => {
   };
 
   beforeEach(() => {
+    jest.useFakeTimers();
+
     renderResult = render(
-      <ExampleLoadingOverlay {...props} />
+      <ExampleLoadingOverlay {...props as any} />
     );
   });
 
@@ -37,7 +38,7 @@ describe('ExampleLoadingOverlayComponent', () => {
   });
 
   describe('#render', () => {
-    it('should render without crashing', () => {
+    it('should be render without crashing', () => {
       const { container } = renderResult;
 
       expect(container).toBeInTheDocument();
@@ -98,7 +99,7 @@ describe('ExampleLoadingOverlayComponent', () => {
       };
       const { getByTestId, rerender } = renderResult;
 
-      rerender(<ExampleLoadingOverlay {...mockProps} />);
+      rerender(<ExampleLoadingOverlay {...mockProps as any} />);
 
       waitFor(() => {
         expect(mockProps.setProgress).toHaveBeenCalled();
@@ -137,7 +138,7 @@ describe('ExampleLoadingOverlayComponent', () => {
       };
       const { rerender } = renderResult;
 
-      rerender(<ExampleLoadingOverlay {...mockProps} />);
+      rerender(<ExampleLoadingOverlay {...mockProps as any} />);
 
       // Move time forward
       act(() => {

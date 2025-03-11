@@ -1,3 +1,5 @@
+import { DefaultPropsOptions } from '@/composers/withPage/withPage.types';
+
 type HandleInput = {
   message: string;
   delay: number;
@@ -11,11 +13,9 @@ type CallbacksPayload = {
 export type OnHandleCallback = (
   values: HandleInput,
   callbacks: CallbacksPayload
-) => void;
+) => Promise<void>;
 
 export type Props = {
-  params?: object;
-  searchParams?: object;
   messages: string[];
   setMessages: React.Dispatch<React.SetStateAction<string[]>>;
   progress: number;
@@ -23,4 +23,4 @@ export type Props = {
   isLoadingOverlay: boolean;
   setLoadingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
   onHandleSubmit: OnHandleCallback;
-}
+} & DefaultPropsOptions

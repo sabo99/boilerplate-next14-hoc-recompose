@@ -1,13 +1,18 @@
 import withPage from '@/composers/withPage';
 import { DefaultPropsOptions, StateOptions, UiSettingOptions } from '@/composers/withPage/withPage.types';
+import Constants from '@/constants';
 
 import ExampleLoadingOverlay from './ExampleLoadingOverlay.component';
+import ExampleLoadingOverlayConfig from './ExampleLoadingOverlay.config';
 import ExampleLoadingOverlayHandlers from './ExampleLoadingOverlay.handlers';
 
+const { Permissions } = Constants;
+const { screenName } = ExampleLoadingOverlayConfig;
+
 export const defaultProps: DefaultPropsOptions = {
-  screenName: 'ExampleLoadingOverlay', // for unit testing
+  screenName, // for unit testing
   pageTitle: 'Example with Loading Overlay',
-  permissions: ['VIEW_LOADING_OVERLAY'],
+  permissions: Permissions,
   isAuthenticatedPage: true
 };
 
