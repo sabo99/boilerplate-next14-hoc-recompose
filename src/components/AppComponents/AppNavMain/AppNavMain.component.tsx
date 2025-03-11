@@ -1,5 +1,3 @@
-import { ChevronRightIcon } from 'lucide-react';
-
 import {
   Collapsible,
   CollapsibleContent,
@@ -15,47 +13,69 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem
 } from '@/components/ui/sidebar';
+import { testProps, tid } from '@/lib/utils';
 
-import { Props } from './AppNavMain.types';
+import { StyledChevronRightIcon } from './AppNavMain.styles';
+import type { Item, Props, SubItem } from './AppNavMain.types';
 
-const AppNavMain: React.FC<Props> = ({ items }) => {
+const AppNavMain: React.FC<Props> = ({ screenName, items }) => {
+
+  const renderSidebarMenuSubItem = (subItem: SubItem) => (
+    <SidebarMenuSubItem key={subItem.title}>
+      <SidebarMenuSubButton asChild>
+        <a href={subItem.url}>
+          {subItem.icon && <subItem.icon />}
+          <span>{subItem.title}</span>
+        </a>
+      </SidebarMenuSubButton>
+    </SidebarMenuSubItem>
+  );
+
+  const renderSidebarMenuSub = (item: Item) => (
+    <SidebarMenuSub>
+      {item.subItems && item.subItems.map((subItem) => renderSidebarMenuSubItem(subItem))}
+    </SidebarMenuSub>
+  );
+
+  const renderSidebarMenuItem = (item: Item) => (
+    <SidebarMenuItem>
+
+      <CollapsibleTrigger asChild>
+        <SidebarMenuButton tooltip={item.title}>
+          {item.icon && <item.icon />}
+          <span>{item.title}</span>
+          <StyledChevronRightIcon />
+        </SidebarMenuButton>
+      </CollapsibleTrigger>
+
+      <CollapsibleContent>
+        {renderSidebarMenuSub(item)}
+      </CollapsibleContent>
+
+    </SidebarMenuItem>
+  );
+
+  const renderSidebarMenu = () => (
+    <SidebarMenu {...testProps(tid(screenName, 'SidebarMenu'))}>
+      {items.map((item) => (
+        <Collapsible
+          key={item.title}
+          asChild
+          defaultOpen={item.isActive}
+          className="group/collapsible"
+        >
+          {renderSidebarMenuItem(item)}
+        </Collapsible>
+      ))}
+    </SidebarMenu>
+  );
+
   return (
-    <SidebarGroup>
-      <SidebarGroupLabel>HOCs with Recompose</SidebarGroupLabel>
-      <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="group/collapsible"
-          >
-            <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                  <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  {item.subItems?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          {subItem.icon && <subItem.icon />}
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </SidebarMenuItem>
-          </Collapsible>
-        ))}
-      </SidebarMenu>
+    <SidebarGroup {...testProps(tid(screenName, 'SidebarGroup'))}>
+      <SidebarGroupLabel {...testProps(tid(screenName, 'SidebarGroupLabel'))}>
+        HOCs with Recompose
+      </SidebarGroupLabel>
+      {renderSidebarMenu()};
     </SidebarGroup>
   );
 };

@@ -1,13 +1,13 @@
 import { LucideIcon } from 'lucide-react';
 
-type SubItem = {
+export type SubItem = {
   title: string
   url: string,
   icon?: LucideIcon
   permission?: string
 };
 
-type Item = {
+export type Item = {
   title: string
   url: string
   icon?: LucideIcon
@@ -16,5 +16,6 @@ type Item = {
 }
 
 export type Props = {
+  screenName: string;
   items: Item[],
 }
