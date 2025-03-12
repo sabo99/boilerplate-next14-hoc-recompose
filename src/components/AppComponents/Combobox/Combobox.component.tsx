@@ -20,7 +20,9 @@ interface Props {
   placeholder?: string;
 }
 
-const Combobox: React.FC<Props> = ({ screenName, name, options, value, onChange, placeholder = 'Select an option' }) => {
+const Combobox: React.FC<Props> = ({
+  screenName, name, options, value, onChange, placeholder = 'Select an option'
+}) => {
   const selectedLabel = options.find((option) => option.value === value)?.label;
 
   return (

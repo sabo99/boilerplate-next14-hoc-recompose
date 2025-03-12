@@ -18,7 +18,8 @@ export const StyledAnchor: React.FC<React.ComponentProps<'a'>> = (props) =>
     'a',
     {
       ...props,
-      className: 'ml-1 bg-black/[.05] dark:bg-white/[.06] hover:bg-blue-100 dark:hover:bg-gray-700 px-1 py-0.5 rounded font-semibold'
+      className: `ml-1 bg-black/[.05] dark:bg-white/[.06] 
+      hover:bg-blue-100 dark:hover:bg-gray-700 px-1 py-0.5 rounded font-semibold`
     },
     props.children
   );

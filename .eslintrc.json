@@ -28,9 +28,28 @@
     "quotes": ["error", "single", { "avoidEscape": true }],
 
     // enforce spacing after commas
-    "comma-spacing": ["error", { "before": false, "after": true }]
+    "comma-spacing": ["error", { "before": false, "after": true }],
 
     // Max len in one line code
-    // "max-len": ["error", { "code": 120, "tabWidth": 2, "ignoreComments": true }]
-  }
+    "max-len": ["error", { "code": 120, "tabWidth": 2, "ignoreComments": true }],
+
+    "require-jsdoc": ["error", {
+      "require": {
+          "FunctionDeclaration": false,
+          "MethodDefinition": false,
+          "ClassDeclaration": true,
+          "ArrowFunctionExpression": false,
+          "FunctionExpression": false
+      }
+    }]
+  },
+  "overrides": [
+    {
+      "files": ["**/components/ui/**"],
+      "rules": {
+        "require-jsdoc": "off",
+        "max-len": "off"
+      }
+    }
+  ]
 }

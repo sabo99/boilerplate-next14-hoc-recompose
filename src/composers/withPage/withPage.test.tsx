@@ -76,7 +76,8 @@ describe('withPage', () => {
   });
 
   describe('#connectRedux', () => {
-    it('should invoke connect redux when `connect` is present and is object includes mapStateToProps and mapDispatchToProps', () => {
+    it(`should invoke connect redux when 'connect' is present
+      and is object includes mapStateToProps and mapDispatchToProps`, () => {
       const options: any = {
         uiSettings,
         connect: {
@@ -152,7 +153,7 @@ describe('withPage', () => {
 
     it('should not invoke withOverlay when uiSettings does not have overlay', () => {
       const options = {
-        uiSettings: { }
+        uiSettings: {}
       };
 
       withPage(options)(Component);

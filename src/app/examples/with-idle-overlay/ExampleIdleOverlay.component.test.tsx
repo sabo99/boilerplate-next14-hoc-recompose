@@ -43,7 +43,8 @@ describe('ExampleIdleOverlay', () => {
       const { getByTestId } = renderResult;
 
       expect(getByTestId(cardDescriptionTestId)).toBeTruthy();
-      expect(getByTestId(cardDescriptionTestId)).toHaveTextContent(defaultValue.idleCountdownDescription(props.countdown));
+      expect(getByTestId(cardDescriptionTestId))
+        .toHaveTextContent(defaultValue.idleCountdownDescription(props.countdown));
       expect(getByTestId(buttonTestId)).toBeTruthy();
       expect(getByTestId(buttonTestId)).toHaveTextContent('Run Idle Again');
     });

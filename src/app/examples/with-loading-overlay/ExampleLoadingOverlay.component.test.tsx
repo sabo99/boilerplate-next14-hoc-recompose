@@ -105,7 +105,8 @@ describe('ExampleLoadingOverlayComponent', () => {
         expect(mockProps.setProgress).toHaveBeenCalled();
       });
       expect(getByTestId(progressTestId)).toBeTruthy();
-      expect(getByTestId(progressTestId).children[0]).toHaveAttribute('style', `transform: translateX(-${maxProgress - progress}%);`);
+      expect(getByTestId(progressTestId).children[0])
+        .toHaveAttribute('style', `transform: translateX(-${maxProgress - progress}%);`);
     });
 
     it('should start progress at 5 when onBefore it called', () => {
@@ -150,7 +151,8 @@ describe('ExampleLoadingOverlayComponent', () => {
   });
 
   describe('#onClick', () => {
-    it('should invoke setMessages, setProgress and onHandleSubmit when on form submission button is clicked', async () => {
+    it(`should invoke setMessages, setProgress and onHandleSubmit 
+      when on form submission button is clicked`, async () => {
       const inputMessageTestId = `${screenName}_Input_message`;
       const inputDelayTestId = `${screenName}_Input_delay`;
       const buttonTestId = `${screenName}_SubmitButton`;

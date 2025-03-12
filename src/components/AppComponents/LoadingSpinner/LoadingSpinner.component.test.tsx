@@ -42,7 +42,8 @@ describe('LoadingSpinner', () => {
 
       expect(getByTestId(styledContainerTestId)).toBeTruthy();
       expect(getByTestId(styledSpinnerTestId)).toBeTruthy();
-      expect(getByTestId(styledSpinnerTestId)).toHaveAttribute('class', `${sizeClasses.medium} border-gray-300 border-t-blue-500 rounded-full animate-spin`);
+      expect(getByTestId(styledSpinnerTestId))
+        .toHaveAttribute('class', `${sizeClasses.medium} border-gray-300 border-t-blue-500 rounded-full animate-spin`);
     });
 
     it('should render component with customize size', () => {
@@ -56,7 +57,8 @@ describe('LoadingSpinner', () => {
 
       expect(getByTestId(styledContainerTestId)).toBeTruthy();
       expect(getByTestId(styledSpinnerTestId)).toBeTruthy();
-      expect(getByTestId(styledSpinnerTestId)).toHaveAttribute('class', `${sizeClasses.small} border-gray-300 border-t-blue-500 rounded-full animate-spin`);
+      expect(getByTestId(styledSpinnerTestId))
+        .toHaveAttribute('class', `${sizeClasses.small} border-gray-300 border-t-blue-500 rounded-full animate-spin`);
     });
   });
 });

@@ -15,7 +15,7 @@ describe('AppAlertDialog', () => {
   const confirmTestId = `${testId}_AlertDialogAction`;
 
   beforeEach(() => {
-    renderResult = render(<AppAlertDialog screenName={screenName}/>);
+    renderResult = render(<AppAlertDialog screenName={screenName} />);
   });
 
   afterEach(() => {
@@ -24,7 +24,8 @@ describe('AppAlertDialog', () => {
   });
 
   describe('#render', () => {
-    it('should open alert dialog with title, description, cancel button and confirm button when with default props', () => {
+    it(`should open alert dialog with title, description, cancel button and
+      confirm button when with default props`, () => {
       const { getByTestId, queryAllByTestId } = renderResult;
 
       expect(queryAllByTestId(/AppAlertDialog/i)).toBeTruthy();
@@ -34,7 +35,8 @@ describe('AppAlertDialog', () => {
       expect(getByTestId(confirmTestId)).toBeTruthy();
     });
 
-    it('should open alert dialog with custom title, message, cancel button and confirm button when with custom props', () => {
+    it(`should open alert dialog with custom title, message, cancel button and
+      confirm button when with custom props`, () => {
       const title = 'Custom Title';
       const message = 'Custom Description';
       const cancelText = 'Custom Cancel';

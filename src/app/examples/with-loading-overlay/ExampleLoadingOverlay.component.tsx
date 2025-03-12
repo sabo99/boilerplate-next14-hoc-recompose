@@ -19,7 +19,13 @@ import {
 import { testProps, tid } from '@/lib/utils';
 
 import ExampleLoadingOverlayConfig from './ExampleLoadingOverlay.config';
-import { StyledContainer, StyledForm, StyledTableCell, StyledTableContainer, StyledTableHead } from './ExampleLoadingOverlay.styles';
+import {
+  StyledContainer,
+  StyledForm,
+  StyledTableCell,
+  StyledTableContainer,
+  StyledTableHead
+} from './ExampleLoadingOverlay.styles';
 import type { Props } from './ExampleLoadingOverlay.types';
 
 const { FormSchema } = ExampleLoadingOverlayConfig;
