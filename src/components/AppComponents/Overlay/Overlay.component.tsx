@@ -34,7 +34,7 @@ const Overlay: React.FC<Props> = ({
       : <LoadingSpinner screenName={testId} />;
   };
 
-  const renderAlertDialog = () => (
+  const renderIdleContent = () => (
     <AppAlertDialog
       screenName={testId}
       onConfirm={handleIdleOverlayChange}
@@ -45,7 +45,7 @@ const Overlay: React.FC<Props> = ({
 
   const renderContent = overlayState === 'LOADING'
     ? renderLoadingContent
-    : renderAlertDialog;
+    : renderIdleContent;
 
   return (
     <ContainerComponent {...testProps(tid(testId, 'StyledContainer'))}>
