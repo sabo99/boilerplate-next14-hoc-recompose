@@ -15,7 +15,7 @@ const mapDispatchToProps = {
   setLoadingOverlay: loadingOverlayActions.setLoadingOverlay,
   setIdleOverlay: idleOverlayActions.setIdleOverlay
 };
-export const withConnectorOverlay = connect(mapStateToProps, mapDispatchToProps);
+const withConnectorOverlay = connect(mapStateToProps, mapDispatchToProps);
 
 // using withState (react-recompose)
 const stateOptions = [
@@ -23,4 +23,11 @@ const stateOptions = [
   ['isIdleOverlay', 'setIdleOverlay', false],
   ['alertDialog', 'setAlertDialog', {}] as [string, string, AppAlertDialogOptions]
 ];
-export const withStateOverlay = stateOptions.map((stateOption) => withState(...(stateOption as [string, string, any])));
+const withStateOverlay = stateOptions.map((stateOption) => withState(...(stateOption as [string, string, any])));
+
+const Config = {
+  withConnectorOverlay,
+  withStateOverlay
+};
+
+export default Config;

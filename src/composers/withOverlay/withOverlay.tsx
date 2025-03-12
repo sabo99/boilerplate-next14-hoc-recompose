@@ -2,13 +2,12 @@ import React from 'react';
 import { compose, withProps } from 'react-recompose';
 
 import Overlay from '@/components/AppComponents/Overlay';
-import {
-  withConnectorOverlay,
-  withStateOverlay
-} from '@/composers/withOverlay/withOverlay.config';
+import OverlayConfig from '@/composers/withOverlay/withOverlay.config';
 import { useIdleTimeout } from '@/hooks';
 
 import type { Options, Props } from './withOverlay.types';
+
+const { withConnectorOverlay, withStateOverlay } = OverlayConfig;
 
 const ComposedOverlay = (ComposedComponent: React.ComponentType<Props>) => {
   const HOC = (props: Props) => {

@@ -3,17 +3,11 @@ import { Options as AppAlertDialogOptions } from '@/components/AppComponents/App
 export type OverlayStateOptions = 'IDLE' | 'LOADING'
 export type LoadingTypeOptions = 'SPINNER' | 'DOTS'
 
-type IdleState = {
-  overlayState: 'IDLE';
-  idleTimeout: number;
-};
-
-type LoadingState = {
-  overlayState: 'LOADING';
-  loaderType: LoadingTypeOptions;
-};
-
-export type Options = IdleState | LoadingState;
+export type Options = {
+  overlayState: OverlayStateOptions;
+  loaderType?: LoadingTypeOptions;
+  idleTimeout?: number
+}
 
 export type Props = {
   screenName: string; // from defaultProps
