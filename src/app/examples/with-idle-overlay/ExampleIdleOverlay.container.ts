@@ -31,6 +31,6 @@ export const uiSettings: UiSettingOptions = {
 export default withPage({
   props: defaultProps,
   state: stateList,
-  handlers: ExampleIdleOverlayHandlers,
-  uiSettings
+  uiSettings,
+  handlers: ExampleIdleOverlayHandlers
 })(ExampleIdleOverlay);
