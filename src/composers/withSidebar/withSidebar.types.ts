@@ -5,5 +5,5 @@ export type Props = {
 } & Options;
 
 export type Options = {
-  isFilteredByPermission: boolean;
+  isAuthenticated: boolean;
 }

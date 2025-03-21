@@ -9,13 +9,12 @@ import { Options, Props } from './withSidebar.types';
 
 const ComposedSidebar = (ComposedComponent: React.ComponentType<Props>) => {
   const HOC = (props: Props) => {
-    const { screenName, permissions, isFilteredByPermission } = props;
+    const { screenName, permissions } = props;
     return (
       <SidebarProvider>
         <AppSidebar
           screenName={screenName}
           permissions={permissions}
-          isFilteredByPermission={isFilteredByPermission}
         />
         <AppSidebarInset {...props}>
           <ComposedComponent {...props} />
