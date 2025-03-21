@@ -1,60 +1,23 @@
-import React from 'react';
 import { compose, withProps } from 'react-recompose';
 
-import Overlay from '@/components/AppComponents/Overlay';
-import OverlayConfig from '@/composers/withOverlay/withOverlay.config';
-import { useIdleTimeout } from '@/hooks';
+import withIdlePopupOverlay from '../withIdlePopupOverlay';
+import withLoadingOverlay from '../withLoadingOverlay';
+import type { Options } from './withOverlay.types';
 
-import type { Options, Props } from './withOverlay.types';
+const withOverlay = (options: Options) => {
+  const enhancers = [];
 
-const { withConnectorOverlay, withStateOverlay } = OverlayConfig;
+  enhancers.push(withProps(options));
 
-const ComposedOverlay = (ComposedComponent: React.ComponentType<Props>) => {
-  const HOC = (props: Props) => {
-    const {
-      screenName,
-      isLoadingOverlay,
-      isIdleOverlay,
-      setIdleOverlay,
-      overlayState,
-      alertDialog,
-      loaderType = 'DOTS',
-      idleTimeout = 5000
-    } = props;
-    const isOpen = isLoadingOverlay || isIdleOverlay;
-    const callbacks = {
-      setIdleOverlay
-    };
+  if (options.overlayState === 'IDLE') {
+    enhancers.push(withIdlePopupOverlay());
+  }
 
-    useIdleTimeout({ overlayState, timeout: idleTimeout, ...callbacks });
+  if (options.overlayState === 'LOADING') {
+    enhancers.push(withLoadingOverlay());
+  }
 
-    return (
-      <>
-        <ComposedComponent {...props} />
-        {isOpen &&
-          <Overlay
-            screenName={screenName}
-            overlayState={overlayState}
-            loaderType={loaderType}
-            callbacks={callbacks}
-            alertDialog={alertDialog}
-          />
-        }
-      </>
-    );
-  };
-
-  return HOC;
+  return compose(...enhancers);
 };
-
-const StateOverlay = withConnectorOverlay; // using connector (react-redux)
-const ArrayStateOverlay = withStateOverlay; // using withState (react-recompose)
-
-const withOverlay = (options: Options) => compose(
-  withProps(options),
-  StateOverlay,
-  ...ArrayStateOverlay,
-  ComposedOverlay
-);
 
 export default withOverlay;

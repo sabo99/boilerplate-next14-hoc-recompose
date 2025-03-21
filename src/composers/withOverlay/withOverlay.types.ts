@@ -1,20 +1,8 @@
-import { Options as AppAlertDialogOptions } from '@/components/AppComponents/AppAlertDialog/AppAlertDialog.types';
+import { Options as IdlePopupOverlayOptions } from '@/composers/withIdlePopupOverlay/withIdlePopupOverlay.types';
+import { Options as LoadingOverlayOptions } from '@/composers/withLoadingOverlay/withLoadingOverlay.types';
 
-export type OverlayStateOptions = 'IDLE' | 'LOADING'
-export type LoadingTypeOptions = 'SPINNER' | 'DOTS'
+export type Options =
+  | IdlePopupOverlayOptions
+  | LoadingOverlayOptions;
 
-export type Options = {
-  overlayState: OverlayStateOptions;
-  loaderType?: LoadingTypeOptions;
-  idleTimeout?: number
-}
-
-export type Props = {
-  screenName: string; // from defaultProps
-  isLoadingOverlay: boolean; // from state config (withOverlay)
-  isIdleOverlay: boolean; // from state config (withOverlay)
-  setIdleOverlay: React.Dispatch<React.SetStateAction<boolean>>;
-  idleTimeout?: number;
-  alertDialog: AppAlertDialogOptions; // from state config (withOverlay)
-  setAlertDialog: React.Dispatch<React.SetStateAction<AppAlertDialogOptions>> // from state config (withOverlay)
-} & Options;
+export type OverlayStateOptions = 'IDLE' | 'LOADING';
