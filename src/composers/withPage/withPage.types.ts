@@ -8,7 +8,6 @@ export type DefaultPropsOptions =  {
   screenName: string;
   pageTitle: string;
   permissions: string[];
-  isAuthenticatedPage?: boolean;
 };
 
 export type ConnectOptions = {

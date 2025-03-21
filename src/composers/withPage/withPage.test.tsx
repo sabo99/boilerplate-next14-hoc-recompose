@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 
 import withOverlay from '../withOverlay';
 import withPreventRefresh from '../withPreventRefresh';
+import withSidebar from '../withSidebar';
 import withPage from './withPage';
 
 jest.mock('react-recompose')
   .mock('react-redux')
+  .mock('../withSidebar')
   .mock('../withOverlay')
   .mock('../withPreventRefresh');
 
@@ -16,7 +18,7 @@ describe('withPage', () => {
   const composeResult = {};
   const uiSettings = {
     sidebar: {
-      isFilteredByPermission: true
+      isAuthenticated: true
     },
     overlay: {
       overlayState: 'LOADING',
@@ -138,6 +140,31 @@ describe('withPage', () => {
     });
   });
 
+  describe('#withSidebar', () => {
+    it('should invoke withSidebar when uiSettings has `sidebar` includes isAuthenticated is true', () => {
+      const options: any = {
+        uiSettings: {
+          sidebar: uiSettings.sidebar
+        }
+      };
+
+      withPage(options)(Component);
+
+      expect(withSidebar).toHaveBeenCalled();
+    });
+
+    it('should not invoke withSidebar when uiSettings does not have `sidebar`', () => {
+      const options: any = {
+        uiSettings: {}
+      };
+
+      withPage(options)(Component);
+
+      expect(withSidebar).not.toHaveBeenCalled();
+    });
+
+  });
+
   describe('#withOverlay', () => {
     it('should invoke withOverlay when uiSettings has `overlay` includes overlayState and loaderType', () => {
       const options: any = {
@@ -151,7 +178,7 @@ describe('withPage', () => {
       expect(withOverlay).toHaveBeenCalled();
     });
 
-    it('should not invoke withOverlay when uiSettings does not have overlay', () => {
+    it('should not invoke withOverlay when uiSettings does not have `overlay`', () => {
       const options = {
         uiSettings: {}
       };

@@ -31,7 +31,7 @@ import type { Options } from './withPage.types';
  * 3. State management using `withState` from React-recompose.
  * 4. Screen configuration using `withProps`.
  * 5. Sidebar functionality using `withSidebar`.
- * 6. Loading overlay functionality using `withLoadingOverlay`.
+ * 6. Overlay functionality using `withLoadingOverlay` includes of `withLoadingOverlay` and `withIdlePopupOverlay`.
  * 7. Prevent refresh functionality using `withPreventRefresh`.
  * 8. Custom handlers using `withHandlers` from React-recompose.
  *
@@ -87,7 +87,6 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
     const {
       sidebar: sidebarOptions = null,
       overlay: overlayOptions = null,
-      // loadingOverlay: loadingOverlayOptions = null,
       preventRefresh: preventRefreshOptions = null
     } = uiSettingsOptions;
 
