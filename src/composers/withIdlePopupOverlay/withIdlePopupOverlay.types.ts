@@ -9,7 +9,6 @@ export type Props = {
   // from defaultProps
   screenName: string;
   // from options
-  overlayState: 'IDLE',
   idleTimeout: number,
   // from (withIdlePopupOverlay.config)
   isIdleOverlay: boolean;

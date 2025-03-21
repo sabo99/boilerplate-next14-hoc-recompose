@@ -13,7 +13,6 @@ const ComposedLoadingOverlay = (ComposedComponent: React.ComponentType<Props>) =
   const HOC = (props: Props) => {
     const {
       screenName,
-      overlayState,
       isLoadingOverlay,
       loaderType = 'DOTS'
     } = props;
@@ -31,7 +30,6 @@ const ComposedLoadingOverlay = (ComposedComponent: React.ComponentType<Props>) =
         {isOpen &&
           <Overlay
             screenName={screenName}
-            overlayState={overlayState}
             content={renderContent()}
           />
         }

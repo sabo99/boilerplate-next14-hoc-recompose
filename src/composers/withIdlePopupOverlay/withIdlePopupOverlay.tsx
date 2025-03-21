@@ -14,7 +14,6 @@ const ComposedIdlePopupOverlay = (ComposedComponent: React.ComponentType<Props>)
   const HOC = (props: Props) => {
     const {
       screenName,
-      overlayState,
       isIdleOverlay,
       setIdleOverlay,
       appAlertDialogOptions,
@@ -39,8 +38,8 @@ const ComposedIdlePopupOverlay = (ComposedComponent: React.ComponentType<Props>)
         {isOpen &&
           <Overlay
             screenName={screenName}
-            overlayState={overlayState}
             content={renderContent()}
+            withoutOpacity
           />
         }
       </>
