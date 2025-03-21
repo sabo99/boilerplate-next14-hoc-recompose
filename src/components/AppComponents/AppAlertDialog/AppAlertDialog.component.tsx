@@ -25,9 +25,24 @@ const AppAlertDialog: React.FC<Props> = ({
   confirmText = defaultProps.confirmText,
   cancelText = defaultProps.cancelText,
   onConfirm,
-  onCancel
+  onCancel,
+  setIdleOverlay
 }) => {
   const testId = tid(screenName, componentName);
+
+  const handleClose = () => {
+    setIdleOverlay?.(false);
+  };
+
+  const handleConfirm = () => {
+    handleClose();
+    onConfirm?.();
+  };
+
+  const handleCancel = () => {
+    handleClose();
+    onCancel?.();
+  };
 
   const renderAlertDialogHeader = () => (
     <AlertDialogHeader>
@@ -48,13 +63,13 @@ const AppAlertDialog: React.FC<Props> = ({
     <AlertDialogFooter>
       <AlertDialogCancel
         {...testProps(tid(testId, 'AlertDialogCancel'))}
-        onClick={onCancel}
+        onClick={handleCancel}
       >
         {cancelText}
       </AlertDialogCancel>
       <AlertDialogAction
         {...testProps(tid(testId, 'AlertDialogAction'))}
-        onClick={onConfirm}
+        onClick={handleConfirm}
       >
         {confirmText}
       </AlertDialogAction>

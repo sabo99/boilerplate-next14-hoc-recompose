@@ -1,4 +1,4 @@
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 
 import AppAlertDialog from './AppAlertDialog.component';
 import config from './AppAlertDialog.config';
@@ -42,7 +42,8 @@ describe('AppAlertDialog', () => {
       const cancelText = 'Custom Cancel';
       const confirmText = 'Custom Confirm';
 
-      renderResult.rerender(
+      const { getByTestId, rerender } = renderResult;
+      rerender(
         <AppAlertDialog
           screenName={screenName}
           title={title}
@@ -52,39 +53,47 @@ describe('AppAlertDialog', () => {
         />
       );
 
-      const { getByTestId } = renderResult;
-
       expect(getByTestId(titleTestId)).toHaveTextContent(title);
       expect(getByTestId(descTestId)).toHaveTextContent(message);
       expect(getByTestId(cancelTestId)).toHaveTextContent(cancelText);
       expect(getByTestId(confirmTestId)).toHaveTextContent(confirmText);
     });
+  });
 
-    it('should call onConfirm when confirm button is clicked', () => {
+  describe('#onClick', () => {
+    const setIdleOverlay = jest.fn();
+
+    it('should invoke onConfirm and setIdleOverlay when confirm button is clicked', () => {
       const onConfirm = jest.fn();
 
-      renderResult.rerender(
+      const { getByTestId, rerender } = renderResult;
+      rerender(
         <AppAlertDialog
           screenName={screenName}
           onConfirm={onConfirm}
+          setIdleOverlay={setIdleOverlay}
         />
       );
-      renderResult.getByTestId(confirmTestId).click();
+      fireEvent.click(getByTestId(confirmTestId));
 
+      expect(setIdleOverlay).toHaveBeenCalledWith(false);
       expect(onConfirm).toHaveBeenCalled();
     });
 
-    it('should call onCancel when cancel button is clicked', () => {
+    it('should invoke onCancel and setIdleOverlay when cancel button is clicked', () => {
       const onCancel = jest.fn();
 
-      renderResult.rerender(
+      const { getByTestId, rerender } = renderResult;
+      rerender(
         <AppAlertDialog
           screenName={screenName}
           onCancel={onCancel}
+          setIdleOverlay={setIdleOverlay}
         />
       );
-      renderResult.getByTestId(cancelTestId).click();
+      fireEvent.click(getByTestId(cancelTestId));
 
+      expect(setIdleOverlay).toHaveBeenCalledWith(false);
       expect(onCancel).toHaveBeenCalled();
     });
   });
