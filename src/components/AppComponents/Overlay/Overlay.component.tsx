@@ -12,10 +12,10 @@ import type { Props } from './Overlay.types';
 
 const Overlay: React.FC<Props> = ({
   screenName,
-  overlayState,
-  content
+  content,
+  withoutOpacity = false
 }) => {
-  const ContainerComponent = overlayState === 'LOADING' ? StyledContainer : StyledContainerWithoutOpacity;
+  const ContainerComponent = !withoutOpacity ? StyledContainer : StyledContainerWithoutOpacity;
   const testId = tid(screenName, OverlayConfig.componentName);
 
   return (
