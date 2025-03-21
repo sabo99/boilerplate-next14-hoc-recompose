@@ -1,15 +1,15 @@
 import {
-  OnHandleAlertDialogCallback,
+  OnHandleAppAlertDialogCallback,
   OnHandleIdleCountdownCallback,
   Props
 } from './ExampleIdleOverlay.types';
 
-const onHandleSetAlertDialogOptions = (
+const onHandleSetAppAlertDialogOptions = (
   props: Props
-): OnHandleAlertDialogCallback => async (alertDialogOptions) => {
-  const { setAlertDialog } = props;
+): OnHandleAppAlertDialogCallback => async (alertDialogOptions) => {
+  const { setAppAlertDialogOptions } = props;
 
-  setAlertDialog(alertDialogOptions);
+  setAppAlertDialogOptions(alertDialogOptions);
 };
 
 const onHandleIdleCountdown = (
@@ -23,7 +23,7 @@ const onHandleIdleCountdown = (
 };
 
 const handlers = {
-  onHandleSetAlertDialogOptions,
+  onHandleSetAppAlertDialogOptions,
   onHandleIdleCountdown
 };
 

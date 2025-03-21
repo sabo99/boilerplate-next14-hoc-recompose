@@ -3,13 +3,13 @@ import { waitFor } from '@testing-library/dom';
 import ExampleIdleOverlayHandlers from './ExampleIdleOverlay.handlers';
 
 const {
-  onHandleSetAlertDialogOptions,
+  onHandleSetAppAlertDialogOptions,
   onHandleIdleCountdown
 } = ExampleIdleOverlayHandlers;
 
 describe('ExampleIdleOverlayHandlers', () => {
   const props = {
-    setAlertDialog: jest.fn(),
+    setAppAlertDialogOptions: jest.fn(),
     setCountdown: jest.fn(),
     setIdleOverlay: jest.fn()
   };
@@ -23,8 +23,8 @@ describe('ExampleIdleOverlayHandlers', () => {
     jest.clearAllMocks();
   });
 
-  describe('#onHandleSetAlertDialogOptions', () => {
-    it('should called setAlertDialog when alertDialogOptions is provide', async () => {
+  describe('#onHandleSetAppAlertDialogOptions', () => {
+    it('should called setAppAlertDialogOptions when alertDialogOptions is provide', async () => {
       const alertDialogOptions = {
         title: 'Title',
         message: 'Message',
@@ -34,9 +34,9 @@ describe('ExampleIdleOverlayHandlers', () => {
         onCancel: jest.fn()
       };
 
-      await onHandleSetAlertDialogOptions(props as any)(alertDialogOptions);
+      await onHandleSetAppAlertDialogOptions(props as any)(alertDialogOptions);
 
-      expect(props.setAlertDialog).toHaveBeenCalledWith(alertDialogOptions);
+      expect(props.setAppAlertDialogOptions).toHaveBeenCalledWith(alertDialogOptions);
     });
   });
 

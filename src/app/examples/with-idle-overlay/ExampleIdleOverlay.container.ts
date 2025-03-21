@@ -10,8 +10,7 @@ const { Permissions } = Constants;
 export const defaultProps: DefaultPropsOptions = {
   screenName: 'ExampleIdleOverlay', // for unit testing
   pageTitle: 'Example with Idle Overlay',
-  permissions: Permissions,
-  isAuthenticatedPage: true
+  permissions: Permissions
 };
 
 export const stateList: StateOptions = [
@@ -20,7 +19,7 @@ export const stateList: StateOptions = [
 
 export const uiSettings: UiSettingOptions = {
   sidebar: {
-    isFilteredByPermission: true
+    isAuthenticated: true
   },
   overlay: {
     overlayState: 'IDLE',

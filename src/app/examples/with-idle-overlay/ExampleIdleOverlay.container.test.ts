@@ -10,8 +10,8 @@ describe('ExampleIdleOverlayContainer', () => {
       const expected = {
         screenName: 'ExampleIdleOverlay',
         pageTitle: 'Example with Idle Overlay',
-        permissions: Permissions,
-        isAuthenticatedPage: true
+        permissions: Permissions
+
       };
 
       expect(defaultProps).toEqual(expected);
@@ -32,7 +32,7 @@ describe('ExampleIdleOverlayContainer', () => {
     it('should return the correct uiSettings', () => {
       const expected = {
         sidebar: {
-          isFilteredByPermission: true
+          isAuthenticated: true
         },
         overlay: {
           overlayState: 'IDLE',

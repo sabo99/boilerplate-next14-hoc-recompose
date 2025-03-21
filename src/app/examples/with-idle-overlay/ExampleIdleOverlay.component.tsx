@@ -13,7 +13,7 @@ const ExampleIdleOverlay: React.FC<Props> = ({
   screenName, idleTimeout,
   countdown, setCountdown,
   setIdleOverlay,
-  onHandleSetAlertDialogOptions, onHandleIdleCountdown
+  onHandleSetAppAlertDialogOptions, onHandleIdleCountdown
 }) => {
   const timeout = Math.round(idleTimeout / delayInterval);
   const description = countdown === 0
@@ -21,13 +21,15 @@ const ExampleIdleOverlay: React.FC<Props> = ({
     : defaultValue.idleCountdownDescription(countdown);
 
   const onSetAlertDialogOptions = React.useCallback(() => {
-    onHandleSetAlertDialogOptions({
-      // title: '',
+    onHandleSetAppAlertDialogOptions({
+      title: 'Custom Title',
       // message: '',
       onConfirm: () => setIdleOverlay(false),
       onCancel: () => setIdleOverlay(false)
     });
-  }, [onHandleSetAlertDialogOptions, setIdleOverlay]);
+  }, [onHandleSetAppAlertDialogOptions, setIdleOverlay]);
+
+  const onRunIdle = () => onHandleIdleCountdown({ timeout });
 
   React.useEffect(() => {
     onSetAlertDialogOptions();
@@ -43,8 +45,6 @@ const ExampleIdleOverlay: React.FC<Props> = ({
     return () => clearInterval(interval);
 
   }, [countdown, setCountdown, timeout]);
-
-  const onRunIdle = () => onHandleIdleCountdown({ timeout });
 
   return (
     <AppBase

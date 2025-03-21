@@ -16,8 +16,8 @@ describe('ExampleIdleOverlay', () => {
     countdown: 5,
     setCountdown: jest.fn(),
     setIdleOverlay: jest.fn(),
-    setAlertDialog: jest.fn(),
-    onHandleSetAlertDialogOptions: jest.fn(),
+    setAppAlertDialogOptions: jest.fn(),
+    onHandleSetAppAlertDialogOptions: jest.fn(),
     onHandleIdleCountdown: jest.fn()
   };
 
@@ -49,14 +49,15 @@ describe('ExampleIdleOverlay', () => {
       expect(getByTestId(buttonTestId)).toHaveTextContent('Run Idle Again');
     });
 
-    it('should call onHandleSetAlertDialogOptions with expected options on mount', () => {
+    it('should call onHandleSetAppAlertDialogOptions with expected options on mount', () => {
       const options = {
+        title: 'Custom Title',
         onConfirm: expect.any(Function),
         onCancel: expect.any(Function)
       };
 
-      expect(props.onHandleSetAlertDialogOptions).toHaveBeenCalledTimes(1);
-      expect(props.onHandleSetAlertDialogOptions).toHaveBeenCalledWith(options);
+      expect(props.onHandleSetAppAlertDialogOptions).toHaveBeenCalledTimes(1);
+      expect(props.onHandleSetAppAlertDialogOptions).toHaveBeenCalledWith(options);
     });
 
     it('should call setCountdown when on mount with interval 2 second', () => {

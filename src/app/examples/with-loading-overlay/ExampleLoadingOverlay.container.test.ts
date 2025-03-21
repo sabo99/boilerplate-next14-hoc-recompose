@@ -11,8 +11,7 @@ describe('ExampleLoadingOverlayContainer', () => {
       const expectedResult = {
         screenName: 'ExampleLoadingOverlay',
         pageTitle: 'Example with Loading Overlay',
-        permissions: Permissions,
-        isAuthenticatedPage: true
+        permissions: Permissions
       };
 
       expect(defaultProps).toEqual(expectedResult);
@@ -50,7 +49,7 @@ describe('ExampleLoadingOverlayContainer', () => {
     it('should be return the correct uiSettings', () => {
       const expectedResult = {
         sidebar: {
-          isFilteredByPermission: true
+          isAuthenticated: true
         },
         overlay: {
           overlayState: 'LOADING',

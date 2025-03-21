@@ -6,12 +6,12 @@ export type Props = {
   countdown: number;
   setCountdown: React.Dispatch<React.SetStateAction<number>>;
   setIdleOverlay: React.Dispatch<React.SetStateAction<boolean>>;
-  setAlertDialog: React.Dispatch<React.SetStateAction<AppAlertDialogOptions>>;
-  onHandleSetAlertDialogOptions: OnHandleAlertDialogCallback;
+  setAppAlertDialogOptions: React.Dispatch<React.SetStateAction<AppAlertDialogOptions>>;
+  onHandleSetAppAlertDialogOptions: OnHandleAppAlertDialogCallback;
   onHandleIdleCountdown: OnHandleIdleCountdownCallback;
 } & DefaultPropsOptions
 
-export type OnHandleAlertDialogCallback = (
+export type OnHandleAppAlertDialogCallback = (
   options: AppAlertDialogOptions
 ) => Promise<void>;
 

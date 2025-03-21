@@ -12,8 +12,7 @@ const { screenName } = ExampleLoadingOverlayConfig;
 export const defaultProps: DefaultPropsOptions = {
   screenName, // for unit testing
   pageTitle: 'Example with Loading Overlay',
-  permissions: Permissions,
-  isAuthenticatedPage: true
+  permissions: Permissions
 };
 
 export const stateList: StateOptions = [
@@ -23,10 +22,10 @@ export const stateList: StateOptions = [
 
 export const uiSettings: UiSettingOptions = {
   sidebar: {
-    isFilteredByPermission: true
+    isAuthenticated: true
   },
   overlay: {
-    overlayState : 'LOADING',
+    overlayState: 'LOADING',
     loaderType: 'DOTS'
   }
 };
