@@ -9,13 +9,12 @@ const { Permissions } = Constants;
 export const defaultProps: DefaultPropsOptions = {
   screenName: 'Dashboard', // for unit testing
   pageTitle: 'Dashboard',
-  permissions: Permissions,
-  isAuthenticatedPage: true
+  permissions: Permissions
 };
 
 export const uiSettings: UiSettingOptions = {
   sidebar: {
-    isFilteredByPermission: true
+    isAuthenticated: true
   }
 };
 

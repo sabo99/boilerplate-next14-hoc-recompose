@@ -12,8 +12,7 @@ describe('DashboardContainer', () => {
       const expected = {
         screenName: 'Dashboard',
         pageTitle: 'Dashboard',
-        permissions: Permissions,
-        isAuthenticatedPage: true
+        permissions: Permissions
       };
       // Act
       const result = defaultProps;
@@ -26,7 +25,7 @@ describe('DashboardContainer', () => {
       // Arrange
       const expected = {
         sidebar: {
-          isFilteredByPermission: true
+          isAuthenticated: true
         }
       };
       // Act
