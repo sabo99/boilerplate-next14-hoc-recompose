@@ -6,10 +6,9 @@ const doHandle = (props: Props): OnHandleCallback => async (
   values, callbacks
 ) => {
   const { } = props;
-  const { message, delay = 3 } = values;
+  const { delay = 3 } = values;
   const { onBefore, onAfter } = callbacks;
 
-  alert(message);
   onBefore();
 
   // Simulate data fetching process

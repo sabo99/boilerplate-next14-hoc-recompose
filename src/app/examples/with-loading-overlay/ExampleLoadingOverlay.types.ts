@@ -1,7 +1,6 @@
 import { DefaultPropsOptions } from '@/composers/withPage/withPage.types';
 
 type HandleInput = {
-  message: string;
   delay: number;
 }
 

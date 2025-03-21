@@ -67,7 +67,7 @@ const ExampleLoadingOverlay: React.FC<Props> = ({
   };
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    const values = { message: 'Open console.log to check sequential process', delay: data.delay };
+    const values = { delay: data.delay };
     const callbacks = { onBefore, onAfter: () => onAfter(data) };
     onHandleSubmit(values, callbacks);
   };

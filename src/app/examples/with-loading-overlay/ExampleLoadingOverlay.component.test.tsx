@@ -19,7 +19,7 @@ describe('ExampleLoadingOverlayComponent', () => {
     isLoadingOverlay: false,
     onHandleSubmit: jest.fn((values, { onBefore, onAfter }) => {
       onBefore();
-      onAfter({ message: values.message, delay: 3 });
+      onAfter({ delay: 3 });
     })
   };
 
@@ -157,7 +157,7 @@ describe('ExampleLoadingOverlayComponent', () => {
       const inputDelayTestId = `${screenName}_Input_delay`;
       const buttonTestId = `${screenName}_SubmitButton`;
       const payload = {
-        values: { message: 'Open console.log to check sequential process', delay: DELAY },
+        values: { delay: DELAY },
         callbacks: { onBefore: expect.any(Function), onAfter: expect.any(Function) }
       };
       const { getByTestId } = renderResult;
