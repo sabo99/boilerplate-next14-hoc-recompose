@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import AppNavMain from '@/components/AppComponents/AppNavMain';
-import { NavUser } from '@/components/nav-user';
-import { TeamSwitcher } from '@/components/team-switcher';
+import AccountSwitcher from '@/components/AppComponents/AppSidebar/AccountSwitcher';
+import NavMain from '@/components/AppComponents/AppSidebar/NavMain';
+import NavUser from '@/components/AppComponents/AppSidebar/NavUser';
 import {
   Sidebar,
   SidebarContent,
@@ -14,21 +14,13 @@ import { testProps, tid } from '@/lib/utils';
 
 import AppSidebarConfig from './AppSidebar.config';
 
-const { appSidebarData } = AppSidebarConfig;
+const { appSidebarData, getFilteredNavMain } = AppSidebarConfig;
 
 const AppSidebar: React.FC<React.ComponentProps<typeof Sidebar> & {
-  screenName: string, permissions: string[], isFilteredByPermission: boolean
-}> = ({ screenName, permissions: userPermissions, isFilteredByPermission = true, ...props }) => {
+  screenName: string, permissions: string[]
+}> = ({ screenName, permissions: userPermissions,  ...props }) => {
 
-  const getFilteredNavMain = () =>
-    appSidebarData.navMain
-      .map(({ subItems, ...menu }) => ({
-        ...menu,
-        subItems: subItems.filter(sub => userPermissions.includes(sub.permission))
-      }))
-      .filter(menu => menu.subItems.length); // Remove menus without sub-items
-
-  const navMain = isFilteredByPermission ? getFilteredNavMain() : appSidebarData.navMain;
+  const navMain = getFilteredNavMain(userPermissions);
 
   return (
     <Sidebar
@@ -36,10 +28,10 @@ const AppSidebar: React.FC<React.ComponentProps<typeof Sidebar> & {
       {...testProps(tid(screenName, 'Sidebar'))}
       {...props}>
       <SidebarHeader {...testProps(tid(screenName, 'SidebarHeader'))}>
-        <TeamSwitcher teams={appSidebarData.teams} />
+        <AccountSwitcher accounts={appSidebarData.accounts} />
       </SidebarHeader>
       <SidebarContent {...testProps(tid(screenName, 'SidebarContent'))}>
-        <AppNavMain screenName={screenName} items={navMain} />
+        <NavMain screenName={screenName} items={navMain} />
       </SidebarContent>
       <SidebarFooter {...testProps(tid(screenName, 'SidebarFooter'))}>
         <NavUser user={appSidebarData.user} />

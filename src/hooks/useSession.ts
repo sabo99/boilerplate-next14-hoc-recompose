@@ -1,41 +1,31 @@
 import React from 'react';
 
-import { OverlayStateOptions } from '@/composers/withOverlay/withOverlay.types';
-
 const IDLE_TIMEOUT = 60 * 1000; // 60 seconds (1 minute)
 
 type IdleProps = {
   setIdleOverlay: (value: boolean) => void;
-  overlayState: OverlayStateOptions;
   timeout?: number;
 };
 
 export const useIdleTimeout = (props: IdleProps) => {
-  const { setIdleOverlay, overlayState, timeout = IDLE_TIMEOUT } = props;
+  const { setIdleOverlay, timeout = IDLE_TIMEOUT } = props;
   const idleTimeout = React.useRef<NodeJS.Timeout | null>(null);
 
-  const resetIdleTimer = React.useCallback(() => {
-    // if (idleTimeout.current) {
-    //   clearTimeout(idleTimeout.current);
-    // }
-
-    idleTimeout.current = setTimeout(() => {
-      if (overlayState === 'IDLE') {
-        setIdleOverlay(true);
-      }
-    }, timeout);
-
+  const idleTimer = React.useCallback(() => {
     setIdleOverlay(false);
 
-  }, [setIdleOverlay, overlayState, timeout]);
+    idleTimeout.current = setTimeout(() => {
+      setIdleOverlay(true);
+    }, timeout);
+  }, [setIdleOverlay, timeout]);
 
   React.useEffect(() => {
-    resetIdleTimer(); // Start timer initially
+    idleTimer(); // Start timer initially
 
     return () => {
       if (idleTimeout.current) {
         clearTimeout(idleTimeout.current);
       }
     };
-  }, [resetIdleTimer]);
+  }, [idleTimer]);
 };

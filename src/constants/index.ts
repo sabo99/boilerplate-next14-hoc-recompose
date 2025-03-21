@@ -2,6 +2,7 @@ const Constants =
 {
   Permissions: [
     'VIEW_DASHBOARD',
+    'VIEW_ALERT_DIALOG',
     'VIEW_LOADING_OVERLAY',
     'VIEW_IDLE_OVERLAY',
     'VIEW_PREVENT_REFRESH',

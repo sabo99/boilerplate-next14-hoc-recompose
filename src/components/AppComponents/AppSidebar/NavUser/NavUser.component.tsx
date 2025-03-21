@@ -1,5 +1,3 @@
-'use client';
-
 import {
   BadgeCheck,
   Bell,
@@ -30,15 +28,9 @@ import {
   useSidebar
 } from '@/components/ui/sidebar';
 
-export function NavUser({
-  user
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+import { Props } from './NavUser.types';
+
+const NavUser: React.FC<Props> = ({ user }) => {
   const { isMobile } = useSidebar();
 
   return (
@@ -111,4 +103,6 @@ export function NavUser({
       </SidebarMenuItem>
     </SidebarMenu>
   );
-}
+};
+
+export default NavUser;

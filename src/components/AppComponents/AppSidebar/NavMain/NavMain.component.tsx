@@ -15,10 +15,10 @@ import {
 } from '@/components/ui/sidebar';
 import { testProps, tid } from '@/lib/utils';
 
-import { StyledChevronRightIcon } from './AppNavMain.styles';
-import type { Item, Props, SubItem } from './AppNavMain.types';
+import { StyledChevronRightIcon } from './NavMain.styles';
+import type { Item, Props, SubItem } from './NavMain.types';
 
-const AppNavMain: React.FC<Props> = ({ screenName, items }) => {
+const NavMain: React.FC<Props> = ({ screenName, items }) => {
 
   const renderSidebarMenuSubItem = (subItem: SubItem) => (
     <SidebarMenuSubItem key={subItem.title}>
@@ -80,4 +80,4 @@ const AppNavMain: React.FC<Props> = ({ screenName, items }) => {
   );
 };
 
-export default AppNavMain;
+export default NavMain;

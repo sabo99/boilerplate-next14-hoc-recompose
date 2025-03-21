@@ -21,21 +21,21 @@ const appSidebarData = {
     email: 'm@example.com',
     avatar: ''
   },
-  teams: [
+  accounts: [
     {
       name: 'Acme Inc',
-      logo: GalleryVerticalEndIcon,
-      plan: 'Enterprise'
+      avatar: GalleryVerticalEndIcon,
+      groupId: 'Enterprise01'
     },
     {
       name: 'Acme Corp.',
-      logo: AudioWaveformIcon,
-      plan: 'Startup'
+      avatar: AudioWaveformIcon,
+      groupId: 'Enterprise01'
     },
     {
       name: 'Evil Corp.',
-      logo: CommandIcon,
-      plan: 'Free'
+      avatar: CommandIcon,
+      groupId: 'Enterprise01'
     }
   ],
   navMain: [
@@ -88,8 +88,18 @@ const appSidebarData = {
   ]
 };
 
+const getFilteredNavMain = (userPermissions: string[]) => {
+  return appSidebarData.navMain
+    .map(({ subItems, ...menu }) => ({
+      ...menu,
+      subItems: subItems.filter(sub => userPermissions.includes(sub.permission))
+    }))
+    .filter(menu => menu.subItems.length); // Remove menus without sub-items
+};
+
 const config = {
-  appSidebarData
+  appSidebarData,
+  getFilteredNavMain
 };
 
 export default config;

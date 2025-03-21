@@ -3,11 +3,11 @@ import { cleanup, render } from '@testing-library/react';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { navMainItemData } from '@/fixtures';
 
-import AppNavMain from './AppNavMain.component';
+import NavMain from './NavMain.component';
 
 jest.mock('@/hooks');
 
-describe('AppNavMain', () => {
+describe('NavMain', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'TestPage';
   const props = {
@@ -18,7 +18,7 @@ describe('AppNavMain', () => {
   beforeEach(() => {
     renderResult = render(
       <SidebarProvider {...{ 'data-testid': `${screenName}_SidebarProvider` }}>
-        <AppNavMain {...props as any} />
+        <NavMain {...props as any} />
       </SidebarProvider>
     );
   });
