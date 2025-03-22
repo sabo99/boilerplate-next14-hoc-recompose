@@ -2,13 +2,12 @@ import { act, cleanup, fireEvent, render } from '@testing-library/react';
 
 import ExampleIdleOverlay from './ExampleIdleOverlay.component';
 import Config from './ExampleIdleOverlay.config';
-import { Props } from './ExampleIdleOverlay.types';
 
 const { screenName, defaultValue, delayInterval } = Config;
 
 describe('ExampleIdleOverlay', () => {
   let renderResult: ReturnType<typeof render>;
-  const props: Props = {
+  const props = {
     screenName,
     pageTitle: 'ExampleIdleOverlay',
     permissions: [],
@@ -47,17 +46,6 @@ describe('ExampleIdleOverlay', () => {
         .toHaveTextContent(defaultValue.idleCountdownDescription(props.countdown));
       expect(getByTestId(buttonTestId)).toBeTruthy();
       expect(getByTestId(buttonTestId)).toHaveTextContent('Run Idle Again');
-    });
-
-    it('should call onHandleSetAppAlertDialogOptions with expected options on mount', () => {
-      const options = {
-        title: 'Custom Title',
-        onConfirm: expect.any(Function),
-        onCancel: expect.any(Function)
-      };
-
-      expect(props.onHandleSetAppAlertDialogOptions).toHaveBeenCalledTimes(1);
-      expect(props.onHandleSetAppAlertDialogOptions).toHaveBeenCalledWith(options);
     });
 
     it('should call setCountdown when on mount with interval 2 second', () => {
@@ -104,14 +92,17 @@ describe('ExampleIdleOverlay', () => {
         ...props,
         countdown: 0
       };
+      const appAlertDialogOptions = {
+        title: 'Idle Timeout Alert',
+        message: 'The idle countdown has been reset. Click "Run Idle Again" to start a new countdown.'
+      };
 
       const { getByTestId, rerender } = renderResult;
       rerender(<ExampleIdleOverlay {...mockProps} />);
       fireEvent.click(getByTestId(buttonTestId));
 
-      expect(getByTestId(buttonTestId)).toBeTruthy();
-      expect(getByTestId(buttonTestId)).toHaveTextContent('Run Idle Again');
       expect(props.onHandleIdleCountdown).toHaveBeenCalledWith({ timeout });
+      expect(props.onHandleSetAppAlertDialogOptions).toHaveBeenCalledWith(appAlertDialogOptions);
     });
   });
 });

@@ -12,7 +12,6 @@ const { delayInterval, defaultValue } = ExampleIdleOverlayConfig;
 const ExampleIdleOverlay: React.FC<Props> = ({
   screenName, idleTimeout,
   countdown, setCountdown,
-  setIdleOverlay,
   onHandleSetAppAlertDialogOptions, onHandleIdleCountdown
 }) => {
   const timeout = Math.round(idleTimeout / delayInterval);
@@ -20,20 +19,13 @@ const ExampleIdleOverlay: React.FC<Props> = ({
     ? defaultValue.idleDescription
     : defaultValue.idleCountdownDescription(countdown);
 
-  const onSetAlertDialogOptions = React.useCallback(() => {
+  const onRunIdle = () => {
+    onHandleIdleCountdown({ timeout });
     onHandleSetAppAlertDialogOptions({
-      title: 'Custom Title',
-      // message: '',
-      onConfirm: () => setIdleOverlay(false),
-      onCancel: () => setIdleOverlay(false)
+      title: 'Idle Timeout Alert',
+      message: 'The idle countdown has been reset. Click "Run Idle Again" to start a new countdown.'
     });
-  }, [onHandleSetAppAlertDialogOptions, setIdleOverlay]);
-
-  const onRunIdle = () => onHandleIdleCountdown({ timeout });
-
-  React.useEffect(() => {
-    onSetAlertDialogOptions();
-  }, [onSetAlertDialogOptions]);
+  };
 
   React.useEffect(() => {
     if (countdown === 0) return; // Stop interval when countdown reaches 0
