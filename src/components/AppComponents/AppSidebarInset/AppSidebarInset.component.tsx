@@ -20,25 +20,30 @@ import {
 import type { Props } from './AppSidebarInset.types';
 
 const AppSidebarInset: React.FC<Props> = ({ screenName, pageTitle, children }) => {
+
+  const renderBreadcrumb = () => (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <StyledBreadcrumbItem>
+          <BreadcrumbLink href="/">
+            Boilerplate Next14 HOCs Recompose
+          </BreadcrumbLink>
+        </StyledBreadcrumbItem>
+        <StyledBreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage {...testProps(tid(screenName, 'PageTitle'))}>{pageTitle}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+
   return (
     <SidebarInset {...testProps(tid(screenName, 'SidebarInset'))}>
       <StyledHeader {...testProps(tid(screenName, 'StyledHeader'))}>
         <StyledHeaderContent {...testProps(tid(screenName, 'StyledHeaderContent'))}>
-          <SidebarTrigger />
+          <SidebarTrigger {...testProps(tid(screenName, 'SidebarTrigger'))} />
           <StyledSeparator />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <StyledBreadcrumbItem>
-                <BreadcrumbLink href="/">
-                  Boilerplate Next14 HOCs Recompose
-                </BreadcrumbLink>
-              </StyledBreadcrumbItem>
-              <StyledBreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage {...testProps(tid(screenName, 'PageTitle'))}>{pageTitle}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+          {renderBreadcrumb()}
         </StyledHeaderContent>
       </StyledHeader>
 
