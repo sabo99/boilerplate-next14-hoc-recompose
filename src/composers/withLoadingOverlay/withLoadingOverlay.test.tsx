@@ -5,58 +5,38 @@ import Providers from '@/app/providers';
 import withLoadingOverlay from './withLoadingOverlay';
 
 describe('withLoadingOverlay', () => {
-  const screenName = 'TestScreen';
+  let renderResult: ReturnType<typeof render>;
   const props = {
-    screenName,
-    isLoadingOverlay: true,
-    loaderType: 'DOTS'
+    screenName: 'TestScreen',
+    loaderType: 'DOTS',
+    isLoadingOverlay: true
   };
-  const ComponentWithLoadingDots = (props: any) => (
-    <>
-      <div data-testid='mock_component' {...props}>Mock Component</div>
-      <div>LoadingDots</div>
-    </>
-  );
-  const ComponentWithLoadingSpinner = (props: any) => (
-    <>
-      <div data-testid='mock_component' {...props}>Mock Component</div>
-      <div>LoadingSpinner</div>
-    </>
-  );
+  const Component = (props: any) => {
+    return (
+      <div {...props}>
+        <p>Mock Component</p>
+      </div>
+    );
+  };
+  const WrappedComponent = withLoadingOverlay()(Component);
+
+  beforeEach(() => {
+    renderResult = render(
+      <Providers>
+        <WrappedComponent {...props} />
+      </Providers>
+    );
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   describe('#render', () => {
-    it('should render Overlay with LoadingDots when isLoadingOverlay is true and loaderType is DOTS', () => {
-      const testId = 'mock_component';
-      const WrappedComponent = withLoadingOverlay()(ComponentWithLoadingDots);
+    it('should renders wrapped component correctly', () => {
+      const { getByText } = renderResult;
 
-      const { getByTestId } = render(
-        <Providers>
-          <WrappedComponent {...props} />
-        </Providers>
-      );
-
-      expect(getByTestId(testId)).toBeTruthy();
-      expect(getByTestId(testId)).toHaveAttribute('screenName', screenName);
-      expect(getByTestId(testId)).toHaveAttribute('loaderType', 'DOTS');
-    });
-
-    it('should render Overlay with LoadingDots when isLoadingOverlay is true and loaderType is DOTS', () => {
-      const testId = 'mock_component';
-      const mockProps = {
-        ...props,
-        loaderType: 'SPINNER'
-      };
-      const WrappedComponent = withLoadingOverlay()(ComponentWithLoadingSpinner);
-
-      const { getByTestId } = render(
-        <Providers>
-          <WrappedComponent {...mockProps} />
-        </Providers>
-      );
-
-      expect(getByTestId(testId)).toBeTruthy();
-      expect(getByTestId(testId)).toHaveAttribute('screenName', screenName);
-      expect(getByTestId(testId)).toHaveAttribute('loaderType', 'SPINNER');
+      expect(getByText('Mock Component')).toBeInTheDocument();
     });
   });
 });

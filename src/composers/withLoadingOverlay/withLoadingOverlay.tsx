@@ -1,7 +1,6 @@
 import { compose } from 'react-recompose';
 
-import LoadingDots from '@/components/AppComponents/LoadingDots';
-import LoadingSpinner from '@/components/AppComponents/LoadingSpinner';
+import AppLoading from '@/components/AppComponents/AppLoading';
 import Overlay from '@/components/AppComponents/Overlay';
 
 import Config from './withLoadingOverlay.config';
@@ -18,19 +17,18 @@ const ComposedLoadingOverlay = (ComposedComponent: React.ComponentType<Props>) =
     } = props;
     const isOpen = isLoadingOverlay;
 
-    const renderContent = () => {
-      return loaderType === 'DOTS'
-        ? <LoadingDots screenName={screenName} />
-        : <LoadingSpinner screenName={screenName} />;
-    };
-
     return (
       <>
         <ComposedComponent {...props} />
         {isOpen &&
           <Overlay
             screenName={screenName}
-            content={renderContent()}
+            content={
+              <AppLoading
+                screenName={screenName}
+                loaderType={loaderType}
+              />
+            }
           />
         }
       </>
