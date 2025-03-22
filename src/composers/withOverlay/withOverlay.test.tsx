@@ -1,64 +1,63 @@
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { compose, withProps } from 'react-recompose';
 
-import Providers from '@/app/providers';
-
+import withIdlePopupOverlay from '../withIdlePopupOverlay';
+import withLoadingOverlay from '../withLoadingOverlay';
 import withOverlay from './withOverlay';
+import { Options } from './withOverlay.types';
+
+jest.mock('react-recompose')
+  .mock('../withIdlePopupOverlay')
+  .mock('../withLoadingOverlay');
 
 describe('withOverlay', () => {
-  let renderResult: ReturnType<typeof render>;
-  const options: any = {
-    screenName: 'TestScreen',
+  const Component = () => <div>Component</div>;
+  const composeCallback = jest.fn();
+  const composeResult = {};
+  const options: Options = {
     overlayState: 'LOADING',
     loaderType: 'DOTS'
   };
-  const Component = (props: any) => (
-    <div>
-      <p>Mock Component</p>
-      <button onClick={() => props.setLoadingOverlay(true)}>Show Overlay</button>
-    </div>
-  );
-  // const WrappedComponent = compose(
-  //   withState('showLoadingOverlay', 'setShowLoadingOverlay', false), // when using React-recompose withState
-  //   connect(loadingOverlayReducer), // when using Redux reducer
-  //   withOverlay()
-  // )(Component);
-
-  const WrappedComponent = withOverlay(options)(Component);
 
   beforeEach(() => {
-    renderResult = render(
-      // ⚠️ Required add Providers when using Redux
-      <Providers>
-        <WrappedComponent />
-      </Providers>
-    );
+    composeCallback.mockReturnValue(composeResult);
+    (compose as jest.Mock).mockReturnValue(composeCallback);
   });
 
   afterEach(() => {
-    cleanup();
     jest.clearAllMocks();
   });
 
-  describe('#render', () => {
-    it('should renders wrapped component correctly', () => {
-      const { getByText } = renderResult;
+  describe('#withProps', () => {
+    it('should invoke withProps when `options` is present', () => {
+      withOverlay(options)(Component);
 
-      expect(getByText('Mock Component')).toBeInTheDocument();
+      expect(withProps).toHaveBeenCalledWith(options);
     });
+  });
 
-    it('should not called Overlay by default or when isOpen (isLoadingOverlay or isIdleOverlay) is false', () => {
-      const { queryByTestId } = renderResult;
+  describe('#withIdlePopupOverlay', () => {
+    it('should invoke withIdlePopupOverlay when `options` overlayState is IDLE', () => {
+      const mockOptions: any = {
+        ...options,
+        overlayState: 'IDLE'
+      };
 
-      expect(queryByTestId('TestScreen_Overlay_StyledContainer')).not.toBeInTheDocument();
+      withOverlay(mockOptions)(Component);
+
+      expect(withIdlePopupOverlay).toHaveBeenCalled();
     });
+  });
 
-    it('should called Overlay when isOpen (isLoadingOverlay or isIdleOverlay) is true', () => {
-      const { getByRole, queryByTestId } = renderResult;
+  describe('#withLoadingOverlay', () => {
+    it('should invoke withLoadingOverlay when `options` overlayState is LOADING', () => {
+      const mockOptions: any = {
+        ...options,
+        overlayState: 'LOADING'
+      };
 
-      const button = getByRole('button', { name: /show overlay/i });
-      fireEvent.click(button);
+      withOverlay(mockOptions)(Component);
 
-      expect(queryByTestId('TestScreen_Overlay_StyledContainer')).toBeTruthy();
+      expect(withLoadingOverlay).toHaveBeenCalled();
     });
   });
 });
