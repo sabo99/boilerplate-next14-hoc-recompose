@@ -27,8 +27,8 @@ const ComposedIdlePopupOverlay = (ComposedComponent: React.ComponentType<Props>)
 
     const renderContent = () => (
       <AppAlertDialog
+        screenName={screenName}
         {...appAlertDialogOptions}
-        {...props}
       />
     );
 
