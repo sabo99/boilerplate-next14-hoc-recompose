@@ -6,11 +6,10 @@ import { transformObjectKeysToLowercase } from '@/lib/utils';
 import withSidebar from './withSidebar';
 
 jest
-  .mock('@/app/providers', () => MockComponent)
-  .mock('@/components/AppComponents/AppSidebar', () => MockComponent)
-  .mock('@/components/AppComponents/AppSidebarInset', () => MockComponent)
+  .mock('@/components/AppComponents/AppSidebar', () => jest.fn(MockComponent))
+  .mock('@/components/AppComponents/AppSidebarInset', () => jest.fn(MockComponent))
   .mock('@/components/ui/sidebar', () => ({
-    SidebarProvider: MockComponent
+    SidebarProvider: jest.fn(MockComponent)
   }));
 
 describe('withSidebar', () => {
@@ -30,9 +29,7 @@ describe('withSidebar', () => {
   const WrappedComponent = withSidebar(options)(Component);
 
   beforeEach(() => {
-    renderResult = render(
-      <WrappedComponent />
-    );
+    renderResult = render(<WrappedComponent />);
   });
 
   afterEach(() => {
