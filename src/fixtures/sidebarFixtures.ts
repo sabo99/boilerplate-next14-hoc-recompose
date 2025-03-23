@@ -1,5 +1,10 @@
+import { generateRandomString } from '@sabo99/node-utils';
+
 import {
+  AudioWaveformIcon,
+  CommandIcon,
   DatabaseZapIcon,
+  GalleryVerticalEndIcon,
   LayoutDashboardIcon,
   LoaderIcon,
   MonitorDotIcon,
@@ -7,6 +12,27 @@ import {
   SquareTerminalIcon,
   ViewIcon
 } from '@/__mocks__/lucide-react';
+
+const accounts = [
+  {
+    name: 'Acme Inc',
+    avatar: GalleryVerticalEndIcon,
+    groupId: 'Enterprise01',
+    sessionId: generateRandomString(10)
+  },
+  {
+    name: 'Acme Corp.',
+    avatar: AudioWaveformIcon,
+    groupId: 'Enterprise01',
+    sessionId: generateRandomString(10)
+  },
+  {
+    name: 'Evil Corp.',
+    avatar: CommandIcon,
+    groupId: 'Enterprise01',
+    sessionId: generateRandomString(10)
+  }
+];
 
 const navMainItemData = [
   {
@@ -58,5 +84,6 @@ const navMainItemData = [
 ];
 
 export {
+  accounts,
   navMainItemData
 };
