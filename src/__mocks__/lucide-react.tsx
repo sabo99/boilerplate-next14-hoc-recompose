@@ -10,7 +10,6 @@ export const MonitorDotIcon = MockIcon;
 export const RefreshCwOffIcon = MockIcon;
 export const DatabaseZapIcon = MockIcon;
 export const ChevronsUpDownIcon = MockIcon;
-export const PlusIcon = MockIcon;
 export const GalleryVerticalEndIcon = MockIcon;
 export const AudioWaveformIcon = MockIcon;
 export const CommandIcon = MockIcon;

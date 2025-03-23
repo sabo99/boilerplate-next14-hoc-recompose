@@ -12,7 +12,10 @@ jest
     SidebarHeader: jest.fn(MockComponent),
     SidebarContent: jest.fn(MockComponent),
     SidebarFooter: jest.fn(MockComponent),
-    SidebarRail: jest.fn(MockComponent)
+    SidebarRail: jest.fn(MockComponent),
+    useSidebar: jest.fn(() => ({
+      isMobile: expect.any(Boolean)
+    }))
   }))
   .mock('@/components/AppComponents/AppSidebar/AccountSwitcher', () => jest.fn(MockComponent))
   .mock('@/components/AppComponents/AppSidebar/NavMain', () => jest.fn(MockComponent))

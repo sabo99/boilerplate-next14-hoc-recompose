@@ -1,3 +1,4 @@
+import { generateRandomString } from '@sabo99/node-utils';
 import {
   AudioWaveformIcon,
   CommandIcon,
@@ -25,17 +26,20 @@ const appSidebarData = {
     {
       name: 'Acme Inc',
       avatar: GalleryVerticalEndIcon,
-      groupId: 'Enterprise01'
+      groupId: 'Enterprise01',
+      sessionId: generateRandomString(10)
     },
     {
       name: 'Acme Corp.',
       avatar: AudioWaveformIcon,
-      groupId: 'Enterprise01'
+      groupId: 'Enterprise01',
+      sessionId: generateRandomString(10)
     },
     {
       name: 'Evil Corp.',
       avatar: CommandIcon,
-      groupId: 'Enterprise01'
+      groupId: 'Enterprise01',
+      sessionId: generateRandomString(10)
     }
   ],
   navMain: [

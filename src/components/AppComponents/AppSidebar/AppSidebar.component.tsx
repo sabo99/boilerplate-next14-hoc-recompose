@@ -8,7 +8,8 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail
+  SidebarRail,
+  useSidebar
 } from '@/components/ui/sidebar';
 import { testProps, tid } from '@/lib/utils';
 
@@ -18,7 +19,8 @@ const { appSidebarData, getFilteredNavMain } = AppSidebarConfig;
 
 const AppSidebar: React.FC<React.ComponentProps<typeof Sidebar> & {
   screenName: string, permissions: string[]
-}> = ({ screenName, permissions: userPermissions,  ...props }) => {
+}> = ({ screenName, permissions: userPermissions, ...props }) => {
+  const { isMobile } = useSidebar();
 
   const navMain = getFilteredNavMain(userPermissions);
 
@@ -28,13 +30,22 @@ const AppSidebar: React.FC<React.ComponentProps<typeof Sidebar> & {
       {...testProps(tid(screenName, 'Sidebar'))}
       {...props}>
       <SidebarHeader {...testProps(tid(screenName, 'SidebarHeader'))}>
-        <AccountSwitcher accounts={appSidebarData.accounts} />
+        <AccountSwitcher
+          screenName={screenName}
+          isMobile={isMobile}
+          accounts={appSidebarData.accounts}
+        />
       </SidebarHeader>
       <SidebarContent {...testProps(tid(screenName, 'SidebarContent'))}>
-        <NavMain screenName={screenName} items={navMain} />
+        <NavMain
+          screenName={screenName}
+          items={navMain}
+        />
       </SidebarContent>
       <SidebarFooter {...testProps(tid(screenName, 'SidebarFooter'))}>
-        <NavUser user={appSidebarData.user} />
+        <NavUser
+          user={appSidebarData.user}
+        />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
