@@ -1,4 +1,4 @@
-import { cn, joinWith, testProps, tid, transformObjectKeysToLowercase } from './utils';
+import { cn, joinWith, testProps, tid } from './utils';
 
 describe('utils', () => {
 
@@ -72,16 +72,4 @@ describe('utils', () => {
       expect(result).toBe('arg1__arg3');
     });
   });
-
-  describe('#transformObjectKeysToLowercase', () => {
-    it('should be transform all object keys to lowercase', () => {
-      const obj = { toLowerCase: 'toLowerCase' };
-      const expectedResult = { tolowercase: 'toLowerCase' };
-
-      const result = transformObjectKeysToLowercase(obj);
-
-      expect(result).toEqual(expectedResult);
-    });
-  });
-
 });

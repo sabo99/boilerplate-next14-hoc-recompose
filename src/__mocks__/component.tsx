@@ -1,7 +1,3 @@
-import { transformObjectKeysToLowercase } from '@/lib/utils';
-
 export const MockComponent = (props: any) => {
-  const lowerCaseProps = transformObjectKeysToLowercase(props);
-
-  return <div {...lowerCaseProps}>{lowerCaseProps.children}</div>;
+  return <div {...props}>{props.children}</div>;
 };

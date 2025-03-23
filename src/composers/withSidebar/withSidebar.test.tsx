@@ -1,7 +1,6 @@
 import { cleanup, render } from '@testing-library/react';
 
 import { MockComponent } from '@/__mocks__/component';
-import { transformObjectKeysToLowercase } from '@/lib/utils';
 
 import withSidebar from './withSidebar';
 
@@ -14,11 +13,10 @@ jest
 
 describe('withSidebar', () => {
   let renderResult: ReturnType<typeof render>;
-  const options: any = transformObjectKeysToLowercase({
+  const options: any = {
     screenName: 'TestScreen',
-    permissions: ['VIEW_MENU'],
-    isFilteredByPermission: true
-  });
+    permissions: ['VIEW_MENU']
+  };
   const Component = (props: any) => {
     return (
       <div {...props}>

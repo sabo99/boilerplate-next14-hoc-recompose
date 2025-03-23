@@ -59,20 +59,3 @@ export const joinWith = (args: string[], separator: string = '-'): string => arg
  * ```
  */
 export const tid = (...args: string[]): string => joinWith(args, '_');
-
-/**
- * Transforms all keys of an object to lowercase.
- *
- * @param obj - The object whose keys need to be transformed to lowercase.
- * @returns A new object with all keys in lowercase.
- */
-export const transformObjectKeysToLowercase = (obj: Record<string, any>) => {
-  return Object.keys(obj).reduce((acc, key) => {
-    const value = obj[key];
-    // Convert booleans to strings if they are not valid HTML attributes
-    acc[key.toLowerCase()] =
-      typeof value === 'boolean' ? value.toString() : value;
-
-    return acc;
-  }, {} as Record<string, any>);
-};
