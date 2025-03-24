@@ -59,3 +59,29 @@ export const joinWith = (args: string[], separator: string = '-'): string => arg
  * ```
  */
 export const tid = (...args: string[]): string => joinWith(args, '_');
+
+/**
+ * Extracts the initials from a given string.
+ *
+ * @param value - The input string from which to extract initials.
+ * @returns A string containing the initials of the input string.
+ *
+ * @example
+ * ```typescript
+ * getInitials("John Doe"); // Returns "JD"
+ * getInitials("Alice"); // Returns "A"
+ * getInitials("Bob Marley"); // Returns "BM"
+ * ```
+ */
+export const getInitials = (value: string): string => {
+  const words = value.trim().split(/\s+/); // Split by spaces and remove extra spaces
+
+  if (words.length === 1) {
+    return words[0][0].toUpperCase(); // Return first letter
+  }
+
+  return words
+    .slice(0, 2) // Take only the first two words
+    .map(word => word[0].toUpperCase()) // Get the first letter of each word
+    .join(''); // Join them together
+};

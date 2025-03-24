@@ -1,4 +1,4 @@
-import { cn, joinWith, testProps, tid } from './utils';
+import { cn, getInitials, joinWith, testProps, tid } from './utils';
 
 describe('utils', () => {
 
@@ -70,6 +70,17 @@ describe('utils', () => {
       const result = tid(...args);
 
       expect(result).toBe('arg1__arg3');
+    });
+  });
+
+  describe('#getInitials', () => {
+    it('should return initials of the first two words', () => {
+      const value = 'Bob Marley Handler';
+      const expectedResult = 'BM';
+
+      const result = getInitials(value);
+
+      expect(result).toEqual(expectedResult);
     });
   });
 });
