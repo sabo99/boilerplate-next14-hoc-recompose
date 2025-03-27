@@ -16,7 +16,6 @@ const ComposedIdlePopupOverlay = (ComposedComponent: React.ComponentType<Props>)
       screenName,
       isIdleOverlay,
       setIdleOverlay,
-      appAlertDialogOptions,
       idleTimeout: timeout = 5000
     } = props;
     const callbacks = {
@@ -26,10 +25,7 @@ const ComposedIdlePopupOverlay = (ComposedComponent: React.ComponentType<Props>)
     useIdleTimeout({ timeout, ...callbacks });
 
     const renderContent = () => (
-      <AppAlertDialog
-        screenName={screenName}
-        {...appAlertDialogOptions}
-      />
+      <AppAlertDialog {...props} />
     );
 
     return (

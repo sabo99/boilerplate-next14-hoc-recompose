@@ -31,7 +31,7 @@ const AppAlertDialog: React.FC<Props> = ({
   const testId = tid(screenName, componentName);
 
   const handleClose = () => {
-    setIdleOverlay?.(false);
+    setIdleOverlay(false);
   };
 
   const handleConfirm = () => {

@@ -5,7 +5,7 @@ export type Props = {
 export type Callbacks = {
   onConfirm?: () => void;
   onCancel?: () => void;
-  setIdleOverlay?: React.Dispatch<React.SetStateAction<boolean>>
+  setIdleOverlay: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export type Options = {
