@@ -2,7 +2,7 @@ import { cleanup, render } from '@testing-library/react';
 
 import Overlay from './Overlay.component';
 import OverlayConfig from './Overlay.config';
-import { Props } from './Overlay.types';
+import type { Props } from './Overlay.types';
 
 const { componentName } = OverlayConfig;
 
