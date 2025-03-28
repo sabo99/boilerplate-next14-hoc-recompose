@@ -1,9 +1,6 @@
 import { generateRandomString } from '@sabo99/node-utils';
 import {
-  AudioWaveformIcon,
-  CommandIcon,
   DatabaseZapIcon,
-  GalleryVerticalEndIcon,
   LayoutDashboardIcon,
   LoaderIcon,
   MonitorDotIcon,
@@ -19,26 +16,26 @@ const { Paths } = Constants;
 const appSidebarData = {
   user: {
     name: 'shadcn',
-    email: 'm@example.com',
-    avatar: ''
+    email: 'shadcn@example.com',
+    photo: '/photo-1.png'
   },
   accounts: [
     {
-      name: 'Acme Inc',
-      avatar: GalleryVerticalEndIcon,
-      groupId: 'Enterprise01',
+      name: 'shadcn',
+      email: 'shadcn@example.com',
+      photo: '/photo-1.png',
       sessionId: generateRandomString(10)
     },
     {
       name: 'Acme Corp.',
-      avatar: AudioWaveformIcon,
-      groupId: 'Enterprise01',
+      email: 'acme.corpadwadawdadw@gmail.com',
+      photo: '/photo-2.png',
       sessionId: generateRandomString(10)
     },
     {
       name: 'Evil Corp.',
-      avatar: CommandIcon,
-      groupId: 'Enterprise01',
+      email: 'evil.corp@gmail.com',
+      photo: '/photo-3.png',
       sessionId: generateRandomString(10)
     }
   ],

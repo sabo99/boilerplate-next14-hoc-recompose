@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 import AppLoading from './AppLoading.component';
-import { Props } from './AppLoading.types';
+import type { Props } from './AppLoading.types';
 
 describe('AppLoading', () => {
   const screenName = 'TestScreen';

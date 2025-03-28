@@ -14,12 +14,11 @@ import {
 import { testProps, tid } from '@/lib/utils';
 
 import AppSidebarConfig from './AppSidebar.config';
+import type { Props } from './AppSidebar.types';
 
 const { appSidebarData, getFilteredNavMain } = AppSidebarConfig;
 
-const AppSidebar: React.FC<React.ComponentProps<typeof Sidebar> & {
-  screenName: string, permissions: string[]
-}> = ({ screenName, permissions: userPermissions, ...props }) => {
+const AppSidebar: React.FC<Props> = ({ screenName, permissions: userPermissions, ...props }) => {
   const { isMobile } = useSidebar();
 
   const navMain = getFilteredNavMain(userPermissions);
@@ -44,6 +43,8 @@ const AppSidebar: React.FC<React.ComponentProps<typeof Sidebar> & {
       </SidebarContent>
       <SidebarFooter {...testProps(tid(screenName, 'SidebarFooter'))}>
         <NavUser
+          screenName={screenName}
+          isMobile={isMobile}
           user={appSidebarData.user}
         />
       </SidebarFooter>

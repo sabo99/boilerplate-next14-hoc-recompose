@@ -1,10 +1,7 @@
 import { generateRandomString } from '@sabo99/node-utils';
 
 import {
-  AudioWaveformIcon,
-  CommandIcon,
   DatabaseZapIcon,
-  GalleryVerticalEndIcon,
   LayoutDashboardIcon,
   LoaderIcon,
   MonitorDotIcon,
@@ -16,20 +13,20 @@ import {
 const accounts = [
   {
     name: 'Acme Inc',
-    avatar: GalleryVerticalEndIcon,
-    groupId: 'Enterprise01',
+    email: 'acme.inc@gmail.com',
+    photo: '/photo-1.png',
     sessionId: generateRandomString(10)
   },
   {
     name: 'Acme Corp.',
-    avatar: AudioWaveformIcon,
-    groupId: 'Enterprise01',
+    email: 'acme.corp@gmail.com',
+    photo: '/photo-2.png',
     sessionId: generateRandomString(10)
   },
   {
     name: 'Evil Corp.',
-    avatar: CommandIcon,
-    groupId: 'Enterprise01',
+    email: 'evil.corp@gmail.com',
+    photo: '/photo-3.png',
     sessionId: generateRandomString(10)
   }
 ];
