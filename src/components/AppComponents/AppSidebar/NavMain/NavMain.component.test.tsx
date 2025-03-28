@@ -27,6 +27,7 @@ describe('NavMain', () => {
     cleanup();
     jest.clearAllMocks();
   });
+  
   describe('#render', () => {
     it('should render component with testId correctly', () => {
       const sidebarGroupTestId = `${screenName}_SidebarGroup`;

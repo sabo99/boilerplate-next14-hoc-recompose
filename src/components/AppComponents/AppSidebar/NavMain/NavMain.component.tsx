@@ -75,7 +75,7 @@ const NavMain: React.FC<Props> = ({ screenName, items }) => {
       <SidebarGroupLabel {...testProps(tid(screenName, 'SidebarGroupLabel'))}>
         HOCs with Recompose
       </SidebarGroupLabel>
-      {renderSidebarMenu()};
+      {renderSidebarMenu()}
     </SidebarGroup>
   );
 };
