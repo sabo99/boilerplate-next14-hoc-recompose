@@ -1,11 +1,11 @@
-import { ChevronsUpDownIcon, UserRoundCheckIcon } from 'lucide-react';
+import { ChevronsUpDownIcon, GalleryVerticalEndIcon } from 'lucide-react';
 import * as React from 'react';
 
+import AccountInfo from '@/components/AppComponents/AccountInfo';
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
@@ -16,28 +16,13 @@ import {
 import { testProps, tid } from '@/lib/utils';
 
 import {
-  StyledContainerAccountGroupId,
-  StyledContainerAccountInfo,
-  StyledContainerAccountName,
-  StyledContainerAvatar,
   StyledDropdownMenuContent,
   StyledSidebarMenuButton
 } from './AccountSwitcher.styles';
-import { Props } from './AccountSwitcher.types';
+import type { Props } from './AccountSwitcher.types';
 
 const AccountSwitcher: React.FC<Props> = ({ screenName, isMobile, accounts }) => {
   const [activeAccount, setActiveAccount] = React.useState(accounts[0]);
-
-  const renderAccountInfo = () => (
-    <StyledContainerAccountInfo>
-      <StyledContainerAccountName {...testProps(tid(screenName, 'ActiveAccountName'))}>
-        {activeAccount.name}
-      </StyledContainerAccountName>
-      <StyledContainerAccountGroupId {...testProps(tid(screenName, 'ActiveAccountGroupID'))}>
-        {activeAccount.groupId}
-      </StyledContainerAccountGroupId>
-    </StyledContainerAccountInfo>
-  );
 
   const renderDropdownMenuContent = () => (
     <StyledDropdownMenuContent
@@ -47,23 +32,26 @@ const AccountSwitcher: React.FC<Props> = ({ screenName, isMobile, accounts }) =>
       <DropdownMenuLabel className="text-xs text-muted-foreground">
         Accounts
       </DropdownMenuLabel>
-      {accounts.map((acount, index) => (
+      {accounts.map((account, index) => (
         <DropdownMenuItem
-          {...testProps(tid(screenName, 'DropdownMenuItem', index.toString()))}
-          key={index}
-          onClick={() => setActiveAccount(acount)}
+          key={account.sessionId}
+          onClick={() => setActiveAccount(account)}
           className="gap-2 p-2"
+          {...testProps(tid(screenName, 'DropdownMenuItem', index.toString()))}
         >
-          <div className="flex size-6 items-center justify-center rounded-sm border">
-            <acount.avatar className="size-4 shrink-0" />
-          </div>
-          {acount.name}
-          <DropdownMenuShortcut>
-            <UserRoundCheckIcon className="size-4" />
-          </DropdownMenuShortcut>
+
+          <AccountInfo
+            screenName={screenName}
+            user={account}
+          />
+
+          {activeAccount === account &&
+            <DropdownMenuShortcut>
+              <GalleryVerticalEndIcon size={16} color='black' />
+            </DropdownMenuShortcut>
+          }
         </DropdownMenuItem>
       ))}
-      <DropdownMenuSeparator />
     </StyledDropdownMenuContent>
   );
 
@@ -73,11 +61,14 @@ const AccountSwitcher: React.FC<Props> = ({ screenName, isMobile, accounts }) =>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <StyledSidebarMenuButton>
-              <StyledContainerAvatar>
-                <activeAccount.avatar className="size-4" />
-              </StyledContainerAvatar>
-              {renderAccountInfo()}
-              <ChevronsUpDownIcon className="ml-auto" />
+
+              <AccountInfo
+                screenName={screenName}
+                user={activeAccount}
+                icon={<ChevronsUpDownIcon className="ml-auto size-4" />}
+                avatarFallback={<GalleryVerticalEndIcon className="size-4 shrink-0" />}
+              />
+
             </StyledSidebarMenuButton>
           </DropdownMenuTrigger>
           {renderDropdownMenuContent()}

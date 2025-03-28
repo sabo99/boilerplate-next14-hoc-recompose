@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import {  render } from '@testing-library/react';
 
 import { MockComponent } from '@/__mocks__/component';
 import { accounts } from '@/fixtures';
@@ -39,19 +39,12 @@ describe('AccountSwitcher', () => {
     it('should render component with correctly testId', () => {
       const sidebarMenuTestId = `${screenName}_SidebarMenu`;
       const dropdownMenuItemTestId = `${screenName}_DropdownMenuItem_0`;
-      const activeAccountNameTestId = `${screenName}_ActiveAccountName`;
-      const activeAccountGroupIdTestId = `${screenName}_ActiveAccountGroupID`;
 
       const { getByTestId, getByText } = renderResult;
 
       expect(getByTestId(sidebarMenuTestId)).toBeTruthy();
       expect(getByTestId(dropdownMenuItemTestId)).toBeTruthy();
-      expect(getByTestId(activeAccountNameTestId)).toBeTruthy();
-      expect(getByTestId(activeAccountNameTestId)).toHaveTextContent(accounts[0].name);
-      expect(getByTestId(activeAccountGroupIdTestId)).toBeTruthy();
-      expect(getByTestId(activeAccountGroupIdTestId)).toHaveTextContent(accounts[0].groupId);
       expect(getByText('Accounts')).toBeTruthy();
-
     });
 
     it('should render StyledDropdownMenuContent with side `right` when isMobile is false', () => {
@@ -78,22 +71,5 @@ describe('AccountSwitcher', () => {
       expect(getByTestId(styledDropdownMenuContentId)).toHaveAttribute('side', 'bottom');
     });
 
-  });
-
-  describe('#onClick', () => {
-    it('should switch to the selected account when a different `DropdownMenuItem` is clicked', () => {
-      const index = 1;
-      const dropdownMenuItemTestId = `${screenName}_DropdownMenuItem_${index}`;
-      const activeAccountNameTestId = `${screenName}_ActiveAccountName`;
-      const activeAccountGroupIdTestId = `${screenName}_ActiveAccountGroupID`;
-
-      const { getByTestId } = renderResult;
-      fireEvent.click(getByTestId(dropdownMenuItemTestId));
-
-      expect(getByTestId(activeAccountNameTestId)).toBeTruthy();
-      expect(getByTestId(activeAccountNameTestId)).toHaveTextContent(accounts[index].name);
-      expect(getByTestId(activeAccountGroupIdTestId)).toBeTruthy();
-      expect(getByTestId(activeAccountGroupIdTestId)).toHaveTextContent(accounts[index].groupId);
-    });
   });
 });

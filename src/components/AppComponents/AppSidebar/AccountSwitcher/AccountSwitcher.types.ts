@@ -1,10 +1,11 @@
 import { DropdownMenuContent } from '@/components/ui/dropdown-menu';
 
-type Account = {
-  avatar: React.ElementType;
+export type Account = {
+  // avatar: React.ElementType;
   sessionId?: string;
   name: string;
-  groupId: string;
+  email: string;
+  photo: string;
 }
 
 export type StyledDropdownMenuContentProps = Omit<

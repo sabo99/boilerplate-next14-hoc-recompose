@@ -19,47 +19,6 @@ export const StyledSidebarMenuButton = React.forwardRef<
 
 StyledSidebarMenuButton.displayName = 'StyledSidebarMenuButton';
 
-export const StyledContainerAvatar: React.FC<React.ComponentProps<'div'>> = (props) =>
-  React.createElement(
-    'div',
-    {
-      ...props,
-      className: `flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary
-       text-sidebar-primary-foreground`
-    },
-    props.children
-  );
-
-export const StyledContainerAccountInfo: React.FC<React.ComponentProps<'div'>> = (props) =>
-  React.createElement(
-    'div',
-    {
-      ...props,
-      className: 'grid flex-1 text-left text-sm leading-tight'
-    },
-    props.children
-  );
-
-export const StyledContainerAccountName: React.FC<React.ComponentProps<'span'>> = (props) =>
-  React.createElement(
-    'span',
-    {
-      ...props,
-      className: 'truncate font-semibold'
-    },
-    props.children
-  );
-
-export const StyledContainerAccountGroupId: React.FC<React.ComponentProps<'span'>> = (props) =>
-  React.createElement(
-    'span',
-    {
-      ...props,
-      className: 'truncate text-xs'
-    },
-    props.children
-  );
-
 export const StyledDropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuContent>,
   StyledDropdownMenuContentProps
