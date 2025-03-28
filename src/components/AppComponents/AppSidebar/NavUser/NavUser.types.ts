@@ -1,9 +1,7 @@
-type User = {
-  name: string;
-  email: string;
-  avatar: string;
-}
+import { Account } from '@/components/AppComponents/AppSidebar/AccountSwitcher/AccountSwitcher.types';
 
 export type Props = {
-  user: User;
+  screenName: string;
+  isMobile: boolean;
+  user: Account;
 }
