@@ -74,6 +74,15 @@ describe('utils', () => {
   });
 
   describe('#getInitials', () => {
+    it('should return initials of the first word', () => {
+      const value = 'Bob';
+      const expectedResult = 'B';
+
+      const result = getInitials(value);
+
+      expect(result).toEqual(expectedResult);
+    });
+
     it('should return initials of the first two words', () => {
       const value = 'Bob Marley Handler';
       const expectedResult = 'BM';
