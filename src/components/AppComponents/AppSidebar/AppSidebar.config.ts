@@ -80,7 +80,7 @@ const appSidebarData = {
         },
         {
           title: 'withDataFetching',
-          url: '#',
+          url: Paths.Examples.WithDataFetching,
           icon: DatabaseZapIcon,
           permission: 'VIEW_DATA_FETCHING'
         }
@@ -93,7 +93,7 @@ const getFilteredNavMain = (userPermissions: string[]) => {
   return appSidebarData.navMain
     .map(({ subItems, ...menu }) => ({
       ...menu,
-      subItems: subItems.filter(sub => userPermissions.includes(sub.permission))
+      subItems: subItems.filter(sub => userPermissions?.includes(sub.permission))
     }))
     .filter(menu => menu.subItems.length); // Remove menus without sub-items
 };
