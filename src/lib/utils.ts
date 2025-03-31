@@ -1,6 +1,8 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+import Config from '@/config';
+
 /**
  * Merges Tailwind CSS classes dynamically.
  *
@@ -28,7 +30,7 @@ export const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
  * ```
  */
 export const testProps = (testId: string): Record<string, string> => ({
-  ...(process.env.APP_ENV !== 'prod' && { 'data-testid': testId }),
+  ...(Config.env !== 'prod' && { 'data-testid': testId }),
   'aria-label': testId
 });
 
