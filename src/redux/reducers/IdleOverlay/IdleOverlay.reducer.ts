@@ -8,10 +8,9 @@ export const idleOverlaySlice = createSlice({
   name: 'idleOverlay',
   initialState,
   reducers: {
-    setIdleOverlay: (state, action) => ({
-      ...state,
-      isIdleOverlay: action.payload
-    })
+    setIdleOverlay: (state, action) => {
+      state.isIdleOverlay = action.payload;
+    }
   }
 });
 
