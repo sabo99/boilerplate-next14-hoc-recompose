@@ -1,58 +1,83 @@
-// import React from "react";
-// import { Options } from "./withAxiosApi.type"
+import { get } from 'lodash';
+import React from 'react';
+import { compose, withProps, withState } from 'react-recompose';
 
-// const withAxiosApi = (axiosApiOptions: Options) => (ComposedComponent: React.ComponentType<any>) => {
-//   const {
-//     url,
-//     method = "GET",
-//     props: mapProps,
-//     options = () => ({}),
-//     skipQueryOnRender = false
-//   } = axiosApiOptions;
+import Config from '@/config';
+import AxiosClient from '@/services/AxiosClient';
 
-//   class WithAxios extends React.PureComponent {
-//     constructor(props: any) {
-//       super(props);
-//       this._isFetching = false;
-//       this.state = {
-//         result: this._mapDataProps()
-//       };
-//     }
+import type { Options, Props } from './withAxiosApi.types';
 
-//     componentDidMount(): void {
-//       if (!skipQueryOnRender) {
-//         this._fetchData();
-//       }
-//     }
+const baseURL = get(Config.api, 'baseURL', '');
 
-//     _mapDataProps = (state = {}) => {
-//       const { loading = true, error = null, ...data } = state;
-//       return mapProps({
-//         refetch: this._fetchData(),
-//         loading,
-//         error,
-//         ...data
-//       });
-//     };
+const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
+  const AxiosApiHOC: React.FC<Props> = (props) => {
+    const {
+      response,
+      setResponse,
+      skipApiOnRender,
+      url,
+      method = 'GET',
+      mapProps,
+      options = {},
+      setLoadingOverlay
+    } = props;
 
-//     _fetchData = async () => {
-//       this.setState({
-//         result: this._mapDataProps()
-//       });
-//     };
+    const requestData = React.useCallback(
+      async (payload = {}) => {
+        const axiosOptions = {
+          ...options,
+          data: payload
+        };
 
-//     _axiosGet = async () => {
-//       if (this._isFetching) {
+        setResponse((prev) => ({ ...prev, loading: true, data: null, error: null }));
 
-//       }
-//     }
+        setLoadingOverlay(true);
 
-//     _postData = async (payload: any) => {
-//       this.setState({
-//         result: this._mapDataProps()
-//       });
-//     };
+        try {
+          const result = await new AxiosClient(baseURL)
+            .getInstance()
+            .request({ url, method, ...axiosOptions });
+          setResponse({ loading: false, data: result.data });
+        } catch (error: any) {
+          setResponse({ loading: false, data: null, error });
+        } finally {
+          setLoadingOverlay(false);
+        }
 
-//     // const response = await this.
-//   }
-// };
+        return response;
+      },
+      [options, setResponse, setLoadingOverlay, url, method, response]
+    );
+
+    React.useEffect(() => {
+      if (!skipApiOnRender) {
+        requestData();
+      }
+    }, [skipApiOnRender]);
+
+    const mappedProps = mapProps({
+      request: { send: requestData, refetch: requestData },
+      response
+    });
+
+    const computedProps = React.useMemo(
+      () => mappedProps,
+      [mappedProps]
+    );
+
+    return <ComposedComponent {...props} {...computedProps} />;
+  };
+
+  return AxiosApiHOC;
+};
+
+const withAxiosApi = (axiosApiOptions: Options) => compose(
+  withState('response', 'setResponse', { loading: true, data: null, error: null }),
+  withProps({
+    skipApiOnRender: axiosApiOptions.options?.skipApiOnRender || axiosApiOptions.method !== 'GET'
+  }),
+  withProps(axiosApiOptions),
+  ComposedAxiosApi
+);
+
+export default withAxiosApi;

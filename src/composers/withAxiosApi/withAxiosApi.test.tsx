@@ -1,0 +1,112 @@
+import '@testing-library/jest-dom';
+
+import { render, waitFor } from '@testing-library/react';
+import React from 'react';
+
+import Providers from '@/app/providers';
+import AxiosClient from '@/services/AxiosClient';
+
+import withAxiosApi from '../withAxiosApi';
+import { AxiosApiInstance } from './withAxiosApi.types';
+
+jest.mock('@/services/AxiosClient');
+
+describe('withAxiosApi HOC', () => {
+  let EnhancedComponent: React.ComponentType<any>;
+  const screenName = 'TestScreen';
+  const props = {
+    screenName,
+    loading: false,
+    data: null,
+    error: null,
+    setResponse: jest.fn(),
+    setLoadingOverlay: jest.fn(),
+    refetch: jest.fn()
+  };
+
+  const options: any = {
+    url: '/test',
+    method: 'GET',
+    mapProps: jest.fn(({ response }: AxiosApiInstance) => ({
+      loading: response.loading,
+      data: response.data,
+      error: response.error
+    }))
+  };
+
+  const MockComponent = ({ loading, data, error, refetch }: any) => (
+    <div>
+      {loading && <p>Loading...</p>}
+      {data && <p>Data: {data.message}</p>}
+      {error && <p>Error: {error.message}</p>}
+      <button onClick={refetch} data-testid="refetchButton">Refetch Data</button>
+    </div>
+  );
+
+  const mockAxiosRequest = (response: any, isError = false) => {
+    (AxiosClient as jest.Mock).mockImplementation(() => ({
+      getInstance: () => ({
+        request: jest.fn(() =>
+          isError ? Promise.reject(new Error(response)) : Promise.resolve({ data: response })
+        )
+      })
+    }));
+  };
+
+  beforeEach(() => {
+    EnhancedComponent = withAxiosApi(options)(MockComponent);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders loading state and updates with API response', async () => {
+    const message = 'Success';
+    mockAxiosRequest({ message });
+
+    const { getByText } = render(
+      <Providers>
+        <EnhancedComponent {...props} />
+      </Providers>
+    );
+
+    expect(getByText('Loading...')).toBeInTheDocument();
+    // expect(props.setLoadingOverlay).toHaveBeenCalled();
+    // expect(props.setResponse).toHaveBeenCalled();
+
+    await waitFor(() => expect(getByText(`Data: ${message}`)).toBeInTheDocument());
+  });
+
+  it('handles API error state correctly', async () => {
+    const errorMessage = 'API Error';
+    mockAxiosRequest(errorMessage, true);
+
+    const { getByText } = render(
+      <Providers>
+        <EnhancedComponent {...props} />
+      </Providers>
+    );
+
+    await waitFor(() => expect(getByText(`Error: ${errorMessage}`)).toBeInTheDocument());
+  });
+
+  it('skips API call when `skipApiOnRender` is true or method is not `GET`', async () => {
+    const mockOptions = {
+      ...options,
+      method: 'POST',
+      options: { skipApiOnRender: true }
+    };
+    mockAxiosRequest({ message: 'Success' });
+
+    EnhancedComponent = withAxiosApi(mockOptions)(MockComponent);
+    const { queryByText } = render(
+      <Providers>
+        <EnhancedComponent {...props} />
+      </Providers>
+    );
+
+    // expect(getByText('Loading...')).toBeFalsy();
+    expect(queryByText('Data: Success')).not.toBeInTheDocument();
+  });
+});

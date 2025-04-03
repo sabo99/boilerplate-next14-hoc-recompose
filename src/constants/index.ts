@@ -12,8 +12,19 @@ const Constants =
     Dashboard: '/dashboard',
     Examples: {
       WithLoadingOverlay: '/examples/with-loading-overlay',
-      WithIdleOverlay: '/examples/with-idle-overlay'
+      WithIdleOverlay: '/examples/with-idle-overlay',
+      WithDataFetching: '/examples/with-data-fetching'
     }
+  },
+  ErrorCode: {
+    BadRequest: 'BAD_REQUEST',
+    Unauthorized: 'UNAUTHORIZED',
+    Forbidden: 'FORBIDDEN',
+    NotFound: 'NOT_FOUND',
+    InternalServerError: 'INTERNAL_SERVER_ERROR',
+    TokenExpired: 'TOKEN_EXPIRED',
+    ConnectionRefused: 'ECONNREFUSED',
+    ConnectionReset: 'ECONNRESET'
   }
 };
 

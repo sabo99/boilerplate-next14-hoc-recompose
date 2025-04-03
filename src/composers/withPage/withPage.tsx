@@ -2,6 +2,8 @@ import { isEmptyObject, isNonEmptyArray } from '@sabo99/node-utils';
 import { compose, withHandlers, withProps, withState } from 'react-recompose';
 import { connect } from 'react-redux';
 
+import withAxiosApi from '../withAxiosApi';
+import withLoadingOverlay from '../withLoadingOverlay';
 import withOverlay from '../withOverlay';
 import withPreventRefresh from '../withPreventRefresh';
 import withSidebar from '../withSidebar';
@@ -16,11 +18,12 @@ import type { Options } from './withPage.types';
  * @param {Function} options.connect.mapStateToProps - Function to map state to props.
  * @param {Function} options.connect.mapDispatchToProps - Function to map dispatch to props.
  * @param {Array} options.state - State options for the component.
+ * @param {Object} options.api - API request options.
  * @param {Object} options.uiSettings - UI settings options.
  * @param {Object} options.uiSettings.sidebar - Sidebar settings.
  * @param {boolean} options.uiSettings.sidebar.enabledSidebar - Flag to enable sidebar.
- * @param {Object} options.uiSettings.loadingOverlay - Loading overlay settings.
- * @param {boolean} options.uiSettings.loadingOverlay.enabledLoadingOverlay - Flag to enable loading overlay.
+ * @param {Object} options.uiSettings.overlay - Overlay settings.
+ * @param {boolean} options.uiSettings.overlay.enabledOverlay - Flag to enable overlay.
  * @param {Object} options.uiSettings.preventRefresh - Prevent refresh settings.
  * @param {Object} options.handlers - Handlers to be added to the component.
  *
@@ -29,26 +32,27 @@ import type { Options } from './withPage.types';
  * 1. Custom props using `withProps` from React-recompose.
  * 2. Redux connection using `connect`.
  * 3. State management using `withState` from React-recompose.
- * 4. Screen configuration using `withProps`.
+ * 4. API request handling using `withAxiosApi`.
  * 5. Sidebar functionality using `withSidebar`.
- * 6. Overlay functionality using `withLoadingOverlay` includes of `withLoadingOverlay` and `withIdlePopupOverlay`.
+ * 6. Overlay functionality using `withOverlay` includes of `withLoadingOverlay` and `withIdlePopupOverlay`.
  * 7. Prevent refresh functionality using `withPreventRefresh`.
  * 8. Custom handlers using `withHandlers` from React-recompose.
  *
- * The last `enhancers.push` call adds the `withHandlers` enhancer to the list of enhancers if `handlersOptions` is provided and is an object.
- * This allows the component to handle custom event handlers defined in the `handlersOptions`.
+ * The `enhancers` array dynamically builds a list of HOCs based on the provided options.
+ * Each enhancer is conditionally added to the array, ensuring flexibility and modularity.
  *
  * @example
  * const options = {
- *   props: { screenName: 'Home', pageTitle: 'Home Page', permissions: ['VIEW_MENU']  },
+ *   props: { screenName: 'Home', pageTitle: 'Home Page', permissions: ['VIEW_MENU'] },
  *   connect: { mapStateToProps, mapDispatchToProps },
  *   state: [['stateName', 'setStateName', initialState]],
+ *   api: { url: '/users', method: 'GET' },
  *   handlers: { handleClick: () => {} },
  *   uiSettings: {
  *     sidebar: { isFilteredByPermission: true },
  *     overlay: { overlayState: 'LOADING', loaderType: 'DOTS' },
-//  *     preventRefresh: { someCondition: true }
- *   }
+ *     preventRefresh: { someCondition: true }
+ *   },
  * };
  *
  * const EnhancedComponent = withPage(options)(MyComponent);
@@ -58,6 +62,7 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
     props: propsOptions = null,
     connect: connectOptions = null,
     state: stateOptions = [],
+    api: apiOptions = null,
     uiSettings: uiSettingsOptions = null,
     handlers: handlersOptions = null
   } = options;
@@ -106,7 +111,16 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
     }
   }
 
-  // ✅ 5. Handle handlers using React-recompose withHandlers
+  // ✅ 5. Handle API Request using withAxiosApi
+  if (isNonEmptyArray(apiOptions) && apiOptions) {
+    enhancers.push(withLoadingOverlay());
+
+    apiOptions.forEach((apiOption) => {
+      enhancers.push(withAxiosApi(apiOption));
+    });
+  }
+
+  // ✅ 6. Handle handlers using React-recompose withHandlers
   if (!isEmptyObject(handlersOptions) && handlersOptions) {
     enhancers.push(withHandlers(handlersOptions));
   }

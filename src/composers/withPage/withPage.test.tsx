@@ -1,6 +1,8 @@
 import { compose, withHandlers, withProps, withState } from 'react-recompose';
 import { connect } from 'react-redux';
 
+import withAxiosApi from '../withAxiosApi';
+import withLoadingOverlay from '../withLoadingOverlay';
 import withOverlay from '../withOverlay';
 import withPreventRefresh from '../withPreventRefresh';
 import withSidebar from '../withSidebar';
@@ -10,6 +12,8 @@ jest.mock('react-recompose')
   .mock('react-redux')
   .mock('../withSidebar')
   .mock('../withOverlay')
+  .mock('../withLoadingOverlay')
+  .mock('../withAxiosApi')
   .mock('../withPreventRefresh');
 
 describe('withPage', () => {
@@ -209,6 +213,38 @@ describe('withPage', () => {
       withPage(options)(Component);
 
       expect(withPreventRefresh).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('#withAxiosApi', () => {
+    it('should invoke withLoadingOverlay and withAxiosApi when `api` is present', () => {
+      const options: any = {
+        api: [
+          {
+            url: '/products',
+            method: 'GET',
+            mapProps: jest.fn(),
+            options: {
+              skipApiOnRender: true,
+              params: { limit: 10 }
+            }
+          },
+          {
+            url: '/carts',
+            method: 'GET',
+            mapProps: jest.fn(),
+            options: {
+              headers: { 'Content-Type': 'application/json' }
+            }
+          }
+        ]
+      };
+
+      withPage(options)(Component);
+
+      expect(withLoadingOverlay).toHaveBeenCalled();
+      expect(withAxiosApi).toHaveBeenNthCalledWith(1, options.api[0]);
+      expect(withAxiosApi).toHaveBeenNthCalledWith(2, options.api[1]);
     });
   });
 

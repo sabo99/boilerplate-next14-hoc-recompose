@@ -1,3 +1,4 @@
+import type { Options as ApiOptions } from '../withAxiosApi/withAxiosApi.types';
 import type { Options as OverlayOptions } from '../withOverlay/withOverlay.types';
 import type { Options as PreventRefreshOptions } from '../withPreventRefresh/withPreventRefresh.types';
 import type { Options as SidebarOptions } from '../withSidebar/withSidebar.types';
@@ -27,6 +28,7 @@ export type Options = {
   props?: DefaultPropsOptions & object;
   connect?: ConnectOptions;
   state?: StateOptions[];
+  api?: ApiOptions[];
   handlers?: object | any;
   uiSettings?: UiSettingOptions;
 }
