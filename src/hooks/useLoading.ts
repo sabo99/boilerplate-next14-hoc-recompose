@@ -1,7 +1,7 @@
 type Props = {
-  setLoadingOverlay: (value: boolean) => void;
+  setLoadingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
 };
-type OnSubmit = () => Promise<void>;
+type OnSubmit = () => Promise<any>;
 
 export const useSubmitWithLoading = async (props: Props, onSubmit: OnSubmit) => {
   const { setLoadingOverlay } = props;
