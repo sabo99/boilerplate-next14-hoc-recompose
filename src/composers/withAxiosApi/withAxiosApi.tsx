@@ -6,7 +6,7 @@ import { compose, withProps, withState } from 'react-recompose';
 import Config from '@/config';
 import AxiosClient from '@/services/AxiosClient';
 
-import type { Options, Props } from './withAxiosApi.types';
+import type { AxiosApiResponse, Options, Props } from './withAxiosApi.types';
 
 const baseURL = get(Config.api, 'baseURL', '');
 
@@ -23,41 +23,43 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
       setLoadingOverlay
     } = props;
 
-    const requestData = React.useCallback(
-      async (payload = {}) => {
-        const axiosOptions = {
-          ...options,
-          data: payload
+    const onRequestData = async (payload = {}): Promise<AxiosApiResponse> => {
+      const axiosOptions = {
+        ...options,
+        data: payload
+      };
+
+      setResponse((prev) => ({ ...prev, loading: true, data: null, error: null }));
+
+      setLoadingOverlay(true);
+
+      try {
+        const result = await new AxiosClient(baseURL)
+          .getInstance()
+          .request({ url, method, ...axiosOptions });
+        setResponse({ loading: false, data: result.data });
+      } catch (err) {
+        const axiosError = err as AxiosError;
+        const errorMessage = get(axiosError.response, 'data.message', axiosError.message);
+        const errorStatusCode = get(axiosError.response, 'data.status', axiosError.status);
+        const errorCode = axiosError.code;
+
+        const errorData = {
+          message: errorMessage,
+          statusCode: errorStatusCode,
+          code: errorCode
         };
+        setResponse({ loading: false, data: null, error: errorData });
+      } finally {
+        setLoadingOverlay(false);
+      }
 
-        setResponse((prev) => ({ ...prev, loading: true, data: null, error: null }));
+      return response;
+    };
 
-        setLoadingOverlay(true);
-
-        try {
-          const result = await new AxiosClient(baseURL)
-            .getInstance()
-            .request({ url, method, ...axiosOptions });
-          setResponse({ loading: false, data: result.data });
-        } catch (err) {
-          const axiosError = err as AxiosError;
-          const errorMessage = get(axiosError.response, 'data.message', axiosError.message);
-          const errorStatusCode = get(axiosError.response, 'data.status', axiosError.status);
-          const errorCode = axiosError.code;
-
-          const error = {
-            message: errorMessage,
-            statusCode: errorStatusCode,
-            code: errorCode
-          };
-          setResponse({ loading: false, data: null, error });
-        } finally {
-          setLoadingOverlay(false);
-        }
-
-        return response;
-      },
-      [options, setResponse, setLoadingOverlay, url, method, response]
+    const requestData = React.useCallback(
+      onRequestData,
+      [options, setResponse, setLoadingOverlay, response, url, method]
     );
 
     React.useEffect(() => {

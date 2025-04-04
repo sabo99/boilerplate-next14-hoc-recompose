@@ -8,8 +8,8 @@ export type Options = {
 };
 
 export type AxiosApiInstance = {
-  request: Request;
-  response: Response;
+  request: AxiosApiRequest;
+  response: AxiosApiResponse;
 }
 
 type AxiosApiOptions = {
@@ -19,29 +19,29 @@ type AxiosApiOptions = {
   params?: object;
 }
 
-export type RequestSendCallback = (payload: object) => Promise<Response>;
+export type RequestSendCallback = (payload: object) => Promise<AxiosApiResponse>;
 export type RequestRefetchCallback = () => Promise<any>;
 
-type Request = {
+export type AxiosApiRequest = {
   send: RequestSendCallback;
   refetch: RequestRefetchCallback;
 }
 
-type Error = {
-  message: string;
-  code?: string;
+type AxiosApiError = {
   statusCode?: number;
+  message?: string;
+  code?: string;
 }
 
-type Response = {
+export type AxiosApiResponse = {
   loading: boolean;
-  error?: Error | null;
+  error?: AxiosApiError | null;
   data?: any;
 }
 
 export type Props = {
-  response: Response;
-  setResponse: React.Dispatch<React.SetStateAction<Response>>;
+  response: AxiosApiResponse;
+  setResponse: React.Dispatch<React.SetStateAction<AxiosApiResponse>>;
   skipApiOnRender: boolean;
   setLoadingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
 } & Options;
