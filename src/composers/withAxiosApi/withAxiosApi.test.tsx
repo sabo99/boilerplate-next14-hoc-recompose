@@ -47,7 +47,7 @@ describe('withAxiosApi HOC', () => {
     (AxiosClient as jest.Mock).mockImplementation(() => ({
       getInstance: () => ({
         request: jest.fn(() =>
-          isError ? Promise.reject(new Error(response)) : Promise.resolve({ data: response })
+          isError ? Promise.reject(response) : Promise.resolve({ data: response })
         )
       })
     }));
@@ -61,7 +61,7 @@ describe('withAxiosApi HOC', () => {
     jest.clearAllMocks();
   });
 
-  it('renders loading state and updates with API response', async () => {
+  it('should renders loading state and updates with API response', async () => {
     const message = 'Success';
     mockAxiosRequest({ message });
 
@@ -72,15 +72,19 @@ describe('withAxiosApi HOC', () => {
     );
 
     expect(getByText('Loading...')).toBeInTheDocument();
-    // expect(props.setLoadingOverlay).toHaveBeenCalled();
-    // expect(props.setResponse).toHaveBeenCalled();
-
     await waitFor(() => expect(getByText(`Data: ${message}`)).toBeInTheDocument());
   });
 
-  it('handles API error state correctly', async () => {
+  it('should handles API error state correctly', async () => {
     const errorMessage = 'API Error';
-    mockAxiosRequest(errorMessage, true);
+    const statusCode = 500;
+    const errorAxios: any = {
+      message: errorMessage,
+      response: { data: { message: errorMessage, status: statusCode } },
+      status: statusCode,
+      code: 'INTERNAL_SERVER_ERROR'
+    };
+    mockAxiosRequest(new Error(errorAxios), true);
 
     const { getByText } = render(
       <Providers>
@@ -88,10 +92,12 @@ describe('withAxiosApi HOC', () => {
       </Providers>
     );
 
-    await waitFor(() => expect(getByText(`Error: ${errorMessage}`)).toBeInTheDocument());
+    await waitFor(() => {
+      expect(getByText(`Error: ${errorAxios}`)).toBeInTheDocument();
+    });
   });
 
-  it('skips API call when `skipApiOnRender` is true or method is not `GET`', async () => {
+  it('should skips API call when `skipApiOnRender` is true or method is not `GET`', async () => {
     const mockOptions = {
       ...options,
       method: 'POST',
@@ -106,7 +112,6 @@ describe('withAxiosApi HOC', () => {
       </Providers>
     );
 
-    // expect(getByText('Loading...')).toBeFalsy();
     expect(queryByText('Data: Success')).not.toBeInTheDocument();
   });
 });

@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { get } from 'lodash';
 import React from 'react';
 import { compose, withProps, withState } from 'react-recompose';
@@ -38,7 +39,17 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
             .getInstance()
             .request({ url, method, ...axiosOptions });
           setResponse({ loading: false, data: result.data });
-        } catch (error: any) {
+        } catch (err) {
+          const axiosError = err as AxiosError;
+          const errorMessage = get(axiosError.response, 'data.message', axiosError.message);
+          const errorStatusCode = get(axiosError.response, 'data.status', axiosError.status);
+          const errorCode = axiosError.code;
+
+          const error = {
+            message: errorMessage,
+            statusCode: errorStatusCode,
+            code: errorCode
+          };
           setResponse({ loading: false, data: null, error });
         } finally {
           setLoadingOverlay(false);

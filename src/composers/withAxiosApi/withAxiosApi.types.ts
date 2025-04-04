@@ -27,9 +27,15 @@ type Request = {
   refetch: RequestRefetchCallback;
 }
 
+type Error = {
+  message: string;
+  code?: string;
+  statusCode?: number;
+}
+
 type Response = {
   loading: boolean;
-  error?: any;
+  error?: Error | null;
   data?: any;
 }
 
