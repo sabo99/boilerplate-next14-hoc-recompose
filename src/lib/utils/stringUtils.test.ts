@@ -1,6 +1,6 @@
-import { cn, getInitials, joinWith, testProps, tid } from './utils';
+import { cn, getInitials, joinWith } from '@/lib/utils';
 
-describe('utils', () => {
+describe('stringUtils', () => {
 
   describe('#cn', () => {
     it('should be merge multiple class names correctly', () => {
@@ -29,18 +29,6 @@ describe('utils', () => {
     });
   });
 
-  describe('#testProps', () => {
-    it('should be return correct test properties', () => {
-      const testId = 'test-id';
-      const props = testProps(testId);
-
-      expect(props).toEqual({
-        'data-testid': testId,
-        'aria-label': testId
-      });
-    });
-  });
-
   describe('#joinWith', () => {
     it('should be join strings using a custom separator', () => {
       const args = ['arg1', 'arg2', 'arg3'];
@@ -54,22 +42,6 @@ describe('utils', () => {
       const result = joinWith(args);
 
       expect(result).toBe('arg1-arg2-arg3');
-    });
-  });
-
-  describe('#createTestId', () => {
-    it('should be merge test ids correctly with multiple arguments', () => {
-      const args = ['arg1', 'arg2', 'arg3'];
-      const result = tid(...args);
-
-      expect(result).toBe('arg1_arg2_arg3');
-    });
-
-    it('should be merge test ids correctly with empty arguments', () => {
-      const args = ['arg1', '', 'arg3'];
-      const result = tid(...args);
-
-      expect(result).toBe('arg1__arg3');
     });
   });
 

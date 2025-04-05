@@ -1,8 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import Config from '@/config';
-
 /**
  * Merges Tailwind CSS classes dynamically.
  *
@@ -15,24 +13,6 @@ import Config from '@/config';
  * ```
  */
 export const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
-
-/**
- * Generates test props for components.
- * - Adds `data-testid` attribute in non-production environments.
- * - Always includes `aria-label` for accessibility.
- *
- * @param {string} testId - The test identifier.
- * @returns {Record<string, string>} - Object containing test props.
- *
- * @example
- * ```tsx
- * <button {...testProps('submit-button')}>Submit</button>
- * ```
- */
-export const testProps = (testId: string): Record<string, string> => ({
-  ...(Config.env !== 'prod' && { 'data-testid': testId }),
-  'aria-label': testId
-});
 
 /**
  * Joins an array of strings using a specified separator.
@@ -48,19 +28,6 @@ export const testProps = (testId: string): Record<string, string> => ({
  * ```
  */
 export const joinWith = (args: string[], separator: string = '-'): string => args.join(separator);
-
-/**
- * Generates a structured test ID by joining multiple strings with an underscore.
- *
- * @param {...string[]} args - Parts of the test ID.
- * @returns {string} - Concatenated test ID.
- *
- * @example
- * ```tsx
- * const inputTestId = tid('login', 'username', 'input'); // "login_username_input"
- * ```
- */
-export const tid = (...args: string[]): string => joinWith(args, '_');
 
 /**
  * Extracts the initials from a given string.
