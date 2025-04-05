@@ -1,5 +1,3 @@
-import '@testing-library/jest-dom';
-
 import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 
@@ -16,9 +14,6 @@ describe('withAxiosApi HOC', () => {
   const screenName = 'TestScreen';
   const props = {
     screenName,
-    loading: false,
-    data: null,
-    error: null,
     setResponse: jest.fn(),
     setLoadingOverlay: jest.fn(),
     refetch: jest.fn()
@@ -71,18 +66,22 @@ describe('withAxiosApi HOC', () => {
       </Providers>
     );
 
+    expect(props.setLoadingOverlay).toHaveBeenNthCalledWith(1, true);
     expect(getByText('Loading...')).toBeInTheDocument();
-    await waitFor(() => expect(getByText(`Data: ${message}`)).toBeInTheDocument());
+    await waitFor(() => {
+      expect(getByText(`Data: ${message}`)).toBeInTheDocument();
+    });
+    expect(props.setLoadingOverlay).toHaveBeenLastCalledWith(false);
   });
 
-  it('should handles API error state correctly', async () => {
+  it('should display error state when API request fails', async () => {
     const errorMessage = 'API Error';
     const statusCode = 500;
     const errorAxios: any = {
       message: errorMessage,
       response: { data: { message: errorMessage, status: statusCode } },
       status: statusCode,
-      code: 'INTERNAL_SERVER_ERROR'
+      code: 'ERR_INTERNAL_SERVER_ERROR'
     };
     mockAxiosRequest(new Error(errorAxios), true);
 
@@ -91,10 +90,12 @@ describe('withAxiosApi HOC', () => {
         <EnhancedComponent {...props} />
       </Providers>
     );
-
+    expect(props.setLoadingOverlay).toHaveBeenNthCalledWith(1, true);
+    expect(getByText('Loading...')).toBeInTheDocument();
     await waitFor(() => {
       expect(getByText(`Error: ${errorAxios}`)).toBeInTheDocument();
     });
+    expect(props.setLoadingOverlay).toHaveBeenLastCalledWith(false);
   });
 
   it('should skips API call when `skipApiOnRender` is true or method is not `GET`', async () => {

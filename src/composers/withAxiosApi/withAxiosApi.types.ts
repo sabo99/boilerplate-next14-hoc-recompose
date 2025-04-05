@@ -1,7 +1,7 @@
 export type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 export type Options = {
-  url?: string;
+  url: string;
   method: RequestMethod;
   mapProps: (instance: AxiosApiInstance) => object;
   options?: AxiosApiOptions;
@@ -19,12 +19,10 @@ type AxiosApiOptions = {
   params?: object;
 }
 
-export type RequestSendCallback = (payload: object) => Promise<AxiosApiResponse>;
-export type RequestRefetchCallback = () => Promise<any>;
+export type SendRequestApiCallback = (payload?: object) => Promise<AxiosApiResponse> | Promise<void>;
 
 export type AxiosApiRequest = {
-  send: RequestSendCallback;
-  refetch: RequestRefetchCallback;
+  send: SendRequestApiCallback;
 }
 
 type AxiosApiError = {

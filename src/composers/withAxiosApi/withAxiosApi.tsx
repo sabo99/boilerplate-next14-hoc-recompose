@@ -1,12 +1,13 @@
-import { AxiosError } from 'axios';
+import { AxiosInstance } from 'axios';
 import { get } from 'lodash';
 import React from 'react';
 import { compose, withProps, withState } from 'react-recompose';
 
 import Config from '@/config';
+import { createSendRequest } from '@/lib/utils';
 import AxiosClient from '@/services/AxiosClient';
 
-import type { AxiosApiResponse, Options, Props } from './withAxiosApi.types';
+import type { Options, Props } from './withAxiosApi.types';
 
 const baseURL = get(Config.api, 'baseURL', '');
 
@@ -23,60 +24,31 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
       setLoadingOverlay
     } = props;
 
-    const onRequestData = async (payload = {}): Promise<AxiosApiResponse> => {
-      const axiosOptions = {
-        ...options,
-        data: payload
-      };
-
-      setResponse((prev) => ({ ...prev, loading: true, data: null, error: null }));
-
-      setLoadingOverlay(true);
-
-      try {
-        const result = await new AxiosClient(baseURL)
-          .getInstance()
-          .request({ url, method, ...axiosOptions });
-        setResponse({ loading: false, data: result.data });
-      } catch (err) {
-        const axiosError = err as AxiosError;
-        const errorMessage = get(axiosError.response, 'data.message', axiosError.message);
-        const errorStatusCode = get(axiosError.response, 'data.status', axiosError.status);
-        const errorCode = axiosError.code;
-
-        const errorData = {
-          message: errorMessage,
-          statusCode: errorStatusCode,
-          code: errorCode
-        };
-        setResponse({ loading: false, data: null, error: errorData });
-      } finally {
-        setLoadingOverlay(false);
-      }
-
-      return response;
-    };
-
-    const requestData = React.useCallback(
-      onRequestData,
-      [options, setResponse, setLoadingOverlay, response, url, method]
+    const axiosClientInstance = React.useRef<AxiosInstance>(
+      new AxiosClient(baseURL).getInstance()
     );
+
+    const sendRequest = React.useCallback(() => {
+      return createSendRequest({
+        axiosClientInstance: axiosClientInstance.current,
+        url,
+        method,
+        options,
+        setResponse,
+        setLoadingOverlay
+      })();
+    }, [setLoadingOverlay, url, method, options, setResponse]);
 
     React.useEffect(() => {
       if (!skipApiOnRender) {
-        requestData();
+        sendRequest();
       }
-    }, [skipApiOnRender]);
+    }, [skipApiOnRender, sendRequest]);
 
-    const mappedProps = mapProps({
-      request: { send: requestData, refetch: requestData },
+    const computedProps = mapProps({
+      request: { send: sendRequest },
       response
     });
-
-    const computedProps = React.useMemo(
-      () => mappedProps,
-      [mappedProps]
-    );
 
     return <ComposedComponent {...props} {...computedProps} />;
   };
@@ -85,9 +57,15 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
 };
 
 const withAxiosApi = (axiosApiOptions: Options) => compose(
-  withState('response', 'setResponse', { loading: true, data: null, error: null }),
+  withState('response', 'setResponse', {
+    loading: true,
+    data: null,
+    error: null
+  }),
   withProps({
-    skipApiOnRender: axiosApiOptions.options?.skipApiOnRender || axiosApiOptions.method !== 'GET'
+    skipApiOnRender:
+      axiosApiOptions.options?.skipApiOnRender ||
+      axiosApiOptions.method !== 'GET'
   }),
   withProps(axiosApiOptions),
   ComposedAxiosApi
