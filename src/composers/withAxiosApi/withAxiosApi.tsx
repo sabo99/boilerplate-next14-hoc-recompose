@@ -28,7 +28,7 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
       new AxiosClient(baseURL).getInstance()
     );
 
-    const sendRequest = React.useCallback(() => {
+    const sendRequest = React.useCallback((payload = {}) => {
       return createSendRequest({
         axiosClientInstance: axiosClientInstance.current,
         url,
@@ -36,7 +36,7 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
         options,
         setResponse,
         setLoadingOverlay
-      })();
+      })(payload);
     }, [setLoadingOverlay, url, method, options, setResponse]);
 
     React.useEffect(() => {

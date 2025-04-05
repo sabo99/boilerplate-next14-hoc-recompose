@@ -27,8 +27,6 @@ type SendRequestCallback = (payload?: object) => Promise<AxiosApiResponse>;
  *
  * @returns {(payload?: object) => Promise<AxiosApiResponse>} - A function that sends the request with the given payload
  * and returns a promise resolving to the response.
- *
- * @throws {AxiosError} - Throws an AxiosError if the request fails.
  */
 export const createSendRequest = (params: CreateSendRequestParams): SendRequestCallback => {
   const {
