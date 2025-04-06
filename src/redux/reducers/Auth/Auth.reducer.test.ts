@@ -2,11 +2,27 @@ import reducer, { actions } from './Auth.reducer';
 
 describe('authReducer', () => {
   const intialState = {
+    isAuthenticated: false,
     sessionId: null,
     accessToken: null,
     refreshToken: null,
     userInfo: null
   };
+
+  describe('#setAuthenticated', () => {
+    it('should return isAuthenticated when action is setAuthenticated.type', () => {
+      const isAuthenticated = true;
+      const action = { type: actions.setAuthenticated.type, payload: isAuthenticated };
+      const expectedResult = {
+        ...intialState,
+        isAuthenticated
+      };
+
+      const result = reducer(intialState, action);
+
+      expect(result).toEqual(expectedResult);
+    });
+  });
 
   describe('#setSessionId', () => {
     it('should return sessionId when action is setSessionId.type', () => {
@@ -61,6 +77,17 @@ describe('authReducer', () => {
         ...intialState,
         userInfo
       };
+
+      const result = reducer(intialState, action);
+
+      expect(result).toEqual(expectedResult);
+    });
+  });
+
+  describe('#clearAuthState', () => {
+    it('should return initialState when action is clearAuthState.type', () => {
+      const action = { type: actions.clearAuthState.type };
+      const expectedResult = intialState;
 
       const result = reducer(intialState, action);
 
