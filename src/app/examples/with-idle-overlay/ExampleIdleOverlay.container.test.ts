@@ -31,9 +31,7 @@ describe('ExampleIdleOverlayContainer', () => {
   describe('#uiSettings', () => {
     it('should return the correct uiSettings', () => {
       const expected = {
-        sidebar: {
-          isAuthenticated: true
-        },
+        sidebar: true,
         overlay: {
           overlayState: 'IDLE',
           idleTimeout: 5000

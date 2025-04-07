@@ -18,9 +18,7 @@ export const stateList: StateOptions = [
 ];
 
 export const uiSettings: UiSettingOptions = {
-  sidebar: {
-    isAuthenticated: true
-  },
+  sidebar: true,
   overlay: {
     overlayState: 'IDLE',
     idleTimeout: 5000

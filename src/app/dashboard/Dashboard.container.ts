@@ -13,9 +13,7 @@ export const defaultProps: DefaultPropsOptions = {
 };
 
 export const uiSettings: UiSettingOptions = {
-  sidebar: {
-    isAuthenticated: true
-  }
+  sidebar: true
 };
 
 export default withPage({

@@ -24,9 +24,7 @@ describe('DashboardContainer', () => {
     it('should return the correct uiSettings', () => {
       // Arrange
       const expected = {
-        sidebar: {
-          isAuthenticated: true
-        }
+        sidebar: true
       };
       // Act
       const result = uiSettings;

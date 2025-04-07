@@ -48,9 +48,7 @@ describe('ExampleLoadingOverlayContainer', () => {
   describe('#uiSettings', () => {
     it('should be return the correct uiSettings', () => {
       const expectedResult = {
-        sidebar: {
-          isAuthenticated: true
-        },
+        sidebar: true,
         overlay: {
           overlayState: 'LOADING',
           loaderType: 'DOTS'
