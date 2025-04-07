@@ -2,6 +2,7 @@ import { isEmptyObject, isNonEmptyArray } from '@sabo99/node-utils';
 import { compose, withHandlers, withProps, withState } from 'react-recompose';
 import { connect } from 'react-redux';
 
+import withAuth from '../withAuth/withAuth';
 import withAxiosApi from '../withAxiosApi';
 import withLoadingOverlay from '../withLoadingOverlay';
 import withOverlay from '../withOverlay';
@@ -20,10 +21,8 @@ import type { Options } from './withPage.types';
  * @param {Array} options.state - State options for the component.
  * @param {Object} options.api - API request options.
  * @param {Object} options.uiSettings - UI settings options.
- * @param {Object} options.uiSettings.sidebar - Sidebar settings.
- * @param {boolean} options.uiSettings.sidebar.enabledSidebar - Flag to enable sidebar.
+ * @param {Object} options.uiSettings.sidebar - Flag to enable sidebar.
  * @param {Object} options.uiSettings.overlay - Overlay settings.
- * @param {boolean} options.uiSettings.overlay.enabledOverlay - Flag to enable overlay.
  * @param {Object} options.uiSettings.preventRefresh - Prevent refresh settings.
  * @param {Object} options.handlers - Handlers to be added to the component.
  *
@@ -68,8 +67,10 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
   } = options;
   const enhancers = [];
 
-  // ✅ 0. Handle default and required enhancers for the component uiSettingsOptions.screenConfig (screenName, pageTitle)
-  // ✅ 1. Handle custom props using React-recompose withProps
+  // ✅ 0. Add authentication enhancer using withAuth
+  enhancers.push(withAuth());
+
+  // ✅ 1. Handle default and required enhancers for the component uiSettingsOptions.screenConfig (screenName, pageTitle)
   if (!isEmptyObject(propsOptions) && propsOptions) {
     enhancers.push(withProps(propsOptions));
   }
@@ -90,14 +91,14 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
   // ✅ 4. Handle uiSettings
   if (!isEmptyObject(uiSettingsOptions) && uiSettingsOptions) {
     const {
-      sidebar: sidebarOptions = null,
+      sidebar = false,
       overlay: overlayOptions = null,
       preventRefresh: preventRefreshOptions = null
     } = uiSettingsOptions;
 
     // ✅ 4.1. Handle ui settings for sidebar
-    if (!isEmptyObject(sidebarOptions) && sidebarOptions) {
-      enhancers.push(withSidebar(sidebarOptions));
+    if (sidebar) {
+      enhancers.push(withSidebar());
     }
 
     // ✅ 4.2. Handle ui settings for overlay

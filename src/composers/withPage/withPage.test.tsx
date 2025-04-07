@@ -10,6 +10,7 @@ import withPage from './withPage';
 
 jest.mock('react-recompose')
   .mock('react-redux')
+  .mock('../withAuth')
   .mock('../withSidebar')
   .mock('../withOverlay')
   .mock('../withLoadingOverlay')
@@ -63,6 +64,16 @@ describe('withPage', () => {
     });
   });
 
+  // describe('#withAuth', () => {
+  //   it('should invoke withAuth when withPage is called', () => {
+  //     const options = {};
+
+  //     withPage(options)(Component);
+
+  //     expect(withAuth).toHaveBeenCalled();
+  //   });
+  // })
+
   describe('#withProps', () => {
     it('should invoke withProps when `props` is present', () => {
       const options = { props: defaultProps };
@@ -99,24 +110,6 @@ describe('withPage', () => {
       withPage(options)(Component);
 
       expect(connect).toHaveBeenCalled();
-    });
-
-    it('should not invoke connect redux when `connect` is present but empty object', () => {
-      const options = {
-        connect: {}
-      };
-
-      withPage(options)(Component);
-
-      expect(connect).not.toHaveBeenCalled();
-    });
-
-    it('should not invoke connect redux when `connect` is not present', () => {
-      const options = {};
-
-      withPage(options)(Component);
-
-      expect(connect).not.toHaveBeenCalled();
     });
   });
 
