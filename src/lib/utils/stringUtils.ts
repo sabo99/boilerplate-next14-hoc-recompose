@@ -54,3 +54,4 @@ export const getInitials = (value: string): string => {
     .map(word => word[0].toUpperCase()) // Get the first letter of each word
     .join(''); // Join them together
 };
+
