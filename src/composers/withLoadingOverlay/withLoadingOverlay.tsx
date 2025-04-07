@@ -1,12 +1,9 @@
-import { compose } from 'react-recompose';
+import { compose, withState } from 'react-recompose';
 
 import AppLoading from '@/components/AppComponents/AppLoading';
 import Overlay from '@/components/AppComponents/Overlay';
 
-import Config from './withLoadingOverlay.config';
 import { Props } from './withLoadingOverlay.types';
-
-const { withConnectorLoadingOverlay, withStateLoadingOverlay } = Config;
 
 const ComposedLoadingOverlay = (ComposedComponent: React.ComponentType<Props>) => {
   const HOC = (props: Props) => {
@@ -39,8 +36,7 @@ const ComposedLoadingOverlay = (ComposedComponent: React.ComponentType<Props>) =
 };
 
 const withLoadingOverlay = () => compose(
-  ...withStateLoadingOverlay,
-  withConnectorLoadingOverlay,
+  withState('isLoadingOverlay', 'setLoadingOverlay', false),
   ComposedLoadingOverlay
 );
 
