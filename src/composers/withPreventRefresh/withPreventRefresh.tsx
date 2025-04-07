@@ -2,8 +2,6 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { useBeforeunload } from 'react-beforeunload';
 
-import AppAlertDialog from '@/components/AppComponents/AppAlertDialog';
-
 import type { Options } from './withPreventRefresh.types';
 
 const withPreventRefresh = (options: Options) => (ComposedComponent: React.ComponentType<any>) => {
@@ -22,16 +20,7 @@ const withPreventRefresh = (options: Options) => (ComposedComponent: React.Compo
     }, [pathname, redirectPath, router]);
 
     const renderAlertDialog = () => {
-      return (
-        <AppAlertDialog
-          screenName="PreventRefresh"
-          open={true}
-          title={alertDialogOption?.title ?? 'Warning'}
-          description={alertDialogOption?.description ?? 'Are you sure you want to leave this page?'}
-          actionText={alertDialogOption?.actionText ?? 'Leave'}
-          onAction={alertDialogOption?.onAction}
-        />
-      );
+      return null;
     };
 
     useBeforeunload((event) => {
