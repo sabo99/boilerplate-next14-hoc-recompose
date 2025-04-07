@@ -19,7 +19,7 @@ type AxiosApiOptions = {
   params?: object;
 }
 
-export type SendRequestApiCallback = (payload?: object) => Promise<AxiosApiResponse | void>;
+export type SendRequestApiCallback = (payload?: object) => Promise<AxiosApiResponse>;
 
 export type AxiosApiRequest = {
   send: SendRequestApiCallback;
