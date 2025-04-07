@@ -21,6 +21,7 @@
 		"start": "dotenv -c -- next start",
 		"lint": "next lint",
 		"lint:fix": "next lint --fix",
+		"lf": "next lint --fix",
 		"test": "jest",
 		"test:cov": "jest --coverage",
 		"clean:install": "sh ./makefile.sh clean_install"
