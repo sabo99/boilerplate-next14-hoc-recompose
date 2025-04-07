@@ -1,16 +1,17 @@
 import React from 'react';
-import { compose, withProps } from 'react-recompose';
+import { compose, withState } from 'react-recompose';
 
 import AppSidebar from '@/components/AppComponents/AppSidebar';
 import AppSidebarInset from '@/components/AppComponents/AppSidebarInset';
 import { SidebarProvider } from '@/components/ui/sidebar';
 
-import { Options, Props } from './withSidebar.types';
+import { Props } from './withSidebar.types';
 
 const ComposedSidebar = (ComposedComponent: React.ComponentType<Props>) => {
   const HOC = (props: Props) => {
-    const { screenName, permissions } = props;
-    return (
+    const { screenName, permissions, enabledSidebar } = props;
+
+    return enabledSidebar &&
       <SidebarProvider>
         <AppSidebar
           screenName={screenName}
@@ -19,15 +20,14 @@ const ComposedSidebar = (ComposedComponent: React.ComponentType<Props>) => {
         <AppSidebarInset {...props}>
           <ComposedComponent {...props} />
         </AppSidebarInset>
-      </SidebarProvider>
-    );
+      </SidebarProvider>;
   };
 
   return HOC;
 };
 
-const withSidebar = (options: Options) => compose(
-  withProps(options),
+const withSidebar = () => compose(
+  withState('enabledSidebar', 'setEnabledSidebar', true),
   ComposedSidebar
 );
 
