@@ -1,0 +1,1 @@
+export const PersistGate = ({ children }: any) => children;
