@@ -9,27 +9,17 @@ import {
   SquareTerminalIcon,
   ViewIcon
 } from '@/__mocks__/lucide-react';
+import { joinWith } from '@/lib/utils';
 
-const accounts = [
-  {
-    name: 'Acme Inc',
-    email: 'acme.inc@gmail.com',
-    photo: '/photo-1.png',
-    sessionId: generateRandomString(10)
-  },
-  {
-    name: 'Acme Corp.',
-    email: 'acme.corp@gmail.com',
-    photo: '/photo-2.png',
-    sessionId: generateRandomString(10)
-  },
-  {
-    name: 'Evil Corp.',
-    email: 'evil.corp@gmail.com',
-    photo: '/photo-3.png',
-    sessionId: generateRandomString(10)
-  }
-];
+import accountsJson from '../../data/accounts.json';
+
+const mapAccounts = accountsJson.map((account) => ({
+  ...account,
+  sessionId: generateRandomString(12),
+  fullName: joinWith([account.firstName, account.lastName], ' ')
+}));
+
+const accounts = mapAccounts;
 
 const navMainItemData = [
   {
