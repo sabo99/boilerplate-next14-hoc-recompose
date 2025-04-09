@@ -4,14 +4,21 @@ describe('authTransform', () => {
   const sessionId = 'sessionId';
   const accessToken = 'accessToken';
   const refreshToken = 'refreshToken';
-  const userInfo = {};
+  const session = {
+    sessionId, accessToken, refreshToken
+  };
+  const activeAccount = {};
+  const accounts: any = [];
 
   describe('#transformInboundAuth', () => {
-    it('should return isAuthenticated is true when all state is present', () => {
-      const state = { sessionId, accessToken, refreshToken, userInfo };
+    it('should return isAuthenticated is true when session state is present', () => {
+      const state = { session, activeAccount, accounts };
       const expectedResult = {
         ...state,
-        isAuthenticated: true
+        session: {
+          ...state.session,
+          isAuthenticated: true
+        }
       };
 
       const result = transformInboundAuth(state);
@@ -19,11 +26,14 @@ describe('authTransform', () => {
       expect(result).toEqual(expectedResult);
     });
 
-    it('should return isAuthenticated is false when some state is not present', () => {
-      const state = { sessionId, accessToken: null, refreshToken, userInfo };
+    it('should return isAuthenticated is false when some session state is not present', () => {
+      const state = { session: { ...session, sessionId: null }, activeAccount, accounts };
       const expectedResult = {
         ...state,
-        isAuthenticated: false
+        session: {
+          ...state.session,
+          isAuthenticated: false
+        }
       };
 
       const result = transformInboundAuth(state);
@@ -43,26 +53,32 @@ describe('authTransform', () => {
   });
 
   describe('#transformOutboundAuth', () => {
-    it('should return isAuthenticated is true when all state is present', () => {
-      const state = { sessionId, accessToken, refreshToken, userInfo };
+    it('should return isAuthenticated is true when session state is present', () => {
+      const state = { session, activeAccount, accounts };
       const expectedResult = {
         ...state,
-        isAuthenticated: true
+        session: {
+          ...state.session,
+          isAuthenticated: true
+        }
       };
 
-      const result = transformOutboundAuth(state);
+      const result = transformInboundAuth(state);
 
       expect(result).toEqual(expectedResult);
     });
 
-    it('should return isAuthenticated is false when some state is not present', () => {
-      const state = { sessionId, accessToken: null, refreshToken, userInfo };
+    it('should return isAuthenticated is false when some session state is not present', () => {
+      const state = { session: { ...session, sessionId: null }, activeAccount, accounts };
       const expectedResult = {
         ...state,
-        isAuthenticated: false
+        session: {
+          ...state.session,
+          isAuthenticated: false
+        }
       };
 
-      const result = transformOutboundAuth(state);
+      const result = transformInboundAuth(state);
 
       expect(result).toEqual(expectedResult);
     });

@@ -1,33 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isAuthenticated: false,
-  sessionId: null,
-  accessToken: null,
-  refreshToken: null,
-  userInfo: null
+  session: {
+    isAuthenticated: false,
+    sessionId: null,
+    accessToken: null,
+    refreshToken: null
+  },
+  activeAccount: null,
+  accounts: []
 };
 
 const authenticationSlice = createSlice({
   name: 'authentication',
   initialState,
   reducers: {
-    setAuthenticated: (state, action) => {
-      state.isAuthenticated = action.payload;
+    setSession: (state, action) => {
+      state.session = action.payload;
     },
-    setSessionId: (state, action) => {
-      state.sessionId = action.payload;
+    setActiveAccount: (state, action) => {
+      state.activeAccount = action.payload;
     },
-    setAccessToken: (state, action) => {
-      state.accessToken = action.payload;
+    setAccounts: (state, action) => {
+      state.accounts = action.payload;
     },
-    setRefreshToken: (state, action) => {
-      state.refreshToken = action.payload;
+    clearAuthSession: (state) => {
+      state.session = initialState.session;
+      state.activeAccount = initialState.activeAccount;
     },
-    setUserInfo: (state, action) => {
-      state.userInfo = action.payload;
-    },
-    clearAuthState: (state) => {
+    clearAllSession: (state) => {
       Object.assign(state, initialState);
     }
   }

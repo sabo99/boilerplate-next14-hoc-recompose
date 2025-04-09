@@ -1,95 +1,88 @@
 import reducer, { actions } from './Auth.reducer';
 
 describe('authReducer', () => {
-  const intialState = {
-    isAuthenticated: false,
-    sessionId: null,
-    accessToken: null,
-    refreshToken: null,
-    userInfo: null
+  const initialState = {
+    session: {
+      isAuthenticated: false,
+      sessionId: null,
+      accessToken: null,
+      refreshToken: null
+    },
+    activeAccount: null,
+    accounts: []
   };
 
-  describe('#setAuthenticated', () => {
-    it('should return isAuthenticated when action is setAuthenticated.type', () => {
-      const isAuthenticated = true;
-      const action = { type: actions.setAuthenticated.type, payload: isAuthenticated };
+  describe('#setSession', () => {
+    it('should return session when action is setSession.type', () => {
+      const session = {
+        isAuthenticated: true,
+        sessionId: 'sessionId',
+        accessToken: 'accessToken',
+        refreshToken: 'refreshToken'
+      };
+      const action = { type: actions.setSession.type, payload: session };
       const expectedResult = {
-        ...intialState,
-        isAuthenticated
+        ...initialState,
+        session
       };
 
-      const result = reducer(intialState, action);
+      const result = reducer(initialState, action);
 
       expect(result).toEqual(expectedResult);
     });
   });
 
-  describe('#setSessionId', () => {
-    it('should return sessionId when action is setSessionId.type', () => {
-      const sessionId = 'sessionId';
-      const action = { type: actions.setSessionId.type, payload: sessionId };
+  describe('#setActiveAccount', () => {
+    it('should return activeAccount when action is setActiveAccount.type', () => {
+      const activeAccount = { email: 'mail@mail.com' };
+      const action = { type: actions.setActiveAccount.type, payload: activeAccount };
       const expectedResult = {
-        ...intialState,
-        sessionId
+        ...initialState,
+        activeAccount
       };
 
-      const result = reducer(intialState, action);
+      const result = reducer(initialState, action);
 
       expect(result).toEqual(expectedResult);
     });
   });
 
-  describe('#setAccessToken', () => {
-    it('should return accessToken when action is setAccessToken.type', () => {
-      const accessToken = 'accessToken';
-      const action = { type: actions.setAccessToken.type, payload: accessToken };
+  describe('#setAccounts', () => {
+    it('should return accounts when action is setAccounts.type', () => {
+      const accounts = [{ email: 'mail.01@mail.com' }, { email: 'mail.02@mail.com' }];
+      const action = { type: actions.setAccounts.type, payload: accounts };
       const expectedResult = {
-        ...intialState,
-        accessToken
+        ...initialState,
+        accounts
       };
 
-      const result = reducer(intialState, action);
+      const result = reducer(initialState, action);
 
       expect(result).toEqual(expectedResult);
     });
   });
 
-  describe('#setRefreshToken', () => {
-    it('should return refreshToken when action is setRefreshToken.type', () => {
-      const refreshToken = 'refreshToken';
-      const action = { type: actions.setRefreshToken.type, payload: refreshToken };
+  describe('#clearAuthSession', () => {
+    it('should return session and activeAccount initialState when action is clearAuthSession.type', () => {
+      const action = { type: actions.clearAuthSession.type };
       const expectedResult = {
-        ...intialState,
-        refreshToken
+        ...initialState,
+        session: initialState.session,
+        activeAccount: initialState.activeAccount
       };
 
-      const result = reducer(intialState, action);
+      const result = reducer(initialState, action);
 
       expect(result).toEqual(expectedResult);
     });
   });
 
-  describe('#setUserInfo', () => {
-    it('should return userInfo when action is setUserInfo.type', () => {
-      const userInfo = { email: 'mail@mail.com' };
-      const action = { type: actions.setUserInfo.type, payload: userInfo };
-      const expectedResult = {
-        ...intialState,
-        userInfo
-      };
+  describe('#clearAllSession', () => {
+    it('should return initialState when action is clearAllSession.type', () => {
+      const action = { type: actions.clearAllSession.type };
+      const expectedResult = initialState;
 
-      const result = reducer(intialState, action);
-
-      expect(result).toEqual(expectedResult);
-    });
-  });
-
-  describe('#clearAuthState', () => {
-    it('should return initialState when action is clearAuthState.type', () => {
-      const action = { type: actions.clearAuthState.type };
-      const expectedResult = intialState;
-
-      const result = reducer(intialState, action);
+      const result = reducer(initialState, action);
 
       expect(result).toEqual(expectedResult);
     });

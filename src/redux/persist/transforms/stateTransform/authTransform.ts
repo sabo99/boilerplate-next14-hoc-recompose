@@ -1,14 +1,16 @@
 const enforceAuthConsistency = (state: any) => {
   if (!state) return state;
 
-  const { sessionId, accessToken, refreshToken, userInfo } = state;
-  const isAuthenticated = Boolean(
-    sessionId && accessToken && refreshToken && userInfo
-  );
+  const { session } = state;
+  const { sessionId, accessToken, refreshToken } = session;
+  const isAuthenticated = Boolean(sessionId && accessToken && refreshToken);
 
   return {
     ...state,
-    isAuthenticated
+    session: {
+      ...session,
+      isAuthenticated
+    }
   };
 };
 
