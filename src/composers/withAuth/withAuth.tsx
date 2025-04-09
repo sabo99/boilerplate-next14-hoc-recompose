@@ -5,20 +5,17 @@ import { ReduxRootState } from '@/redux';
 import { actions as authActions } from '@/redux/reducers/Auth';
 
 export const mapStateToProps = (state: ReduxRootState) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  sessionId: state.auth.sessionId,
-  accessToken: state.auth.accessToken,
-  refreshToken: state.auth.refreshToken,
-  userInfo: state.auth.userInfo
+  session: state.auth.session,
+  activeAccount: state.auth.activeAccount,
+  accounts: state.auth.accounts
 });
 
 export const mapDispatchToProps = {
-  setAuthenticated: authActions.setAuthenticated,
-  setSessionId: authActions.setSessionId,
-  setAccessToken: authActions.setAccessToken,
-  setRefreshToken: authActions.setRefreshToken,
-  setUserInfo: authActions.setUserInfo,
-  clearAuthState: authActions.clearAuthState
+  setSession: authActions.setSession,
+  setActiveAccount: authActions.setActiveAccount,
+  setAccounts: authActions.setAccounts,
+  clearAuthSession: authActions.clearAuthSession,
+  clearAllSession: authActions.clearAllSession
 };
 
 const withAuth = () => {

@@ -25,11 +25,14 @@ describe('withAuth', () => {
     it('should map Redux state to props correctly', () => {
       const mockState = {
         auth: {
-          isAuthenticated: true,
-          sessionId: '123',
-          accessToken: 'access-token',
-          refreshToken: 'refresh-token',
-          userInfo: { name: 'JohnDoe', email: 'email@mail.com' }
+          session: {
+            isAuthenticated: true,
+            sessionId: '123',
+            accessToken: 'access-token',
+            refreshToken: 'refresh-token'
+          },
+          activeAccount: { name: 'JohnDoe', email: 'email@mail.com' },
+          accounts: [{ name: 'JohnDoe', email: 'email@mail.com' }]
         }
       };
 
@@ -40,12 +43,11 @@ describe('withAuth', () => {
 
     it('should map dispatch to props correctly', () => {
       const actions = {
-        setAuthenticated: authActions.setAuthenticated,
-        setSessionId: authActions.setSessionId,
-        setAccessToken: authActions.setAccessToken,
-        setRefreshToken: authActions.setRefreshToken,
-        setUserInfo: authActions.setUserInfo,
-        clearAuthState: authActions.clearAuthState
+        setSession: authActions.setSession,
+        setActiveAccount: authActions.setActiveAccount,
+        setAccounts: authActions.setAccounts,
+        clearAuthSession: authActions.clearAuthSession,
+        clearAllSession: authActions.clearAllSession
       };
 
       expect(mapDispatchToProps).toEqual(actions);
