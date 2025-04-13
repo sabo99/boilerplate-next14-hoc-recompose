@@ -15,9 +15,10 @@ import type { Props } from './ExampleDataFetching.types';
 const { formSchema } = ExampleDataFetchingConfig;
 
 const ExampleDataFetching: React.FC<Props> = ({
-  screenName, isAuthenticated, products, isLoadingProduct,
+  screenName, products, isLoadingProduct, session,
   onHandleLogin, onHandleRefetchProducts, onHandleLogout
 }) => {
+  const { isAuthenticated = null } = session;
 
   React.useEffect(() => {
     if (isAuthenticated) {

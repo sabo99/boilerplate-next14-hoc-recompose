@@ -14,7 +14,7 @@ export const mapDispatchToProps = {
   setSession: authActions.setSession,
   setActiveAccount: authActions.setActiveAccount,
   setAccounts: authActions.setAccounts,
-  clearAuthSession: authActions.clearAuthSession,
+  clearSession: authActions.clearSession,
   clearAllSession: authActions.clearAllSession
 };
 

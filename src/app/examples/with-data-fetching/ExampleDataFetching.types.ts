@@ -5,7 +5,6 @@ import type { SendRequestApiCallback } from '@/composers/withAxiosApi/withAxiosA
 
 export type Props = {
   screenName: string;
-  isAuthenticated: boolean;
   setEnabledSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   isLoadingProduct: boolean;
   errorProduct: any;

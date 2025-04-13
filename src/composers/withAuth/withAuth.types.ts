@@ -7,7 +7,7 @@ export type Props = {
   setSession: React.Dispatch<React.SetStateAction<Session>>,
   setActiveAccount: React.Dispatch<React.SetStateAction<Account>>,
   setAccounts: React.Dispatch<React.SetStateAction<Account[]>>,
-  clearAuthSession: () => void;
+  clearSession: () => void;
   clearAllSession: () => void;
 }
 

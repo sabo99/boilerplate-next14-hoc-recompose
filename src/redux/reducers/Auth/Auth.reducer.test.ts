@@ -38,7 +38,8 @@ describe('authReducer', () => {
       const action = { type: actions.setActiveAccount.type, payload: activeAccount };
       const expectedResult = {
         ...initialState,
-        activeAccount
+        activeAccount,
+        accounts: [activeAccount]
       };
 
       const result = reducer(initialState, action);
@@ -62,9 +63,9 @@ describe('authReducer', () => {
     });
   });
 
-  describe('#clearAuthSession', () => {
-    it('should return session and activeAccount initialState when action is clearAuthSession.type', () => {
-      const action = { type: actions.clearAuthSession.type };
+  describe('#clearSession', () => {
+    it('should return session and activeAccount initialState when action is clearSession.type', () => {
+      const action = { type: actions.clearSession.type };
       const expectedResult = {
         ...initialState,
         session: initialState.session,

@@ -1,6 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+import type { Account } from '@/components/AppComponents/AccountInfo/AccountInfo.types';
+type StateType = {
+  session: {
+    isAuthenticated: boolean;
+    sessionId: string | null;
+    accessToken: string | null;
+    refreshToken: string | null;
+  },
+  activeAccount: Account | null;
+  accounts: Account[]
+}
+
+const initialState: StateType = {
   session: {
     isAuthenticated: false,
     sessionId: null,
@@ -19,12 +31,21 @@ const authenticationSlice = createSlice({
       state.session = action.payload;
     },
     setActiveAccount: (state, action) => {
-      state.activeAccount = action.payload;
+      const newAccount = action.payload as Account;
+      state.activeAccount = newAccount;
+
+      const exists = state.accounts.some(
+        (account: Account) => account.email === newAccount.email
+      );
+
+      if (!exists) {
+        state.accounts.push(newAccount);
+      }
     },
     setAccounts: (state, action) => {
       state.accounts = action.payload;
     },
-    clearAuthSession: (state) => {
+    clearSession: (state) => {
       state.session = initialState.session;
       state.activeAccount = initialState.activeAccount;
     },
