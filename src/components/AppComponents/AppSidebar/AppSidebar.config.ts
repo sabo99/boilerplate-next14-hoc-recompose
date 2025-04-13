@@ -10,35 +10,21 @@ import {
 } from 'lucide-react';
 
 import Constants from '@/constants';
+import { cn } from '@/lib/utils';
+
+import accounts from '../../../../data/accounts.json';
+
+const mapAccounts = accounts.map((account) => ({
+  ...account,
+  sessionId: generateRandomString(12),
+  fullName: cn(account.firstName, account.lastName)
+}));
 
 const { Paths } = Constants;
 
 const appSidebarData = {
-  user: {
-    name: 'shadcn',
-    email: 'shadcn@example.com',
-    photo: '/photo-1.png'
-  },
-  accounts: [
-    {
-      name: 'shadcn',
-      email: 'shadcn@example.com',
-      photo: '/photo-1.png',
-      sessionId: generateRandomString(10)
-    },
-    {
-      name: 'Acme Corp.',
-      email: 'acme.corpadwadawdadw@gmail.com',
-      photo: '/photo-2.png',
-      sessionId: generateRandomString(10)
-    },
-    {
-      name: 'Evil Corp.',
-      email: 'evil.corp@gmail.com',
-      photo: '/photo-3.png',
-      sessionId: generateRandomString(10)
-    }
-  ],
+  user: mapAccounts[0],
+  accounts: mapAccounts,
   navMain: [
     {
       title: 'Overviews',

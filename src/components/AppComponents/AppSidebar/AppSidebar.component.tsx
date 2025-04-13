@@ -16,38 +16,54 @@ import { testProps, tid } from '@/lib/utils';
 import AppSidebarConfig from './AppSidebar.config';
 import type { Props } from './AppSidebar.types';
 
-const { appSidebarData, getFilteredNavMain } = AppSidebarConfig;
+const { getFilteredNavMain } = AppSidebarConfig;
 
-const AppSidebar: React.FC<Props> = ({ screenName, permissions: userPermissions, ...props }) => {
+const AppSidebar: React.FC<Props> = ({
+  screenName, permissions: userPermissions, accounts, ...props
+}) => {
   const { isMobile } = useSidebar();
 
+  const isHiddenFooter = typeof accounts !== 'undefined';
   const navMain = getFilteredNavMain(userPermissions);
+
+  const renderHeader = () => (
+    <SidebarHeader {...testProps(tid(screenName, 'SidebarHeader'))}>
+      <AccountSwitcher
+        isMobile={isMobile}
+        screenName={screenName}
+        accounts={accounts}
+        {...props}
+      />
+    </SidebarHeader>
+  );
+
+  const renderContent = () => (
+    <SidebarContent {...testProps(tid(screenName, 'SidebarContent'))}>
+      <NavMain
+        screenName={screenName}
+        items={navMain}
+      />
+    </SidebarContent>
+  );
+
+  const renderFooter = () => isHiddenFooter && (
+    <SidebarFooter {...testProps(tid(screenName, 'SidebarFooter'))} >
+      <NavUser
+        screenName={screenName}
+        isMobile={isMobile}
+        user={props.activeAccount}
+      />
+    </SidebarFooter>
+  );
 
   return (
     <Sidebar
       collapsible="icon"
       {...testProps(tid(screenName, 'Sidebar'))}
-      {...props}>
-      <SidebarHeader {...testProps(tid(screenName, 'SidebarHeader'))}>
-        <AccountSwitcher
-          screenName={screenName}
-          isMobile={isMobile}
-          accounts={appSidebarData.accounts}
-        />
-      </SidebarHeader>
-      <SidebarContent {...testProps(tid(screenName, 'SidebarContent'))}>
-        <NavMain
-          screenName={screenName}
-          items={navMain}
-        />
-      </SidebarContent>
-      <SidebarFooter {...testProps(tid(screenName, 'SidebarFooter'))}>
-        <NavUser
-          screenName={screenName}
-          isMobile={isMobile}
-          user={appSidebarData.user}
-        />
-      </SidebarFooter>
+    >
+      {renderHeader()}
+      {renderContent()}
+      {renderFooter()}
       <SidebarRail />
     </Sidebar>
   );

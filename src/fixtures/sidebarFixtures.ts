@@ -9,14 +9,12 @@ import {
   SquareTerminalIcon,
   ViewIcon
 } from '@/__mocks__/lucide-react';
-import { joinWith } from '@/lib/utils';
 
 import accountsJson from '../../data/accounts.json';
 
 const mapAccounts = accountsJson.map((account) => ({
   ...account,
-  sessionId: generateRandomString(12),
-  fullName: joinWith([account.firstName, account.lastName], ' ')
+  sessionId: generateRandomString(12)
 }));
 
 const accounts = mapAccounts;
