@@ -1,15 +1,21 @@
 import { cleanup, render } from '@testing-library/react';
 
 import { accounts } from '@/fixtures';
+import { joinWith } from '@/lib/utils';
 
 import AccountInfo from './AccountInfo.component';
+import AccountInfoConfig from './AccountInfo.config';
+
+const { componentName } = AccountInfoConfig;
 
 describe('AccountInfo', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'TestPage';
+  const testId = `${screenName}_${componentName}`;
+  const user = accounts[0];
   const props = {
     screenName,
-    user: accounts[0]
+    user
   };
 
   beforeEach(() => {
@@ -26,15 +32,35 @@ describe('AccountInfo', () => {
   describe('#render', () => {
 
     it('should render component with testId correctly', () => {
-      const userNameTestId = `${screenName}_StyledUserName`;
-      const userEmailTestId = `${screenName}_StyledUserEmail`;
+      const userFullNameTestId = `${testId}_StyledUserFullName`;
+      const userEmailTestId = `${testId}_StyledUserEmail`;
+      const fullName = joinWith([user.firstName, user.lastName], ' ');
 
       const { getByTestId } = renderResult;
 
-      expect(getByTestId(userNameTestId)).toBeTruthy();
-      expect(getByTestId(userNameTestId)).toHaveTextContent(props.user.name);
+      expect(getByTestId(userFullNameTestId)).toBeTruthy();
+      expect(getByTestId(userFullNameTestId)).toHaveTextContent(fullName);
       expect(getByTestId(userEmailTestId)).toBeTruthy();
-      expect(getByTestId(userEmailTestId)).toHaveTextContent(props.user.email);
+      expect(getByTestId(userEmailTestId)).toHaveTextContent(user.email);
+    });
+
+    it('should render with pre-condition when user is undefined', () => {
+      const userFullNameTestId = `${testId}_StyledUserFullName`;
+      const userEmailTestId = `${testId}_StyledUserEmail`;
+      const fullName = 'Guest';
+      const email = '-';
+      const mockProps = {
+        ...props,
+        user: undefined
+      };
+
+      const { getByTestId, rerender } = renderResult;
+      rerender(<AccountInfo {...mockProps} />);
+
+      expect(getByTestId(userFullNameTestId)).toBeTruthy();
+      expect(getByTestId(userFullNameTestId)).toHaveTextContent(fullName);
+      expect(getByTestId(userEmailTestId)).toBeTruthy();
+      expect(getByTestId(userEmailTestId)).toHaveTextContent(email);
     });
 
     it('should render icon when icon is provide', () => {

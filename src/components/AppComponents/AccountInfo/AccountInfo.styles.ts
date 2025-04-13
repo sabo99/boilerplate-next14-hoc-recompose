@@ -10,7 +10,7 @@ export const StyledContainer: React.FC<React.HTMLAttributes<'div'>> = (props) =>
     props.children
   );
 
-export const StyledUserName: React.FC<React.HTMLAttributes<'span'>> = (props) =>
+export const StyledUserFullName: React.FC<React.HTMLAttributes<'span'>> = (props) =>
   React.createElement(
     'span',
     {

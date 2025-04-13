@@ -1,20 +1,33 @@
-import AppUserAvatar from '@/components/AppComponents/AppUserAvatar';
-import { testProps, tid } from '@/lib/utils';
+import AppAvatar from '@/components/AppComponents/AppAvatar';
+import { getInitials, joinWith, testProps, tid } from '@/lib/utils';
 
-import { StyledContainer, StyledUserEmail, StyledUserName } from './AccountInfo.styles';
+import AccountInfoConfig from './AccountInfo.config';
+import { StyledContainer, StyledUserEmail, StyledUserFullName } from './AccountInfo.styles';
 import type { Props } from './AccountInfo.types';
+
+const { componentName } = AccountInfoConfig;
 
 const AccountInfo: React.FC<Props> = (props) => {
   const { screenName, user, icon: renderIcon } = props;
+  const testId = tid(screenName, componentName);
+  const fullName = user ? joinWith([user.firstName, user.lastName], ' ') : 'Guest';
+  const initialName = getInitials(fullName);
+  const email = user ? user.email : '-';
+
   return (
     <>
-      <AppUserAvatar {...props} />
+      <AppAvatar
+        screenName={screenName}
+        src={user?.image}
+        alt="User-Image"
+        fallback={initialName}
+      />
       <StyledContainer>
-        <StyledUserName {...testProps(tid(screenName, 'StyledUserName'))}>
-          {user.name}
-        </StyledUserName>
-        <StyledUserEmail {...testProps(tid(screenName, 'StyledUserEmail'))}>
-          {user.email}
+        <StyledUserFullName {...testProps(tid(testId, 'StyledUserFullName'))}>
+          {fullName}
+        </StyledUserFullName>
+        <StyledUserEmail {...testProps(tid(testId, 'StyledUserEmail'))}>
+          {email}
         </StyledUserEmail>
       </StyledContainer>
 
