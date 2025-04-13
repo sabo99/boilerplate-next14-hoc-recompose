@@ -1,4 +1,4 @@
-import {  render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import { MockComponent } from '@/__mocks__/component';
 import { accounts } from '@/fixtures';
@@ -27,7 +27,9 @@ describe('AccountSwitcher', () => {
   const props = {
     screenName,
     isMobile: false,
-    accounts
+    accounts,
+    activeAccount: accounts[0],
+    setActiveAccount: jest.fn()
   };
 
   beforeEach(() => {
@@ -71,5 +73,45 @@ describe('AccountSwitcher', () => {
       expect(getByTestId(styledDropdownMenuContentId)).toHaveAttribute('side', 'bottom');
     });
 
+    it('should render UserRoundCheckIcon for the active account', () => {
+      const iconTestId = `${screenName}_UserRoundCheckIcon`;
+
+      const { getByTestId } = renderResult;
+
+      expect(getByTestId(iconTestId)).toBeTruthy();
+    });
+
+    it('should render description "Account has maximum extended" when accounts reach the maximum limit', () => {
+      const description = 'Account has maximum extended';
+
+      const { getByText } = renderResult;
+
+      expect(getByText(description)).toBeTruthy();
+    });
+
+    it('should render "Add Account" description when accounts are not at maximum limit', () => {
+      const description = 'Add Account';
+      const mockProps = {
+        ...props,
+        accounts: []
+      };
+
+      const { getByText, rerender } = renderResult;
+      rerender(<AccountSwitcher {...mockProps} />);
+
+      expect(getByText(description)).toBeTruthy();
+    });
+  });
+
+  describe('#onClick', () => {
+    it('should invoke setActiveAccount when selected another account', async () => {
+      const index = 2;
+      const dropdownMenuItemSelectedTestId = `${screenName}_DropdownMenuItem_${index}`;
+
+      const { getByTestId } = renderResult;
+      fireEvent.click(getByTestId(dropdownMenuItemSelectedTestId));
+
+      expect(props.setActiveAccount).toHaveBeenCalledWith(accounts[index]);
+    });
   });
 });

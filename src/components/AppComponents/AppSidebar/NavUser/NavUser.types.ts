@@ -1,4 +1,4 @@
-import { Account } from '@/components/AppComponents/AppSidebar/AccountSwitcher/AccountSwitcher.types';
+import type { Account } from '@/components/AppComponents/AccountInfo/AccountInfo.types';
 
 export type Props = {
   screenName: string;
