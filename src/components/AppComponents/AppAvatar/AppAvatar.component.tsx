@@ -1,9 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getInitials, testProps, tid } from '@/lib/utils';
+import { testProps, tid } from '@/lib/utils';
 
-import type { Props } from './AppUserAvatar.types';
+import type { Props } from './AppAvatar.types';
 
-const AppUserAvatar: React.FC<Props> = ({ screenName, user, avatarFallback }) => {
+const AppAvatar: React.FC<Props> = ({ screenName, fallback, ...props }) => {
   return (
     <Avatar
       {...testProps(tid(screenName, 'Avatar'))}
@@ -11,17 +11,16 @@ const AppUserAvatar: React.FC<Props> = ({ screenName, user, avatarFallback }) =>
     >
       <AvatarImage
         {...testProps(tid(screenName, 'AvatarImage'))}
-        src={user.photo}
-        alt={user.name}
+        {...props}
       />
       <AvatarFallback
         {...testProps(tid(screenName, 'AvatarFallback'))}
         className="rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
       >
-        {avatarFallback || getInitials(user.name)}
+        {fallback}
       </AvatarFallback>
     </Avatar>
   );
 };
 
-export default AppUserAvatar;
+export default AppAvatar;
