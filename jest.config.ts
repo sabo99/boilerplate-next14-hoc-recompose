@@ -58,7 +58,7 @@ const config: Config = {
       branches: 99,
       functions: 99,
       lines: 99,
-      statements: 99
+      statements: 99.99
     }
   },
 
