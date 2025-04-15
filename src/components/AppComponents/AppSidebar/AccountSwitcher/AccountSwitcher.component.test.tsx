@@ -1,11 +1,15 @@
 import { fireEvent, render } from '@testing-library/react';
+import { useRouter } from 'next/navigation';
 
 import { MockComponent } from '@/__mocks__/component';
-import { accounts } from '@/fixtures';
+import { accounts, session } from '@/fixtures';
 
 import AccountSwitcher from './AccountSwitcher.component';
 
 jest
+  .mock('next/navigation', () => ({
+    useRouter: jest.fn()
+  }))
   .mock('@/components/ui/sidebar', () => ({
     SidebarMenuButton: jest.fn(MockComponent),
     SidebarMenu: jest.fn(MockComponent),
@@ -28,11 +32,23 @@ describe('AccountSwitcher', () => {
     screenName,
     isMobile: false,
     accounts,
+    session,
     activeAccount: accounts[0],
-    setActiveAccount: jest.fn()
+    setSelectedRelogAccount: jest.fn(),
+    setSession: jest.fn(),
+    setActiveAccount: jest.fn(),
+    setAccounts: jest.fn(),
+    clearSession: jest.fn(),
+    clearAllSession: jest.fn(),
+    clearSelectedRelogAccount: jest.fn()
+  };
+  const router = {
+    push: jest.fn()
   };
 
   beforeEach(() => {
+    (useRouter as jest.Mock).mockReturnValue(router);
+
     renderResult = render(
       <AccountSwitcher {...props} />
     );
@@ -104,14 +120,14 @@ describe('AccountSwitcher', () => {
   });
 
   describe('#onClick', () => {
-    it('should invoke setActiveAccount when selected another account', async () => {
+    it('should invoke setSelectedRelogAccount and router.push when selected another account', async () => {
       const index = 2;
       const dropdownMenuItemSelectedTestId = `${screenName}_DropdownMenuItem_${index}`;
 
       const { getByTestId } = renderResult;
       fireEvent.click(getByTestId(dropdownMenuItemSelectedTestId));
 
-      expect(props.setActiveAccount).toHaveBeenCalledWith(accounts[index]);
+      expect(props.setSelectedRelogAccount).toHaveBeenCalledWith(accounts[index]);
     });
   });
 });

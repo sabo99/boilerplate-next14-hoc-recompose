@@ -1,5 +1,5 @@
-import type { Account } from '@/components/AppComponents/AccountInfo/AccountInfo.types';
 import { DropdownMenuContent } from '@/components/ui/dropdown-menu';
+import { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
 
 export type StyledDropdownMenuContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuContent>,
@@ -11,7 +11,4 @@ export type StyledDropdownMenuContentProps = Omit<
 export type Props = {
   screenName: string;
   isMobile: boolean;
-  accounts: Account[];
-  activeAccount: Account;
-  setActiveAccount: React.Dispatch<React.SetStateAction<Account>>;
-}
+}& withAuthProps;

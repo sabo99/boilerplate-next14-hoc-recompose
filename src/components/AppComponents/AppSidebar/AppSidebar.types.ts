@@ -1,10 +1,7 @@
-import type { Account } from '@/components/AppComponents/AccountInfo/AccountInfo.types';
 import { Sidebar } from '@/components/ui/sidebar';
+import { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
 
 export type Props = React.ComponentProps<typeof Sidebar> & {
-  screenName: string,
-  permissions: string[],
-  accounts: Account[],
-  activeAccount: Account,
-  setActiveAccount: React.Dispatch<React.SetStateAction<Account>>,
-}
+  screenName: string;
+  permissions: string[];
+} & withAuthProps;

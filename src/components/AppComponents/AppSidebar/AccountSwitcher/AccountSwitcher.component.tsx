@@ -23,15 +23,19 @@ import {
 import type { Props } from './AccountSwitcher.types';
 
 const AccountSwitcher: React.FC<Props> = ({
-  screenName, isMobile, accounts, activeAccount, setActiveAccount
+  screenName, isMobile, accounts, activeAccount, setSelectedRelogAccount
 }) => {
   const maxAccount = 3;
+
+  const onRelogin = (account: any) => {
+    setSelectedRelogAccount(account);
+  };
 
   const renderAccounts = () => (
     accounts && accounts.map((account, index) => (
       <DropdownMenuItem
         key={index}
-        onClick={() => setActiveAccount(account)}
+        onClick={() => onRelogin(account)}
         className="gap-2 p-2"
         {...testProps(tid(screenName, 'DropdownMenuItem', index.toString()))}
       >
