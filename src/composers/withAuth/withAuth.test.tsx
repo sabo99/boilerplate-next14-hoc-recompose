@@ -2,6 +2,7 @@ import { compose } from 'react-recompose';
 import { connect } from 'react-redux';
 
 import { actions as authActions } from '@/redux/reducers/Auth';
+import { actions as relogActions } from '@/redux/reducers/Relogin';
 
 import withAuth, { mapDispatchToProps, mapStateToProps } from './withAuth';
 
@@ -11,6 +12,7 @@ jest.mock('react-recompose')
 describe('withAuth', () => {
   const composeCallback = jest.fn();
   const composeResult = {};
+  const account = { name: 'JohnDoe', email: 'email@mail.com' };
 
   beforeEach(() => {
     composeCallback.mockReturnValue(composeResult);
@@ -23,7 +25,7 @@ describe('withAuth', () => {
 
   describe('#connect', () => {
     it('should map Redux state to props correctly', () => {
-      const mockState = {
+      const state = {
         auth: {
           session: {
             isAuthenticated: true,
@@ -31,14 +33,17 @@ describe('withAuth', () => {
             accessToken: 'access-token',
             refreshToken: 'refresh-token'
           },
-          activeAccount: { name: 'JohnDoe', email: 'email@mail.com' },
-          accounts: [{ name: 'JohnDoe', email: 'email@mail.com' }]
+          activeAccount: account,
+          accounts: [account]
+        },
+        relogin: {
+          selectedRelogAccount: account
         }
       };
 
-      const props = mapStateToProps(mockState as any);
+      const props = mapStateToProps(state as any);
 
-      expect(props).toEqual(mockState.auth);
+      expect(props).toEqual({ ...state.auth, ...state.relogin });
     });
 
     it('should map dispatch to props correctly', () => {
@@ -47,7 +52,9 @@ describe('withAuth', () => {
         setActiveAccount: authActions.setActiveAccount,
         setAccounts: authActions.setAccounts,
         clearSession: authActions.clearSession,
-        clearAllSession: authActions.clearAllSession
+        clearAllSession: authActions.clearAllSession,
+        setSelectedRelogAccount: relogActions.setSelectedRelogAccount,
+        clearSelectedRelogAccount: relogActions.clearSelectedRelogAccount
       };
 
       expect(mapDispatchToProps).toEqual(actions);

@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 
 import { ReduxRootState } from '@/redux';
 import { actions as authActions } from '@/redux/reducers/Auth';
+import { actions as relogActions } from '@/redux/reducers/Relogin';
 
 export const mapStateToProps = (state: ReduxRootState) => ({
   session: state.auth.session,
   activeAccount: state.auth.activeAccount,
-  accounts: state.auth.accounts
+  accounts: state.auth.accounts,
+  selectedRelogAccount: state.relogin.selectedRelogAccount
 });
 
 export const mapDispatchToProps = {
@@ -15,7 +17,9 @@ export const mapDispatchToProps = {
   setActiveAccount: authActions.setActiveAccount,
   setAccounts: authActions.setAccounts,
   clearSession: authActions.clearSession,
-  clearAllSession: authActions.clearAllSession
+  clearAllSession: authActions.clearAllSession,
+  setSelectedRelogAccount: relogActions.setSelectedRelogAccount,
+  clearSelectedRelogAccount: relogActions.clearSelectedRelogAccount
 };
 
 const withAuth = () => {
