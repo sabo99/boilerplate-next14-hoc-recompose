@@ -1,5 +1,3 @@
-import { generateRandomString } from '@sabo99/node-utils';
-
 import {
   DatabaseZapIcon,
   LayoutDashboardIcon,
@@ -9,15 +7,6 @@ import {
   SquareTerminalIcon,
   ViewIcon
 } from '@/__mocks__/lucide-react';
-
-import accountsJson from '../../data/accounts.json';
-
-const mapAccounts = accountsJson.map((account) => ({
-  ...account,
-  sessionId: generateRandomString(12)
-}));
-
-const accounts = mapAccounts;
 
 const navMainItemData = [
   {
@@ -69,6 +58,5 @@ const navMainItemData = [
 ];
 
 export {
-  accounts,
   navMainItemData
 };
