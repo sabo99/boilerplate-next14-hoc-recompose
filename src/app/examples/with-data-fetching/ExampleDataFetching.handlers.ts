@@ -6,7 +6,7 @@ import type {
 } from './ExampleDataFetching.types';
 
 const onHandleLogin = (props: Props): OnHandleLoginCallback => async (payload, options) => {
-  const { login, setSession, setActiveAccount, setAccounts, accounts, clearSession } = props;
+  const { login, setSession, setActiveAccount, clearSelectedRelogAccount, clearSession } = props;
   const { form } = options;
 
   const { data, error } = await login(payload);
@@ -26,7 +26,7 @@ const onHandleLogin = (props: Props): OnHandleLoginCallback => async (payload, o
       refreshToken
     });
     setActiveAccount(activeAccount);
-    setAccounts([...accounts, activeAccount]);
+    clearSelectedRelogAccount();
   }
 
   form.reset();

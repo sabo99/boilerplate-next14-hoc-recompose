@@ -12,27 +12,24 @@ import { testProps, tid } from '@/lib/utils';
 import ExampleDataFetchingConfig from './ExampleDataFetching.config';
 import type { Props } from './ExampleDataFetching.types';
 
-const { formSchema } = ExampleDataFetchingConfig;
+const { formSchema, formDefaultValue } = ExampleDataFetchingConfig;
 
 const ExampleDataFetching: React.FC<Props> = ({
   screenName, products, isLoadingProduct, session,
   onHandleLogin, onHandleRefetchProducts, onHandleLogout
 }) => {
-  const { isAuthenticated = null } = session;
+  const { isAuthenticated = null } = session!;
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: formDefaultValue
+  });
 
   React.useEffect(() => {
     if (isAuthenticated) {
       onHandleRefetchProducts();
     }
   }, [isAuthenticated, onHandleRefetchProducts]);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: '',
-      password: ''
-    }
-  });
 
   const onSubmit = async (payload: z.infer<typeof formSchema>) => {
     await onHandleLogin(payload, { form });
@@ -136,6 +133,10 @@ const ExampleDataFetching: React.FC<Props> = ({
     </div>
   );
 
+  const content = isAuthenticated
+    ? authenticatedRender()
+    : unauthenticatedRender();
+
   return (
     <AppBase
       screenName={screenName}
@@ -144,7 +145,7 @@ const ExampleDataFetching: React.FC<Props> = ({
     >
       isAuthenticated: {isAuthenticated ? 'true' : 'false'}
       <div {...testProps(tid(screenName, 'MainContainer'))}>
-        {isAuthenticated ? authenticatedRender() : unauthenticatedRender()}
+        {content}
       </div>
     </AppBase>
   );
