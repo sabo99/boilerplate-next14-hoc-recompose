@@ -18,20 +18,16 @@ import type { Props } from './AppSidebar.types';
 
 const { getFilteredNavMain } = AppSidebarConfig;
 
-const AppSidebar: React.FC<Props> = ({
-  screenName, permissions: userPermissions, accounts, ...props
-}) => {
+const AppSidebar: React.FC<Props> = (props) => {
+  const { screenName, permissions: userPermissions, activeAccount } = props;
   const { isMobile } = useSidebar();
 
-  const isHiddenFooter = typeof accounts !== 'undefined';
   const navMain = getFilteredNavMain(userPermissions);
 
   const renderHeader = () => (
     <SidebarHeader {...testProps(tid(screenName, 'SidebarHeader'))}>
       <AccountSwitcher
         isMobile={isMobile}
-        screenName={screenName}
-        accounts={accounts}
         {...props}
       />
     </SidebarHeader>
@@ -46,12 +42,11 @@ const AppSidebar: React.FC<Props> = ({
     </SidebarContent>
   );
 
-  const renderFooter = () => isHiddenFooter && (
+  const renderFooter = () => activeAccount && (
     <SidebarFooter {...testProps(tid(screenName, 'SidebarFooter'))} >
       <NavUser
-        screenName={screenName}
         isMobile={isMobile}
-        user={props.activeAccount}
+        {...props}
       />
     </SidebarFooter>
   );

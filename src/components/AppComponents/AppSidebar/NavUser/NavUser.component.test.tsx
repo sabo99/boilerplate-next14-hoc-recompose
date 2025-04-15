@@ -1,7 +1,7 @@
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 
 import { MockComponent } from '@/__mocks__/component';
-import { accounts } from '@/fixtures';
+import { accounts, session } from '@/fixtures';
 
 import NavUser from './NavUser.component';
 
@@ -29,7 +29,16 @@ describe('NavUser', () => {
   const props = {
     screenName,
     isMobile: true,
-    user: accounts[0]
+    accounts,
+    session,
+    activeAccount: accounts[0],
+    setSelectedRelogAccount: jest.fn(),
+    setSession: jest.fn(),
+    setActiveAccount: jest.fn(),
+    setAccounts: jest.fn(),
+    clearSession: jest.fn(),
+    clearAllSession: jest.fn(),
+    clearSelectedRelogAccount: jest.fn()
   };
 
   beforeEach(() => {
@@ -65,6 +74,17 @@ describe('NavUser', () => {
 
       expect(getByTestId(dropdownMenuContentTestId)).toBeTruthy();
       expect(getByTestId(dropdownMenuContentTestId)).toHaveAttribute('side', 'right');
+    });
+  });
+
+  describe('#onClick', () => {
+    it('should called clearSession when LogoutButton is clicked', () => {
+      const buttonTestId = `${screenName}_LogoutButton`;
+
+      const { getByTestId } = renderResult;
+      fireEvent.click(getByTestId(buttonTestId));
+
+      expect(props.clearSession).toHaveBeenCalled();
     });
   });
 });

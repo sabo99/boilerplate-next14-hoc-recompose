@@ -27,7 +27,11 @@ import { testProps, tid } from '@/lib/utils';
 import type { Props } from './NavUser.types';
 
 const NavUser: React.FC<Props> = (props) => {
-  const { screenName, isMobile } = props;
+  const { screenName, isMobile, clearSession } = props;
+
+  const onLogout = () => {
+    clearSession();
+  };
 
   return (
     <SidebarMenu>
@@ -79,7 +83,10 @@ const NavUser: React.FC<Props> = (props) => {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              {...testProps(tid(screenName, 'LogoutButton'))}
+              onClick={onLogout}
+            >
               <LogOutIcon />
               Log out
             </DropdownMenuItem>

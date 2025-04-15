@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 import { MockComponent } from '@/__mocks__/component';
-import { accounts } from '@/fixtures';
+import { accounts, session } from '@/fixtures';
 
 import AppSidebar from './AppSidebar.component';
 
@@ -28,10 +28,16 @@ describe('AppSidebar', () => {
   const props = {
     screenName,
     permissions: ['VIEW_DASHBOARD'],
-    isFilteredByPermission: true,
     accounts,
     activeAccount: accounts[0],
-    setActiveAccount: jest.fn()
+    session,
+    setSelectedRelogAccount: jest.fn(),
+    setSession: jest.fn(),
+    setActiveAccount: jest.fn(),
+    setAccounts: jest.fn(),
+    clearSession: jest.fn(),
+    clearAllSession: jest.fn(),
+    clearSelectedRelogAccount: jest.fn()
   };
 
   beforeEach(() => {

@@ -1,7 +1,6 @@
 import { cleanup, render } from '@testing-library/react';
 
 import { accounts } from '@/fixtures';
-import { joinWith } from '@/lib/utils';
 
 import AccountInfo from './AccountInfo.component';
 import AccountInfoConfig from './AccountInfo.config';
@@ -34,7 +33,7 @@ describe('AccountInfo', () => {
     it('should render component with testId correctly', () => {
       const userFullNameTestId = `${testId}_StyledUserFullName`;
       const userEmailTestId = `${testId}_StyledUserEmail`;
-      const fullName = joinWith([user.firstName, user.lastName], ' ');
+      const fullName = `${user.firstName} ${user.lastName}`;
 
       const { getByTestId } = renderResult;
 

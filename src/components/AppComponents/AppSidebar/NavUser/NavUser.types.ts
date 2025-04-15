@@ -1,7 +1,6 @@
-import type { Account } from '@/components/AppComponents/AccountInfo/AccountInfo.types';
+import { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
 
 export type Props = {
   screenName: string;
   isMobile: boolean;
-  user: Account;
-}
+} & withAuthProps
