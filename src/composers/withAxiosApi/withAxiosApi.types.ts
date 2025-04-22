@@ -19,13 +19,18 @@ type AxiosApiOptions = {
   params?: object;
 }
 
-export type SendRequestApiCallback = (payload?: object) => Promise<AxiosApiResponse>;
-
-export type AxiosApiRequest = {
-  send: SendRequestApiCallback;
+export type AxiosApiRequestSendParams = {
+  payload?: Record<string, any>;
+  options?: AxiosApiOptions;
 }
 
-type AxiosApiError = {
+export type ApiRequestSendCallback = (params: AxiosApiRequestSendParams) => Promise<AxiosApiResponse>;
+
+export type AxiosApiRequest = {
+  send: ApiRequestSendCallback;
+}
+
+export type AxiosApiError = {
   statusCode?: number;
   message?: string;
   code?: string;

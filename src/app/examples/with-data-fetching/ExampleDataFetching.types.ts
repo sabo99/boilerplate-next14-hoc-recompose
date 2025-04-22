@@ -1,7 +1,7 @@
 import { UseFormReturn } from 'react-hook-form';
 
 import { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
-import type { SendRequestApiCallback } from '@/composers/withAxiosApi/withAxiosApi.types';
+import type { ApiRequestSendCallback } from '@/composers/withAxiosApi/withAxiosApi.types';
 
 export type Props = {
   screenName: string;
@@ -10,7 +10,7 @@ export type Props = {
   errorProduct: any;
   products: Product[];
   setLoadingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
-  login: SendRequestApiCallback;
+  login: ApiRequestSendCallback;
   refetchProducts: OnHandleRefetchProductCallback;
   // Handlers
   onHandleLogin: OnHandleLoginCallback;
@@ -24,13 +24,15 @@ type Product = {
   description: string;
 }
 
-type LoginPayload = {
+export type LoginPayload = {
   username: string;
   password: string;
 }
 
+export type LoginForm = UseFormReturn<LoginPayload, any, undefined>
+
 type LoginOptions = {
-  form: UseFormReturn<LoginPayload, any, undefined>;
+  form: LoginForm;
 }
 
 export type OnHandleLoginCallback = (payload: LoginPayload, options: LoginOptions) => Promise<void>;

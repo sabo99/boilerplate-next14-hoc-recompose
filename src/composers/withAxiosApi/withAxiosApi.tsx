@@ -7,7 +7,7 @@ import Config from '@/config';
 import { createSendRequest } from '@/lib/utils';
 import AxiosClient from '@/services/AxiosClient';
 
-import type { Options, Props } from './withAxiosApi.types';
+import type { AxiosApiRequestSendParams, Options, Props } from './withAxiosApi.types';
 
 const baseURL = get(Config.api, 'baseURL', '');
 
@@ -28,12 +28,18 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
       new AxiosClient(baseURL).getInstance()
     );
 
-    const sendRequest = React.useCallback((payload = {}) => {
+    const sendRequest = React.useCallback((params?: AxiosApiRequestSendParams) => {
+      const { payload, options: apiOptions } = params || {};
+      const axiosOptions = {
+        ...options,
+        ...apiOptions
+      };
+
       return createSendRequest({
         axiosClientInstance: axiosClientInstance.current,
         url,
         method,
-        options,
+        options: axiosOptions,
         setResponse,
         setLoadingOverlay
       })(payload);
@@ -56,7 +62,7 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
   return AxiosApiHOC;
 };
 
-const withAxiosApi = (axiosApiOptions: Options) => compose(
+const withAxiosApi = (withAxiosApiOptions: Options) => compose(
   withState('response', 'setResponse', {
     loading: true,
     data: null,
@@ -64,10 +70,10 @@ const withAxiosApi = (axiosApiOptions: Options) => compose(
   }),
   withProps({
     skipApiOnRender:
-      axiosApiOptions.options?.skipApiOnRender ||
-      axiosApiOptions.method !== 'GET'
+      withAxiosApiOptions.options?.skipApiOnRender ||
+      withAxiosApiOptions.method !== 'GET'
   }),
-  withProps(axiosApiOptions),
+  withProps(withAxiosApiOptions),
   ComposedAxiosApi
 );
 

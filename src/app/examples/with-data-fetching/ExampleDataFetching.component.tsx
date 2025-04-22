@@ -5,14 +5,13 @@ import z from 'zod';
 
 import AppBase from '@/components/AppComponents/AppBase';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { testProps, tid } from '@/lib/utils';
 
+import LoginForm from './(Forms)/LoginForm';
 import ExampleDataFetchingConfig from './ExampleDataFetching.config';
 import type { Props } from './ExampleDataFetching.types';
 
-const { formSchema, formDefaultValue } = ExampleDataFetchingConfig;
+const { loginSchema, loginFormDefaultValue } = ExampleDataFetchingConfig;
 
 const ExampleDataFetching: React.FC<Props> = ({
   screenName, products, isLoadingProduct, session,
@@ -20,9 +19,9 @@ const ExampleDataFetching: React.FC<Props> = ({
 }) => {
   const { isAuthenticated = null } = session!;
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: formDefaultValue
+  const loginForm = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: loginFormDefaultValue
   });
 
   React.useEffect(() => {
@@ -31,78 +30,20 @@ const ExampleDataFetching: React.FC<Props> = ({
     }
   }, [isAuthenticated, onHandleRefetchProducts]);
 
-  const onSubmit = async (payload: z.infer<typeof formSchema>) => {
-    await onHandleLogin(payload, { form });
+  const onSubmit = async (payload: z.infer<typeof loginSchema>) => {
+    await onHandleLogin(payload, { form: loginForm });
     await onHandleRefetchProducts();
   };
 
   const onLogout = async () => {
-    await onHandleLogout({ form });
+    await onHandleLogout({ form: loginForm });
   };
-
-  const renderForm = () => (
-    <Form {...form}>
-      <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel {...testProps(tid(screenName, 'FormLabel', field.name))}>
-                Username
-              </FormLabel>
-              <FormControl>
-                <Input
-                  {...testProps(tid(screenName, 'Input', field.name))}
-                  {...field}
-                  placeholder="Input your username" />
-              </FormControl>
-              <FormDescription {...testProps(tid(screenName, 'FormDescription', field.name))}>
-                Choose a username that is unique and easy to remember. Example: `emilys`
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel {...testProps(tid(screenName, 'FormLabel', field.name))}>
-                Password
-              </FormLabel>
-              <FormControl>
-                <Input
-                  {...testProps(tid(screenName, 'Input', field.name))}
-                  {...field}
-                  type='password'
-                  placeholder="Input your password" />
-              </FormControl>
-              <FormDescription {...testProps(tid(screenName, 'FormDescription', field.name))}>
-                Enter a secure password. Example: `emilyspass`
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button
-          {...testProps(tid(screenName, 'LoginButton'))}
-          type="submit"
-          disabled={form.formState.isSubmitting}
-        >
-          Login
-        </Button>
-      </form>
-    </Form>
-  );
 
   const authenticatedRender = () => (
     <div>
       <h1>Welcome to the authenticated page!</h1>
       <p>You are logged in.</p>
+
       <Button
         {...testProps(tid(screenName, 'LogoutButton'))}
         variant="destructive"
@@ -129,7 +70,13 @@ const ExampleDataFetching: React.FC<Props> = ({
   const unauthenticatedRender = () => (
     <div>
       <h1 className="mb-4">Please log in to access the page.</h1>
-      {renderForm()}
+
+      <LoginForm
+        screenName={screenName}
+        name="LoginForm"
+        form={loginForm}
+        onSubmit={onSubmit}
+      />
     </div>
   );
 

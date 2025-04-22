@@ -1,24 +1,17 @@
 import { z } from 'zod';
 
-const loginSchema = z.object({
+const formSchema = z.object({
   username: z.string()
     .min(5, 'Username must be at least 5 characters.'),
   password: z.string()
     .min(5, 'Password must be at least 5 characters.')
 });
-const loginFormDefaultValue = {
+const formDefaultValue = {
   username: '',
   password: ''
 };
 
-// const refetchSchema = z.object({
-
-// });
-
-const config = {
-  screenName: 'ExampleDataFetching',
-  loginSchema,
-  loginFormDefaultValue
+export {
+  formDefaultValue,
+  formSchema
 };
-
-export default config;

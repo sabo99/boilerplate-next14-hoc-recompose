@@ -9,7 +9,7 @@ const onHandleLogin = (props: Props): OnHandleLoginCallback => async (payload, o
   const { login, setSession, setActiveAccount, clearSelectedRelogAccount, clearSession } = props;
   const { form } = options;
 
-  const { data, error } = await login(payload);
+  const { data, error } = await login({ payload });
 
   if (error) {
     form.setError('username', { message: error.message });
