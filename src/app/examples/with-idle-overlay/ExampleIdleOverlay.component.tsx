@@ -10,7 +10,7 @@ import type { Props } from './ExampleIdleOverlay.types';
 const { delayInterval, defaultValue } = ExampleIdleOverlayConfig;
 
 const ExampleIdleOverlay: React.FC<Props> = ({
-  screenName, idleTimeout,
+  screenName, pageTitle, idleTimeout,
   countdown, setCountdown,
   onHandleSetAppAlertDialogOptions, onHandleIdleCountdown
 }) => {
@@ -41,7 +41,7 @@ const ExampleIdleOverlay: React.FC<Props> = ({
   return (
     <AppBase
       screenName={screenName}
-      title="Example withIdleOverlayPage"
+      title={pageTitle}
       description={description}
     >
       <div>

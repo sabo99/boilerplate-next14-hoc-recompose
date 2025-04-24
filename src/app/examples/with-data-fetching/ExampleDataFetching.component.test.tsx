@@ -7,12 +7,14 @@ import ExampleDataFetching from './ExampleDataFetching.component';
 describe('ExampleDataFetching', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'TestScreen';
+  const pageTitle = 'Example Data Fetching';
   const username = 'userRandom123';
   const password = 'userRandom123pass';
   const limit = 5;
   const form = expect.any(Object);
   const props = {
     screenName,
+    pageTitle,
     products,
     isLoadingProduct: false,
     session,

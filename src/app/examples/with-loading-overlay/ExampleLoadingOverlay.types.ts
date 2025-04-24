@@ -1,4 +1,4 @@
-import { DefaultPropsOptions } from '@/composers/withPage/withPage.types';
+import type { DefaultPropsOptions } from '@/composers/withPage/withPage.types';
 
 type HandleInput = {
   delay: number;

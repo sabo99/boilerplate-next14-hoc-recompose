@@ -1,10 +1,10 @@
 import { UseFormReturn } from 'react-hook-form';
 
-import { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
+import type { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
 import type { ApiRequestSendCallback } from '@/composers/withAxiosApi/withAxiosApi.types';
+import type { DefaultPropsOptions } from '@/composers/withPage/withPage.types';
 
 export type Props = {
-  screenName: string;
   setEnabledSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   isLoadingProduct: boolean;
   errorProduct: any;
@@ -16,7 +16,7 @@ export type Props = {
   onHandleLogin: OnHandleLoginCallback;
   onHandleLogout: OnHandleLogoutCallback;
   onHandleRefetchProducts: OnHandleRefetchProductCallback;
-} & withAuthProps
+} & DefaultPropsOptions & withAuthProps
 
 type Product = {
   id: number;

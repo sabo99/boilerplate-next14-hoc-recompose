@@ -31,7 +31,7 @@ import type { Props } from './ExampleLoadingOverlay.types';
 const { FormSchema } = ExampleLoadingOverlayConfig;
 
 const ExampleLoadingOverlay: React.FC<Props> = ({
-  screenName,
+  screenName, pageTitle,
   messages, setMessages, progress, setProgress,
   onHandleSubmit
 }) => {
@@ -171,7 +171,7 @@ const ExampleLoadingOverlay: React.FC<Props> = ({
   return (
     <AppBase
       screenName={screenName}
-      title="Example withLoadingOverlayPage"
+      title={pageTitle}
       description="using react-hook-form"
     >
       <StyledContainer {...testProps(tid(screenName, 'StyledContainer'))}>

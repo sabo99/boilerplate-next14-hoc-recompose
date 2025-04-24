@@ -9,7 +9,7 @@ describe('ExampleIdleOverlay', () => {
   let renderResult: ReturnType<typeof render>;
   const props = {
     screenName,
-    pageTitle: 'ExampleIdleOverlay',
+    pageTitle: 'Example Idle Overlay',
     permissions: [],
     idleTimeout: 5000,
     countdown: 5,

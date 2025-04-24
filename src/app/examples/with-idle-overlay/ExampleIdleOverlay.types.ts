@@ -1,5 +1,5 @@
-import { Options as AppAlertDialogOptions } from '@/components/AppComponents/AppAlertDialog/AppAlertDialog.types';
-import { DefaultPropsOptions } from '@/composers/withPage/withPage.types';
+import type { Options as AppAlertDialogOptions } from '@/components/AppComponents/AppAlertDialog/AppAlertDialog.types';
+import type { DefaultPropsOptions } from '@/composers/withPage/withPage.types';
 
 export type Props = {
   idleTimeout: number;

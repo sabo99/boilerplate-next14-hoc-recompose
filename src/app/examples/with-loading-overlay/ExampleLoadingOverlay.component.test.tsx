@@ -5,12 +5,13 @@ import ExampleLoadingOverlayConfig from './ExampleLoadingOverlay.config';
 
 const { delay: DELAY, screenName } = ExampleLoadingOverlayConfig;
 
-describe('ExampleLoadingOverlayComponent', () => {
+describe('ExampleLoadingOverlay', () => {
   let renderResult: ReturnType<typeof render>;
   const messages = ['default message...'];
   const progress = 0;
   const props = {
     screenName,
+    pageTitle: 'Example Loading Overlay',
     messages,
     setMessages: jest.fn(),
     progress,

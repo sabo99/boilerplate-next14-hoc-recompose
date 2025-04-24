@@ -18,7 +18,7 @@ const {
 } = ExampleDataFetchingConfig;
 
 const ExampleDataFetching: React.FC<Props> = ({
-  screenName, products, isLoadingProduct, session,
+  screenName, pageTitle, products, isLoadingProduct, session,
   onHandleLogin, onHandleRefetchProducts, onHandleLogout
 }) => {
   const { isAuthenticated = null } = session;
@@ -111,7 +111,7 @@ const ExampleDataFetching: React.FC<Props> = ({
   return (
     <AppBase
       screenName={screenName}
-      title="Example withDataFetching"
+      title={pageTitle}
       description="This is an example of data fetching using Axios."
     >
       isAuthenticated: {isAuthenticated ? 'true' : 'false'}
