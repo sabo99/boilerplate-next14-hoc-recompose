@@ -11,7 +11,7 @@ export type Props = {
   products: Product[];
   setLoadingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
   login: ApiRequestSendCallback;
-  refetchProducts: OnHandleRefetchProductCallback;
+  refetchProducts: ApiRequestSendCallback;
   // Handlers
   onHandleLogin: OnHandleLoginCallback;
   onHandleLogout: OnHandleLogoutCallback;
@@ -24,17 +24,27 @@ type Product = {
   description: string;
 }
 
-export type LoginPayload = {
+type LoginPayload = {
   username: string;
   password: string;
 }
 
-export type LoginForm = UseFormReturn<LoginPayload, any, undefined>
+type LoginForm = UseFormReturn<LoginPayload, any, undefined>
 
 type LoginOptions = {
   form: LoginForm;
 }
 
+type RefetchPayload = {
+  limit: number;
+}
+
+type RefetchForm = UseFormReturn<RefetchPayload, any, undefined>
+
+type RefetchOptions = {
+  form: RefetchForm;
+}
+
 export type OnHandleLoginCallback = (payload: LoginPayload, options: LoginOptions) => Promise<void>;
 export type OnHandleLogoutCallback = (options: LoginOptions) => Promise<void>;
-export type OnHandleRefetchProductCallback = () => Promise<void>;
+export type OnHandleRefetchProductCallback = (payload?: RefetchPayload, options?: RefetchOptions) => Promise<void>;

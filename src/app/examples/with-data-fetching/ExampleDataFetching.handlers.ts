@@ -17,18 +17,15 @@ const onHandleLogin = (props: Props): OnHandleLoginCallback => async (payload, o
     return;
   }
 
-  if (data) {
-    const { accessToken, refreshToken, id: sessionId, ...activeAccount } = data;
-    setSession({
-      isAuthenticated: true,
-      sessionId,
-      accessToken,
-      refreshToken
-    });
-    setActiveAccount(activeAccount);
-    clearSelectedRelogAccount();
-  }
-
+  const { accessToken, refreshToken, id: sessionId, ...activeAccount } = data;
+  setSession({
+    isAuthenticated: true,
+    sessionId,
+    accessToken,
+    refreshToken
+  });
+  setActiveAccount(activeAccount);
+  clearSelectedRelogAccount();
   form.reset();
 };
 
@@ -40,8 +37,16 @@ const onHandleLogout = (props: Props): OnHandleLogoutCallback => async (options)
   form.reset();
 };
 
-const onHandleRefetchProducts = (props: Props): OnHandleRefetchProductCallback => async () => {
+const onHandleRefetchProducts = (props: Props): OnHandleRefetchProductCallback => async (payload, options) => {
   const { refetchProducts } = props;
+
+  if (payload && options) {
+    await refetchProducts({ apiOptions: { params: payload } });
+    const { form } = options;
+    form.reset();
+    return;
+  }
+
   await refetchProducts();
 };
 

@@ -21,7 +21,7 @@ export const mapProductToProps = ({ request, response }: AxiosApiInstance) => {
     isLoadingProduct: response.loading,
     errorProduct: get(response, 'error', null),
     products: get(response.data, 'products', []),
-    refetchProducts: (params: AxiosApiRequestSendParams) => request.send(params)
+    refetchProducts: (params?: AxiosApiRequestSendParams) => request.send(params)
   };
 };
 

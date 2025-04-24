@@ -11,14 +11,21 @@ const loginFormDefaultValue = {
   password: ''
 };
 
-// const refetchSchema = z.object({
-
-// });
+const refetchSchema = z.object({
+  limit: z.union([z.string(), z.number()])
+    .transform((val) => Number(val))
+    .pipe(z.number().min(1, 'Limit must be at least 1.'))
+});
+const refetchFormDefaultValue = {
+  limit: 0
+};
 
 const config = {
   screenName: 'ExampleDataFetching',
   loginSchema,
-  loginFormDefaultValue
+  loginFormDefaultValue,
+  refetchSchema,
+  refetchFormDefaultValue
 };
 
 export default config;

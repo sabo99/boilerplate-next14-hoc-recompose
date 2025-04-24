@@ -6,7 +6,7 @@ import z from 'zod';
 import { MockComponent } from '@/__mocks__/component';
 import { formDefaultValue, formSchema } from '@/fixtures';
 
-import LoginForm from './LoginForm.component';
+import RefetchForm from './RefetchForm.component';
 
 jest.mock('react-hook-form', () => ({
   useForm: jest.fn(() => ({
@@ -16,10 +16,10 @@ jest.mock('react-hook-form', () => ({
   .mock('@/components/AppComponents/AppForm', () => jest.fn(MockComponent))
   .mock('@/components/AppComponents/AppForm/InputForm', () => jest.fn(MockComponent));
 
-describe('LoginForm', () => {
+describe('RefetchForm', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'TestScreen';
-  const name = 'LoginForm';
+  const name = 'RefetchForm';
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: formDefaultValue
@@ -33,7 +33,7 @@ describe('LoginForm', () => {
 
   beforeEach(() => {
     renderResult = render(
-      <LoginForm {...props as any} />
+      <RefetchForm {...props as any} />
     );
   });
 
