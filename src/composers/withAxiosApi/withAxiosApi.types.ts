@@ -21,10 +21,10 @@ type AxiosApiOptions = {
 
 export type AxiosApiRequestSendParams = {
   payload?: Record<string, any>;
-  options?: AxiosApiOptions;
+  apiOptions?: AxiosApiOptions;
 }
 
-export type ApiRequestSendCallback = (params: AxiosApiRequestSendParams) => Promise<AxiosApiResponse>;
+export type ApiRequestSendCallback = (params?: AxiosApiRequestSendParams) => Promise<AxiosApiResponse>;
 
 export type AxiosApiRequest = {
   send: ApiRequestSendCallback;
