@@ -29,7 +29,7 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
     );
 
     const sendRequest = React.useCallback((params?: AxiosApiRequestSendParams) => {
-      const { payload, options: apiOptions } = params || {};
+      const { payload, apiOptions } = params || {};
       const axiosOptions = {
         ...options,
         ...apiOptions
