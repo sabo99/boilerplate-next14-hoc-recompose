@@ -27,7 +27,7 @@ import { testProps, tid } from '@/lib/utils';
 import type { Props } from './NavUser.types';
 
 const NavUser: React.FC<Props> = (props) => {
-  const { screenName, isMobile, clearSession } = props;
+  const { screenName, isMobile, activeAccount, clearSession } = props;
 
   const onLogout = () => {
     clearSession();
@@ -44,6 +44,7 @@ const NavUser: React.FC<Props> = (props) => {
             >
               <AccountInfo
                 {...props}
+                user={activeAccount}
                 icon={<ChevronsUpDownIcon className="ml-auto size-4" />}
               />
             </SidebarMenuButton>
@@ -57,7 +58,10 @@ const NavUser: React.FC<Props> = (props) => {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <AccountInfo  {...props} />
+                <AccountInfo
+                  {...props}
+                  user={activeAccount}
+                />
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
