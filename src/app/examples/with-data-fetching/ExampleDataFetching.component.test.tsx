@@ -4,6 +4,12 @@ import { products, session } from '@/fixtures';
 
 import ExampleDataFetching from './ExampleDataFetching.component';
 
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn().mockImplementation(() => ({
+    push: jest.fn()
+  }))
+}));
+
 describe('ExampleDataFetching', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'TestScreen';

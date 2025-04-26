@@ -55,3 +55,20 @@ export const getInitials = (value: string): string => {
     .join(''); // Join them together
 };
 
+/**
+ * Constructs a URL path with appended search parameters.
+ *
+ * @param path - The base URL path.
+ * @param params - An object representing key-value pairs to be converted into query parameters.
+ * @returns A string representing the full URL with the query parameters appended.
+ *
+ * @example
+ * ```typescript
+ * const url = pathWithSearchParams('/api/data', { userId: 123, filter: 'active' });
+ * console.log(url); // Output: "/api/data?userId=123&filter=active"
+ * ```
+ */
+export const pathWithSearchParams = (path: string, params: Record<string, any>): string => {
+  const queryParams = new URLSearchParams(params).toString();
+  return `${path}?${queryParams}`;
+};

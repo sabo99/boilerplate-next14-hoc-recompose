@@ -38,12 +38,20 @@ const onHandleLogout = (props: Props): OnHandleLogoutCallback => async (options)
 };
 
 const onHandleRefetchProducts = (props: Props): OnHandleRefetchProductCallback => async (payload, options) => {
-  const { refetchProducts } = props;
+  const { refetchProducts, searchParams } = props;
 
   if (payload && options) {
-    await refetchProducts({ apiOptions: { params: payload } });
-    const { form } = options;
-    form.reset();
+    await refetchProducts({
+      apiOptions: { params: payload }
+    });
+    options.form.reset();
+    return;
+  }
+
+  if (searchParams) {
+    await refetchProducts({
+      apiOptions: { params: searchParams }
+    });
     return;
   }
 

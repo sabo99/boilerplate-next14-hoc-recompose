@@ -1,4 +1,4 @@
-import { cn, getInitials, joinWith } from '@/lib/utils';
+import { cn, getInitials, joinWith, pathWithSearchParams } from '@/lib/utils';
 
 describe('stringUtils', () => {
 
@@ -60,6 +60,18 @@ describe('stringUtils', () => {
       const expectedResult = 'BM';
 
       const result = getInitials(value);
+
+      expect(result).toEqual(expectedResult);
+    });
+  });
+
+  describe('#pathWithSearchParams', () => {
+    it('should return path with search params', () => {
+      const path = '/products';
+      const params = { searchWith: 'tag', q: 'Product1' };
+      const expectedResult = '/products?searchWith=tag&q=Product1';
+
+      const result = pathWithSearchParams(path, params);
 
       expect(result).toEqual(expectedResult);
     });

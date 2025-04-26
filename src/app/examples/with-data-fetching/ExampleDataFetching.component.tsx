@@ -1,16 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
 import AppBase from '@/components/AppComponents/AppBase';
 import { Button } from '@/components/ui/button';
-import { testProps, tid } from '@/lib/utils';
+import Constants from '@/constants';
+import { pathWithSearchParams, testProps, tid } from '@/lib/utils';
 
 import LoginForm from './(Forms)/LoginForm';
 import RefetchForm from './(Forms)/RefetchForm';
 import ExampleDataFetchingConfig from './ExampleDataFetching.config';
 import type { Props } from './ExampleDataFetching.types';
+
+const { Paths } = Constants;
 
 const {
   loginSchema, loginFormDefaultValue,
@@ -21,6 +25,7 @@ const ExampleDataFetching: React.FC<Props> = ({
   screenName, pageTitle, products, isLoadingProduct, session,
   onHandleLogin, onHandleRefetchProducts, onHandleLogout
 }) => {
+  const router = useRouter();
   const { isAuthenticated = null } = session;
 
   const loginForm = useForm<z.infer<typeof loginSchema>>({
@@ -50,6 +55,7 @@ const ExampleDataFetching: React.FC<Props> = ({
 
   const onSubmitRefetch = async (payload: z.infer<typeof refetchSchema>) => {
     await onHandleRefetchProducts(payload, { form: refetchForm });
+    router.push(pathWithSearchParams(Paths.Examples.WithDataFetching, payload));
   };
 
   const renderAuthenticatedContent = () => (

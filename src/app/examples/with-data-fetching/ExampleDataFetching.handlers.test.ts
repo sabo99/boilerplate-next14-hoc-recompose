@@ -84,10 +84,24 @@ describe('ExampleDataFetchingHandlers', () => {
       expect(form.reset).toHaveBeenCalled();
     });
 
+    it('should called refetchProducts with params when searchParams is present', async() =>{
+      const searchParams = { limit: 5 };
+      const mockProps = {
+        ...props,
+        searchParams
+      };
+
+      await onHandleRefetchProducts(mockProps as any)();
+
+      expect(props.refetchProducts).toHaveBeenCalledWith({ apiOptions: { params: searchParams } });
+      expect(form.reset).not.toHaveBeenCalled();
+    });
+
     it('should called refetchProducts without params', async()=>{
       await onHandleRefetchProducts(props as any)();
 
       expect(props.refetchProducts).toHaveBeenCalled();
+      expect(form.reset).not.toHaveBeenCalled();
     });
   });
 });
