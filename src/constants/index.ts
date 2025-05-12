@@ -6,14 +6,16 @@ const Constants =
     'VIEW_LOADING_OVERLAY',
     'VIEW_IDLE_OVERLAY',
     'VIEW_PREVENT_REFRESH',
-    'VIEW_DATA_FETCHING'
+    'VIEW_DATA_FETCHING',
+    'VIEW_STEP_UP_VERIFICATION'
   ],
   Paths: {
     Dashboard: '/dashboard',
     Examples: {
       WithLoadingOverlay: '/examples/with-loading-overlay',
       WithIdleOverlay: '/examples/with-idle-overlay',
-      WithDataFetching: '/examples/with-data-fetching'
+      WithDataFetching: '/examples/with-data-fetching',
+      WithStepUpVerification: '/examples/with-step-up-verification'
     }
   },
   ErrorCode: {
