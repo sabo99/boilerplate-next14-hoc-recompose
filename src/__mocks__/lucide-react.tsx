@@ -17,3 +17,4 @@ export const BellIcon = MockIcon;
 export const CreditCardIcon = MockIcon;
 export const LogOutIcon = MockIcon;
 export const SparklesIcon = MockIcon;
+export const ShieldEllipsisIcon = MockIcon;

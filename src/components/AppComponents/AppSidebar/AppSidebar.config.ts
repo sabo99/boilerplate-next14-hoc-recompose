@@ -5,6 +5,7 @@ import {
   LoaderIcon,
   MonitorDotIcon,
   RefreshCwOffIcon,
+  ShieldEllipsisIcon,
   SquareTerminalIcon,
   ViewIcon
 } from 'lucide-react';
@@ -69,6 +70,12 @@ const appSidebarData = {
           url: Paths.Examples.WithDataFetching,
           icon: DatabaseZapIcon,
           permission: 'VIEW_DATA_FETCHING'
+        },
+        {
+          title: 'withStepUpVerification',
+          url: Paths.Examples.WithStepUpVerification,
+          icon: ShieldEllipsisIcon,
+          permission: 'VIEW_STEP_UP_VERIFICATION'
         }
       ]
     }
