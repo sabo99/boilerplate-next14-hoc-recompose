@@ -1,13 +1,15 @@
-import { compose, withProps } from 'react-recompose';
+import { compose, withProps, withState } from 'react-recompose';
 
 import withIdlePopupOverlay from '../withIdlePopupOverlay';
 import withLoadingOverlay from '../withLoadingOverlay';
+import withStepUpVerificationOverlay from '../withStepUpVerificationOverlay';
 import withOverlay from './withOverlay';
 import { Options } from './withOverlay.types';
 
 jest.mock('react-recompose')
   .mock('../withIdlePopupOverlay')
-  .mock('../withLoadingOverlay');
+  .mock('../withLoadingOverlay')
+  .mock('../withStepUpVerificationOverlay');
 
 describe('withOverlay', () => {
   const Component = () => <div>Component</div>;
@@ -58,6 +60,24 @@ describe('withOverlay', () => {
       withOverlay(mockOptions)(Component);
 
       expect(withLoadingOverlay).toHaveBeenCalled();
+    });
+  });
+
+  describe('#withStepUpVerificationOverlay', () => {
+    it('should invoke withStepUpVerificationOverlay when `options` overlayState is STEP_UP_VERIFICATION', () => {
+      const mockOptions: any = {
+        ...options,
+        overlayState: 'STEP_UP_VERIFICATION'
+      };
+      const defaultValue = {
+        isOpen: false,
+        type: null
+      };
+
+      withOverlay(mockOptions)(Component);
+
+      expect(withState).toHaveBeenCalledWith('stepUpVerification', 'setStepUpVerification', defaultValue);
+      expect(withStepUpVerificationOverlay).toHaveBeenCalledWith(mockOptions);
     });
   });
 });
