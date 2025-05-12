@@ -5,7 +5,8 @@ import AppAlertDialog from '@/components/AppComponents/AppAlertDialog';
 import Overlay from '@/components/AppComponents/Overlay';
 import { useIdleTimeout } from '@/hooks';
 
-import { Props } from './withIdlePopupOverlay.types';
+import type { StateOptions } from '../withPage/withPage.types';
+import type { Props } from './withIdlePopupOverlay.types';
 
 const ComposedIdlePopupOverlay = (ComposedComponent: React.ComponentType<Props>) => {
   const HOC = (props: Props) => {
@@ -43,17 +44,16 @@ const ComposedIdlePopupOverlay = (ComposedComponent: React.ComponentType<Props>)
   return HOC;
 };
 
-const stateOptions = [
-  ['isIdle', 'setIdle', false],
+const stateOptions: StateOptions = [
   ['isIdleOverlay', 'setIdleOverlay', false],
   ['appAlertDialogOptions', 'setAppAlertDialogOptions', {}]
 ];
-const withStateIdlePopupOverlay = stateOptions.map(
-  (stateOption) => withState(...(stateOption as [string, string, any]))
+const withStateOptions = stateOptions.map(
+  (stateOption) => withState(...(stateOption))
 );
 
 const withIdlePopupOverlay = () => compose(
-  ...withStateIdlePopupOverlay,
+  ...withStateOptions,
   ComposedIdlePopupOverlay
 );
 
