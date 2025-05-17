@@ -1,10 +1,15 @@
 const Config = {
-  screenName: 'ExampleIdleOverlay',
-  delayInterval: 1000,
   defaultValue: {
-    idleDescription: 'Idle popup triggered due to inactivity.',
-    idleCountdownDescription: (countdown: number) => `Idle popup will appear in ${countdown} seconds due to inactivity.`
-  }
+    description: 'Idle Popup triggered due to inactivity.',
+    decriptionOnIdle: (countdown: number) => `Are you still there? IdlePopup will appear in ${countdown} seconds`
+  },
+    detections: [
+      'Mouse movement',
+      'Keyboard input',
+      'Scrolling',
+      'Touch interactions',
+      'Tab or window visibility change'
+    ]
 };
 
 export default Config;

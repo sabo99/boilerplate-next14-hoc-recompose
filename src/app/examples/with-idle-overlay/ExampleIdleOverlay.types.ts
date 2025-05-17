@@ -3,12 +3,12 @@ import type { DefaultPropsOptions } from '@/composers/withPage/withPage.types';
 
 export type Props = {
   idleTimeout: number;
-  countdown: number;
-  setCountdown: React.Dispatch<React.SetStateAction<number>>;
-  setIdleOverlay: React.Dispatch<React.SetStateAction<boolean>>;
-  setAppAlertDialogOptions: React.Dispatch<React.SetStateAction<AppAlertDialogOptions>>;
-  onHandleSetAppAlertDialogOptions: OnHandleAppAlertDialogCallback;
-  onHandleIdleCountdown: OnHandleIdleCountdownCallback;
+  // countdown: number;
+  // setCountdown: React.Dispatch<React.SetStateAction<number>>;
+  // setIdleOverlay: React.Dispatch<React.SetStateAction<boolean>>;
+  // setAppAlertDialogOptions: React.Dispatch<React.SetStateAction<AppAlertDialogOptions>>;
+  // onHandleSetAppAlertDialogOptions: OnHandleAppAlertDialogCallback;
+  // onHandleIdleCountdown: OnHandleIdleCountdownCallback;
 } & DefaultPropsOptions
 
 export type OnHandleAppAlertDialogCallback = (

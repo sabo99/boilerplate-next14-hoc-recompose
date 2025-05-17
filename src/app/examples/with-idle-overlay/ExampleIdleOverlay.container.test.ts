@@ -1,6 +1,6 @@
 import Constants from '@/constants';
 
-import { defaultProps, stateList, uiSettings } from './ExampleIdleOverlay.container';
+import { defaultProps, uiSettings } from './ExampleIdleOverlay.container';
 
 const { Permissions } = Constants;
 
@@ -18,23 +18,12 @@ describe('ExampleIdleOverlayContainer', () => {
     });
   });
 
-  describe('#stateList', () => {
-    it('should return the correct stateList', () => {
-      const expected = [
-        ['countdown', 'setCountdown', 5]
-      ];
-
-      expect(stateList).toEqual(expected);
-    });
-  });
-
   describe('#uiSettings', () => {
     it('should return the correct uiSettings', () => {
       const expected = {
         sidebar: true,
         overlay: {
-          overlayState: 'IDLE',
-          idleTimeout: 5000
+          overlayState: 'IDLE'
         }
       };
 

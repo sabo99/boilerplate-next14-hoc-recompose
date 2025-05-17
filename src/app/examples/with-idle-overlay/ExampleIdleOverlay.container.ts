@@ -1,9 +1,8 @@
 import withPage from '@/composers/withPage';
-import { DefaultPropsOptions, StateOptions, UiSettingOptions } from '@/composers/withPage/withPage.types';
+import { DefaultPropsOptions, UiSettingOptions } from '@/composers/withPage/withPage.types';
 import Constants from '@/constants';
 
 import ExampleIdleOverlay from './ExampleIdleOverlay.component';
-import ExampleIdleOverlayHandlers from './ExampleIdleOverlay.handlers';
 
 const { Permissions } = Constants;
 
@@ -13,21 +12,14 @@ export const defaultProps: DefaultPropsOptions = {
   permissions: Permissions
 };
 
-export const stateList: StateOptions = [
-  ['countdown', 'setCountdown', 5]
-];
-
 export const uiSettings: UiSettingOptions = {
   sidebar: true,
   overlay: {
-    overlayState: 'IDLE',
-    idleTimeout: 5000
+    overlayState: 'IDLE'
   }
 };
 
 export default withPage({
   props: defaultProps,
-  state: stateList,
-  uiSettings,
-  handlers: ExampleIdleOverlayHandlers
+  uiSettings
 })(ExampleIdleOverlay);
