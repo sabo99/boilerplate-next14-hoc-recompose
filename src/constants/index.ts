@@ -10,6 +10,7 @@ const Constants =
     'VIEW_STEP_UP_VERIFICATION'
   ],
   Paths: {
+    Root: '/',
     Dashboard: '/dashboard',
     Examples: {
       WithLoadingOverlay: '/examples/with-loading-overlay',
