@@ -8,14 +8,35 @@ const { componentName } = config;
 describe('AppAlertDialog', () => {
   let renderResult: ReturnType<typeof render>;
   const screenName = 'Screen';
+  const title = 'Custom Title';
+  const message = 'Custom Message';
+  const cancelText = 'Custom Cancel';
+  const confirmText = 'Custom Confirm';
+  const onClick = jest.fn();
+  const cancelButton = {
+    onClick,
+    text: cancelText
+  };
+  const confirmButton = {
+    onClick,
+    text: confirmText
+  };
+  const props = {
+    screenName,
+    title,
+    message,
+    cancelButton,
+    confirmButton
+  };
+
   const testId = `${screenName}_${componentName}`;
   const titleTestId = `${testId}_AlertDialogTitle`;
-  const descTestId = `${testId}_AlertDialogDescription`;
+  const messageTestId = `${testId}_AlertDialogDescription`;
   const cancelTestId = `${testId}_AlertDialogCancel`;
   const confirmTestId = `${testId}_AlertDialogAction`;
 
   beforeEach(() => {
-    renderResult = render(<AppAlertDialog screenName={screenName} />);
+    renderResult = render(<AppAlertDialog {...props} />);
   });
 
   afterEach(() => {
@@ -30,71 +51,75 @@ describe('AppAlertDialog', () => {
 
       expect(queryAllByTestId(/AppAlertDialog/i)).toBeTruthy();
       expect(getByTestId(titleTestId)).toBeTruthy();
-      expect(getByTestId(descTestId)).toBeTruthy();
+      expect(getByTestId(messageTestId)).toBeTruthy();
       expect(getByTestId(cancelTestId)).toBeTruthy();
       expect(getByTestId(confirmTestId)).toBeTruthy();
     });
 
     it(`should open alert dialog with custom title, message, cancel button and
       confirm button when with custom props`, () => {
-      const title = 'Custom Title';
-      const message = 'Custom Description';
-      const cancelText = 'Custom Cancel';
-      const confirmText = 'Custom Confirm';
-
       const { getByTestId, rerender } = renderResult;
+
       rerender(
-        <AppAlertDialog
-          screenName={screenName}
-          title={title}
-          message={message}
-          cancelText={cancelText}
-          confirmText={confirmText}
-        />
+        <AppAlertDialog {...props} />
       );
 
       expect(getByTestId(titleTestId)).toHaveTextContent(title);
-      expect(getByTestId(descTestId)).toHaveTextContent(message);
+      expect(getByTestId(messageTestId)).toHaveTextContent(message);
       expect(getByTestId(cancelTestId)).toHaveTextContent(cancelText);
       expect(getByTestId(confirmTestId)).toHaveTextContent(confirmText);
+    });
+
+    it('should render component withoutFooter when props withoutFooter is true', () => {
+      const mockProps = {
+        screenName,
+        title,
+        message
+      };
+      const { queryByTestId, rerender } = renderResult;
+
+      rerender(
+        <AppAlertDialog {...mockProps} withoutFooter />
+      );
+
+      expect(queryByTestId(cancelTestId)).not.toBeInTheDocument();
+      expect(queryByTestId(confirmTestId)).not.toBeInTheDocument();
+    });
+
+    it('should render default button text, title and message when default props are missing', () => {
+      const mockProps = {
+        screenName,
+        confirmButton: { onClick },
+        cancelButton: { onClick }
+      };
+      const { queryByTestId, rerender } = renderResult;
+
+      rerender(
+        <AppAlertDialog {...mockProps} />
+      );
+
+      expect(queryByTestId(titleTestId)).toHaveTextContent('Alert');
+      expect(queryByTestId(messageTestId)).toHaveTextContent('Are you sure you want to proceed?');
+      expect(queryByTestId(cancelTestId)).toHaveTextContent('Cancel');
+      expect(queryByTestId(confirmTestId)).toHaveTextContent('Confirm');
     });
   });
 
   describe('#onClick', () => {
-    const setIdleOverlay = jest.fn();
+    it('should invoke confirmButton.onClick when confirm button is clicked', () => {
+      const { getByTestId } = renderResult;
 
-    it('should invoke onConfirm and setIdleOverlay when confirm button is clicked', () => {
-      const onConfirm = jest.fn();
-
-      const { getByTestId, rerender } = renderResult;
-      rerender(
-        <AppAlertDialog
-          screenName={screenName}
-          onConfirm={onConfirm}
-          setIdleOverlay={setIdleOverlay}
-        />
-      );
       fireEvent.click(getByTestId(confirmTestId));
 
-      expect(setIdleOverlay).toHaveBeenCalledWith(false);
-      expect(onConfirm).toHaveBeenCalled();
+      expect(confirmButton.onClick).toHaveBeenCalled();
     });
 
-    it('should invoke onCancel and setIdleOverlay when cancel button is clicked', () => {
-      const onCancel = jest.fn();
+    it('should invoke cancelButton.onClick when cancel button is clicked', () => {
+      const { getByTestId } = renderResult;
 
-      const { getByTestId, rerender } = renderResult;
-      rerender(
-        <AppAlertDialog
-          screenName={screenName}
-          onCancel={onCancel}
-          setIdleOverlay={setIdleOverlay}
-        />
-      );
       fireEvent.click(getByTestId(cancelTestId));
 
-      expect(setIdleOverlay).toHaveBeenCalledWith(false);
-      expect(onCancel).toHaveBeenCalled();
+      expect(cancelButton.onClick).toHaveBeenCalled();
     });
   });
 

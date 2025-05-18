@@ -19,29 +19,22 @@ const { componentName, defaultProps } = config;
 
 const AppAlertDialog: React.FC<Props> = ({
   screenName,
-  open = defaultProps.open,
+  isOpen = defaultProps.isOpen,
   title = defaultProps.title,
   message = defaultProps.message,
-  confirmText = defaultProps.confirmText,
-  cancelText = defaultProps.cancelText,
-  onConfirm,
-  onCancel,
-  setIdleOverlay
+  withoutFooter,
+  confirmButton,
+  cancelButton
 }) => {
   const testId = tid(screenName, componentName);
-
-  const handleClose = () => {
-    setIdleOverlay?.(false);
-  };
+  const withFooter = Boolean(withoutFooter) === false;
 
   const handleConfirm = () => {
-    handleClose();
-    onConfirm?.();
+    confirmButton?.onClick();
   };
 
   const handleCancel = () => {
-    handleClose();
-    onCancel?.();
+    cancelButton?.onClick();
   };
 
   const renderAlertDialogHeader = () => (
@@ -65,13 +58,13 @@ const AppAlertDialog: React.FC<Props> = ({
         {...testProps(tid(testId, 'AlertDialogCancel'))}
         onClick={handleCancel}
       >
-        {cancelText}
+        {cancelButton?.text ?? defaultProps.cancelText}
       </AlertDialogCancel>
       <AlertDialogAction
         {...testProps(tid(testId, 'AlertDialogAction'))}
         onClick={handleConfirm}
       >
-        {confirmText}
+        {confirmButton?.text ?? defaultProps.confirmText}
       </AlertDialogAction>
     </AlertDialogFooter>
   );
@@ -79,14 +72,14 @@ const AppAlertDialog: React.FC<Props> = ({
   const renderAlertDialogContent = () => (
     <AlertDialogContent>
       {renderAlertDialogHeader()}
-      {renderAlertDialogFooter()}
+      {withFooter && renderAlertDialogFooter()}
     </AlertDialogContent>
   );
 
   return (
     <AlertDialog
       {...testProps(tid(testId, 'AlertDialog'))}
-      open={open}
+      open={isOpen}
     >
       {renderAlertDialogContent()}
     </AlertDialog>

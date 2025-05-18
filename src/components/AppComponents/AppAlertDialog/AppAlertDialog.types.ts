@@ -2,17 +2,27 @@ export type Props = {
   screenName: string;
 } & Options
 
-export type Callbacks = {
-  onConfirm?: () => void;
-  onCancel?: () => void;
-  setIdleOverlay?: React.Dispatch<React.SetStateAction<boolean>>
+type ButtonOption = {
+  onClick: () => void;
+  text?: string
 }
 
-export type Options = {
-  open?: boolean;
+type BaseOptions = {
+  isOpen?: boolean;
   title?: string;
-  message?: string;
-  confirmText?: string;
-  cancelText?: string;
-} & Callbacks
+  message?: string | React.ReactNode;
+};
 
+type WithFooter = BaseOptions & {
+  withoutFooter?: never;
+  confirmButton: ButtonOption;
+  cancelButton: ButtonOption;
+};
+
+type WithoutFooter = BaseOptions & {
+  withoutFooter: true;
+  confirmButton?: never;
+  cancelButton?: never;
+};
+
+export type Options = WithFooter | WithoutFooter;

@@ -1,12 +1,11 @@
 const config = {
   componentName: 'AppAlertDialog',
   defaultProps: {
-    open: true,
-    title: 'Are You Still Active?',
-    message: `You’ve been inactive for a while. To ensure security,
-    your session will automatically end soon. Do you want to continue your session?`,
+    isOpen: true,
+    title: 'Alert',
+    message: 'Are you sure you want to proceed?',
     cancelText: 'Cancel',
-    confirmText: 'Continue'
+    confirmText: 'Confirm'
   }
 };
 
