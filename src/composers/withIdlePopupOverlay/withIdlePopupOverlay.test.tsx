@@ -4,14 +4,32 @@ import Providers from '@/app/providers';
 
 import withIdlePopupOverlay from './withIdlePopupOverlay';
 
+jest
+  .mock('@/hooks', () => ({
+    useRouter: () => ({
+      replace: jest.fn()
+    }),
+    useIdleTimer: () => ({
+      pause: jest.fn(),
+      activate: jest.fn()
+    })
+  }))
+  .mock('./withIdlePopupOverlay.config', () => ({
+    __esModule: true,
+    default: {
+      defaultProps: {
+        idleTimeout: 5000,
+        popupTimeout: 30000
+      }
+    }
+  }));
+
 describe('withIdlePopupOverlay', () => {
   const screenName = 'TestScreen';
   const props = {
     screenName,
-    isIdleOverlay: true,
-    setIdleOverlay: jest.fn(),
-    appAlertDialogOptions: {},
-    idleTimeout: 5000
+    isIdlePopupOverlay: true,
+    setIdlePopupOverlay: jest.fn()
   };
   const Component = (props: any) => (
     <div data-testid='mock_component' {...props}>Mock Component</div>
@@ -21,8 +39,9 @@ describe('withIdlePopupOverlay', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+
   describe('#render', () => {
-    it('should render Overlay with idlePopup when isIdleOverlay is true', () => {
+    it('should render AppIdleSession with props', () => {
       const testId = 'mock_component';
 
       const { getByTestId } = render(
@@ -32,8 +51,9 @@ describe('withIdlePopupOverlay', () => {
       );
 
       expect(getByTestId(testId)).toBeTruthy();
-      expect(getByTestId(testId)).toHaveAttribute('idleTimeout', '5000');
       expect(getByTestId(testId)).toHaveAttribute('screenName', screenName);
+      expect(getByTestId(testId)).toHaveAttribute('idleTimeout', '5000');
+      expect(getByTestId(testId)).toHaveAttribute('popupTimeout', '30000');
     });
   });
 

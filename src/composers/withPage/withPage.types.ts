@@ -24,7 +24,7 @@ export type UiSettingOptions = {
 }
 
 export type Options = {
-  props?: DefaultPropsOptions & object;
+  props?: DefaultPropsOptions | object;
   connect?: ConnectOptions;
   state?: StateOptions[];
   api?: ApiOptions[];

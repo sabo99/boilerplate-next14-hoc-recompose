@@ -1,43 +1,22 @@
 import React from 'react';
 import { compose, withState } from 'react-recompose';
 
-import AppAlertDialog from '@/components/AppComponents/AppAlertDialog';
-import Overlay from '@/components/AppComponents/Overlay';
-import { useIdleTimeout } from '@/hooks';
+import AppIdleSession from '@/components/AppComponents/AppIdleSession';
 
 import type { StateOptions } from '../withPage/withPage.types';
+import WithIdlePopupOverlayConfig from './withIdlePopupOverlay.config';
 import type { Props } from './withIdlePopupOverlay.types';
+
+const { defaultProps } = WithIdlePopupOverlayConfig;
 
 const ComposedIdlePopupOverlay = (ComposedComponent: React.ComponentType<Props>) => {
   const HOC = (props: Props) => {
-    const {
-      screenName,
-      isIdleOverlay,
-      setIdleOverlay,
-      idleTimeout: timeout = 5000
-    } = props;
-    const callbacks = {
-      setIdleOverlay
-    };
-    const isOpen = isIdleOverlay;
-    useIdleTimeout({ timeout, ...callbacks });
-
-    const renderContent = () => (
-      <AppAlertDialog {...props} />
-    );
 
     return (
       <>
+        <AppIdleSession {...props} />
         <ComposedComponent {...props} />
-        {isOpen &&
-          <Overlay
-            screenName={screenName}
-            content={renderContent()}
-            withoutOpacity
-          />
-        }
       </>
-
     );
   };
 
@@ -45,8 +24,9 @@ const ComposedIdlePopupOverlay = (ComposedComponent: React.ComponentType<Props>)
 };
 
 const stateOptions: StateOptions = [
-  ['isIdleOverlay', 'setIdleOverlay', false],
-  ['appAlertDialogOptions', 'setAppAlertDialogOptions', {}]
+  ['isIdlePopupOverlay', 'setIdlePopupOverlay', false],
+  ['idleTimeout', 'setIdleTimeout', defaultProps.idleTimeout],
+  ['popupTimeout', 'setPopupTimeout', defaultProps.popupTimeout]
 ];
 const withStateOptions = stateOptions.map(
   (stateOption) => withState(...(stateOption))
