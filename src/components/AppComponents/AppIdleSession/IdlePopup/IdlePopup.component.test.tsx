@@ -40,8 +40,8 @@ describe('IdlePopup', () => {
     });
     it('should display timer in hh:mm:ss format when popupTimeout is one hour or above', () => {
       const styledTimerTextTestId = `${screenName}_StyledTimerText`;
-      const popupTimeout = 86_400_000;
-      const timerText = 'In 23:59:59';
+      const popupTimeout = 3_610_000;
+      const timerText = 'In 01:00:09';
       const mockProps = {
         ...props,
         popupTimeout
