@@ -1,8 +1,7 @@
 import { compose, withHandlers, withProps, withState } from 'react-recompose';
 import { connect } from 'react-redux';
 
-import withAxiosApi from '../withAxiosApi';
-import withLoadingOverlay from '../withLoadingOverlay';
+import withAxiosApiLifecycle from '../withAxiosApiLifecycle';
 import withOverlay from '../withOverlay';
 import withPreventRefresh from '../withPreventRefresh';
 import withSidebar from '../withSidebar';
@@ -13,8 +12,7 @@ jest.mock('react-recompose')
   .mock('../withAuth')
   .mock('../withSidebar')
   .mock('../withOverlay')
-  .mock('../withLoadingOverlay')
-  .mock('../withAxiosApi')
+  .mock('../withAxiosApiLifecycle')
   .mock('../withPreventRefresh');
 
 describe('withPage', () => {
@@ -209,8 +207,8 @@ describe('withPage', () => {
     });
   });
 
-  describe('#withAxiosApi', () => {
-    it('should invoke withLoadingOverlay and withAxiosApi when `api` is present', () => {
+  describe('#withAxiosApiLifecycle', () => {
+    it('should invoke withAxiosApiLifecycle when `api` is present', () => {
       const options: any = {
         api: [
           {
@@ -235,9 +233,7 @@ describe('withPage', () => {
 
       withPage(options)(Component);
 
-      expect(withLoadingOverlay).toHaveBeenCalled();
-      expect(withAxiosApi).toHaveBeenNthCalledWith(1, options.api[0]);
-      expect(withAxiosApi).toHaveBeenNthCalledWith(2, options.api[1]);
+      expect(withAxiosApiLifecycle).toHaveBeenCalledWith({ apiOptions: options.api });
     });
   });
 

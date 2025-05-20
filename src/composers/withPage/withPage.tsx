@@ -3,8 +3,7 @@ import { compose, withHandlers, withProps, withState } from 'react-recompose';
 import { connect } from 'react-redux';
 
 import withAuth from '../withAuth/withAuth';
-import withAxiosApi from '../withAxiosApi';
-import withLoadingOverlay from '../withLoadingOverlay';
+import withAxiosApiLifecycle from '../withAxiosApiLifecycle';
 import withOverlay from '../withOverlay';
 import withPreventRefresh from '../withPreventRefresh';
 import withSidebar from '../withSidebar';
@@ -26,16 +25,32 @@ import type { Options } from './withPage.types';
  * @param {Object} options.uiSettings.preventRefresh - Prevent refresh settings.
  * @param {Object} options.handlers - Handlers to be added to the component.
  *
- * @description
- * This HOC enhances a React component with the following capabilities:
- * 1. Custom props using `withProps` from React-recompose.
- * 2. Redux connection using `connect`.
- * 3. State management using `withState` from React-recompose.
- * 4. API request handling using `withAxiosApi`.
- * 5. Sidebar functionality using `withSidebar`.
- * 6. Overlay functionality using `withOverlay` includes of `withLoadingOverlay` and `withIdlePopupOverlay`.
- * 7. Prevent refresh functionality using `withPreventRefresh`.
- * 8. Custom handlers using `withHandlers` from React-recompose.
+  * @description
+ * This Higher-Order Component (HOC) enhances a React component with multiple capabilities:
+ *
+ * 1. Authentication Handling:
+ *    - Injects authentication-related props using `withAuth`.
+ *
+ * 2. Custom Props Injection:
+ *    - Uses `withProps` from `react-recompose` to provide additional custom props.
+ *
+ * 3. Redux Integration:
+ *    - Connects the component to the Redux store using `connect`.
+ *
+ * 4. Local State Management:
+ *    - Manages local component state using `withState` from `react-recompose`.
+ *
+ * 5. UI Settings Support:
+ *    - Accepts `uiSettingsOptions` prop to enable UI behaviors such as:
+ *      - `withSidebar` → Displays sidebar
+ *      - `withOverlay` → Displays overlay
+ *      - `withPreventRefresh` → Prevents page refresh
+ *
+ * 6. API Request Handling:
+ *    - Handles Axios API calls using `withAxiosApiLifecycle`.
+ *
+ * 7. Business Logic Handling:
+ *    - Injects custom logic/handlers using `withHandlers` from `react-recompose`.
  *
  * The `enhancers` array dynamically builds a list of HOCs based on the provided options.
  * Each enhancer is conditionally added to the array, ensuring flexibility and modularity.
@@ -67,28 +82,28 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
   } = options;
   const enhancers = [];
 
-  // ✅ 0. Add authentication enhancer using withAuth
+  // ✅ 1. Add authentication enhancer using withAuth
   enhancers.push(withAuth());
 
-  // ✅ 1. Handle default and required enhancers for the component uiSettingsOptions.screenConfig (screenName, pageTitle)
+  // ✅ 2. Handle default and required enhancers for the component uiSettingsOptions.screenConfig (screenName, pageTitle)
   if (!isEmptyObject(propsOptions) && propsOptions) {
     enhancers.push(withProps(propsOptions));
   }
 
-  // ✅ 2. Handle Redux connection
+  // ✅ 3. Handle Redux connection
   if (!isEmptyObject(connectOptions) && connectOptions) {
     const { mapStateToProps = null, mapDispatchToProps = null } = connectOptions;
     enhancers.push(connect(mapStateToProps, mapDispatchToProps));
   }
 
-  // ✅ 3. Handle state using React-recompose withState
+  // ✅ 4. Handle state using React-recompose withState
   if (isNonEmptyArray(stateOptions)) {
     stateOptions.forEach((stateOption) => {
       enhancers.push(withState(...(stateOption as [string, string, any])));
     });
   }
 
-  // ✅ 4. Handle uiSettings
+  // ✅ 5. Handle uiSettings
   if (!isEmptyObject(uiSettingsOptions) && uiSettingsOptions) {
     const {
       sidebar = false,
@@ -96,32 +111,29 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
       preventRefresh: preventRefreshOptions = null
     } = uiSettingsOptions;
 
-    // ✅ 4.1. Handle ui settings for sidebar
+    // ✅ 5.1. Handle ui settings for sidebar
     if (sidebar) {
       enhancers.push(withSidebar());
     }
 
-    // ✅ 4.2. Handle ui settings for overlay
+    // ✅ 5.2. Handle ui settings for overlay
     if (!isEmptyObject(overlayOptions) && overlayOptions) {
       enhancers.push(withOverlay(overlayOptions));
     }
 
-    // ✅ 4.3. Handle ui settings for prevent refresh
+    // ✅ 5.3. Handle ui settings for prevent refresh
     if (!isEmptyObject(preventRefreshOptions) && preventRefreshOptions) {
       enhancers.push(withPreventRefresh(preventRefreshOptions));
     }
   }
 
-  // ✅ 5. Handle API Request using withAxiosApi
+  // ✅ 6. Handle API Request using withAxiosApi
   if (isNonEmptyArray(apiOptions) && apiOptions) {
-    enhancers.push(withLoadingOverlay());
-
-    apiOptions.forEach((apiOption) => {
-      enhancers.push(withAxiosApi(apiOption));
-    });
+    const axiosApiLifecyleOptions = { apiOptions };
+    enhancers.push(withAxiosApiLifecycle(axiosApiLifecyleOptions));
   }
 
-  // ✅ 6. Handle handlers using React-recompose withHandlers
+  // ✅ 7. Handle handlers using React-recompose withHandlers
   if (!isEmptyObject(handlersOptions) && handlersOptions) {
     enhancers.push(withHandlers(handlersOptions));
   }
