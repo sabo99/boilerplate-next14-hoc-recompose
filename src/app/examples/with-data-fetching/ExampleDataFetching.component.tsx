@@ -5,12 +5,12 @@ import { useForm } from 'react-hook-form';
 import z from 'zod';
 
 import AppBase from '@/components/AppComponents/AppBase';
+import LoginForm from '@/components/AppComponents/Forms/LoginForm';
+import RefetchForm from '@/components/AppComponents/Forms/RefetchForm';
 import { Button } from '@/components/ui/button';
 import Constants from '@/constants';
 import { pathWithSearchParams, testProps, tid } from '@/lib/utils';
 
-import LoginForm from './(Forms)/LoginForm';
-import RefetchForm from './(Forms)/RefetchForm';
 import ExampleDataFetchingConfig from './ExampleDataFetching.config';
 import type { Props } from './ExampleDataFetching.types';
 

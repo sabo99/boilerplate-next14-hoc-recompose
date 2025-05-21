@@ -5,7 +5,7 @@ import InputForm from '@/components/AppComponents/AppForm/InputForm';
 import { Button } from '@/components/ui/button';
 import { testProps, tid } from '@/lib/utils';
 
-import type { Props } from '../Form.types';
+import type { Props } from './RefetchForm.types';
 
 const RefetchForm: React.FC<Props> = (props) => {
     const { screenName, name, form } = props;

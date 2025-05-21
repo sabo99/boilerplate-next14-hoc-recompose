@@ -1,6 +1,6 @@
 import { UseFormReturn } from 'react-hook-form';
 
-export type Props = {
+export type FormProps = {
   screenName: string;
   name: string;
   form: UseFormReturn<any>;
