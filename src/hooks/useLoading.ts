@@ -3,7 +3,7 @@ type Props = {
 };
 type OnSubmit = () => Promise<any>;
 
-export const useSubmitWithLoading = async (props: Props, onSubmit: OnSubmit) => {
+export const useSubmitWithLoading = async (props: Props, onSubmit: OnSubmit): Promise<any> => {
   const { setLoadingOverlay } = props;
   setLoadingOverlay(true);
 

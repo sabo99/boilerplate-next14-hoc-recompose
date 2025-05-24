@@ -1,7 +1,8 @@
 import { compose, withState } from 'react-recompose';
 
-import { Props } from './withLoadingOverlay.types';
 import LoadingOverlay from '@/components/AppComponents/LoadingOverlay';
+
+import type { Props } from './withLoadingOverlay.types';
 
 const ComposedLoadingOverlay = (ComposedComponent: React.ComponentType<Props>) => {
   const HOC = (props: Props) => {
