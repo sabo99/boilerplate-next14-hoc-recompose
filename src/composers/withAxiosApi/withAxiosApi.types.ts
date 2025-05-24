@@ -12,7 +12,7 @@ export type AxiosApiInstance = {
   response: AxiosApiResponse;
 }
 
-type AxiosApiOptions = {
+export type AxiosApiOptions = {
   skipApiOnRender?: boolean;
   baseURL?: string;
   headers?: object;

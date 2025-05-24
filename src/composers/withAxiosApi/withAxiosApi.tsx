@@ -1,15 +1,9 @@
-import { AxiosInstance } from 'axios';
-import { get } from 'lodash';
 import React from 'react';
 import { compose, withProps, withState } from 'react-recompose';
 
-import Config from '@/config';
-import { createSendRequest } from '@/lib/utils';
-import AxiosClient from '@/services/AxiosClient';
+import { useApiRequest } from '@/hooks';
 
-import type { AxiosApiRequestSendParams, Options, Props } from './withAxiosApi.types';
-
-const baseURL = get(Config.api, 'baseURL', '');
+import type { Options, Props } from './withAxiosApi.types';
 
 const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
   const AxiosApiHOC: React.FC<Props> = (props) => {
@@ -24,26 +18,13 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
       setLoadingOverlay
     } = props;
 
-    const axiosClientInstance = React.useRef<AxiosInstance>(
-      new AxiosClient(baseURL).getInstance()
-    );
-
-    const sendRequest = React.useCallback((params?: AxiosApiRequestSendParams) => {
-      const { payload, apiOptions } = params || {};
-      const axiosOptions = {
-        ...options,
-        ...apiOptions
-      };
-
-      return createSendRequest({
-        axiosClientInstance: axiosClientInstance.current,
-        url,
-        method,
-        options: axiosOptions,
-        setResponse,
-        setLoadingOverlay
-      })(payload);
-    }, [setLoadingOverlay, url, method, options, setResponse]);
+    const sendRequest = useApiRequest({
+      url,
+      method,
+      options,
+      setResponse,
+      setLoading: setLoadingOverlay
+    });
 
     React.useEffect(() => {
       if (!skipApiOnRender) {
