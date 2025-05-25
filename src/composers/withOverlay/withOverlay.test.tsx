@@ -1,4 +1,4 @@
-import { compose, withProps, withState } from 'react-recompose';
+import { compose, withProps } from 'react-recompose';
 
 import withIdlePopupOverlay from '../withIdlePopupOverlay';
 import withLoadingOverlay from '../withLoadingOverlay';
@@ -69,14 +69,9 @@ describe('withOverlay', () => {
         ...options,
         overlayState: 'STEP_UP_VERIFICATION'
       };
-      const defaultValue = {
-        isOpen: false,
-        type: null
-      };
 
       withOverlay(mockOptions)(Component);
 
-      expect(withState).toHaveBeenCalledWith('stepUpVerification', 'setStepUpVerification', defaultValue);
       expect(withStepUpVerificationOverlay).toHaveBeenCalledWith(mockOptions);
     });
   });

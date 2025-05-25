@@ -1,4 +1,4 @@
-import { compose, withProps, withState } from 'react-recompose';
+import { compose, withProps } from 'react-recompose';
 
 import withIdlePopupOverlay from '../withIdlePopupOverlay';
 import withLoadingOverlay from '../withLoadingOverlay';
@@ -20,8 +20,6 @@ const withOverlay = (options: Options) => {
   }
 
   if (overlayState === 'STEP_UP_VERIFICATION') {
-    const defaultValue = { isOpen: false, type: null };
-    enhancers.push(withState('stepUpVerification', 'setStepUpVerification', defaultValue));
     enhancers.push(withStepUpVerificationOverlay(options));
   }
 
