@@ -5,7 +5,6 @@ import { LoadingTypeOptions } from '@/composers/withLoadingOverlay/withLoadingOv
 import LoadingOverlay from './LoadingOverlay.component';
 
 describe('LoadingOverlay', () => {
-  let renderResult: ReturnType<typeof render>;
   const screenName = 'TestScreen';
   const props = {
     screenName,
