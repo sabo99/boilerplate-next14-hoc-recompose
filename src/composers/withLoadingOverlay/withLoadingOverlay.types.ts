@@ -10,6 +10,9 @@ export type Props = {
   screenName: string;
   // from options
   loaderType: LoadingTypeOptions,
-  // from state config (withLoadingOverlay.config)
+} & LoadingOverlayProps;
+
+export type LoadingOverlayProps = {
+  setLoadingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
   isLoadingOverlay: boolean;
-};
+}

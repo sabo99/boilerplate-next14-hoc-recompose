@@ -2,19 +2,15 @@ import { cleanup } from '@testing-library/react';
 
 import withAxiosApi from '@/composers/withAxiosApi';
 import withLoadingOverlay from '@/composers/withLoadingOverlay';
-import withLoadingOverlayConfig from '@/composers/withLoadingOverlay/withLoadingOverlay.config';
 
 import withAxiosApiLifecycle from './withAxiosApiLifecycle';
 import type { Options } from './withAxiosApiLifecycle.types';
 
 jest.mock('react-recompose')
   .mock('@/composers/withAxiosApi')
-  .mock('@/composers/withLoadingOverlay')
-  .mock('@/composers/withLoadingOverlay/withLoadingOverlay.config');
+  .mock('@/composers/withLoadingOverlay');
 
 describe('withAxiosApiLifecycle', () => {
-
-  const { withLoadingOverlayState } = withLoadingOverlayConfig;
 
   afterEach(() => {
     cleanup();
@@ -24,7 +20,6 @@ describe('withAxiosApiLifecycle', () => {
   describe('#withLoadingOverlay', () => {
     it('should invoke withLoadingOverlay by default', () => {
       const options: Options = {
-        loadingOverlay: true,
         apiOptions: [
           {
             method: 'GET',
@@ -39,28 +34,11 @@ describe('withAxiosApiLifecycle', () => {
       expect(withLoadingOverlay).toHaveBeenCalledTimes(1);
     });
 
-    it('should invoke withLoadingOverlayState when loadingOverlay is false', () => {
-      const options: Options = {
-        loadingOverlay: false,
-        apiOptions: [
-          {
-            method: 'GET',
-            url: '/products',
-            mapProps: jest.fn()
-          }
-        ]
-      };
-
-      withAxiosApiLifecycle(options);
-
-      expect(withLoadingOverlayState).toHaveBeenCalled();
-    });
   });
 
   describe('#withAxiosApi', () => {
     it('should invoke withAxiosApi when `options` apiOptions is present', () => {
       const options: Options = {
-        loadingOverlay: true,
         apiOptions: [
           {
             url: '/products',

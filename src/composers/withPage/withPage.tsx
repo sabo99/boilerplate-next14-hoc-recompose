@@ -129,7 +129,7 @@ const withPage = (options: Options) => (Component: React.ComponentType<any>) => 
 
   // ✅ 6. Handle API Request using withAxiosApi
   if (isNonEmptyArray(apiOptions) && apiOptions) {
-    const axiosApiLifecyleOptions = { apiOptions, loadingOverlay: true };
+    const axiosApiLifecyleOptions = { apiOptions };
     enhancers.push(withAxiosApiLifecycle(axiosApiLifecyleOptions));
   }
 
