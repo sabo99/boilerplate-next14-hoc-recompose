@@ -13,11 +13,13 @@ describe('IdlePopup', () => {
   };
 
   beforeEach(() => {
+    jest.useFakeTimers();
     renderResult = render(<IdlePopup {...props} />);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.useRealTimers();
   });
 
   describe('#render', () => {
@@ -27,7 +29,7 @@ describe('IdlePopup', () => {
       const styledTimerTextTestId = `${screenName}_StyledTimerText`;
       const subtitle = 'Your session time is almost up and you will be automatically returned to the dashboard page.';
       const buttonText = 'Continue Session';
-      const timerText = 'In 00:04';
+      const timerText = 'In 00:05';
 
       const { getByTestId } = renderResult;
 
@@ -38,10 +40,11 @@ describe('IdlePopup', () => {
       expect(getByTestId(styledTimerTextTestId)).toBeTruthy();
       expect(getByTestId(styledTimerTextTestId)).toHaveTextContent(timerText);
     });
+
     it('should display timer in hh:mm:ss format when popupTimeout is one hour or above', () => {
       const styledTimerTextTestId = `${screenName}_StyledTimerText`;
-      const popupTimeout = 3_610_000;
-      const timerText = 'In 01:00:09';
+      const popupTimeout = 3_600_000;
+      const timerText = 'In 01:00:00';
       const mockProps = {
         ...props,
         popupTimeout
