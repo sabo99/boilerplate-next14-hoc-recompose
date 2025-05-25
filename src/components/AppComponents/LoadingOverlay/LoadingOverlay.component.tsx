@@ -1,6 +1,7 @@
-import Overlay from "@/components/AppComponents//Overlay";
+import Overlay from '@/components/AppComponents//Overlay';
 import AppLoading from '@/components/AppComponents/AppLoading';
-import type { Props } from "./LoadingOverlay.types";
+
+import type { Props } from './LoadingOverlay.types';
 
 const LoadingOverlay: React.FC<Props> = ({ isLoadingOverlay: isShow, ...props }) => {
   return isShow && (
@@ -11,6 +12,6 @@ const LoadingOverlay: React.FC<Props> = ({ isLoadingOverlay: isShow, ...props })
       }
     />
   );
-}
+};
 
 export default LoadingOverlay;

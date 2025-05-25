@@ -1,4 +1,4 @@
-import { LoadingTypeOptions } from "@/composers/withLoadingOverlay/withLoadingOverlay.types";
+import { LoadingTypeOptions } from '@/composers/withLoadingOverlay/withLoadingOverlay.types';
 
 export type Props = {
   // from defaultProps
