@@ -2,7 +2,7 @@ import { UseFormReturn } from 'react-hook-form';
 
 import type { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
 import type { ApiRequestSendCallback } from '@/composers/withAxiosApi/withAxiosApi.types';
-import type { DefaultPropsOptions } from '@/composers/withPage/withPage.types';
+import type { DefaultPropsOptions } from '@/composers/withComposed/withComposed.types';
 
 export type Props = {
   setEnabledSidebar: React.Dispatch<React.SetStateAction<boolean>>;

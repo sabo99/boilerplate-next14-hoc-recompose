@@ -1,12 +1,13 @@
 import { get } from 'lodash';
 
 import { AxiosApiInstance, AxiosApiRequestSendParams } from '@/composers/withAxiosApi/withAxiosApi.types';
-import withPage from '@/composers/withPage';
-import type { DefaultPropsOptions, UiSettingOptions } from '@/composers/withPage/withPage.types';
+import withComposed from '@/composers/withComposed';
+import type { DefaultPropsOptions, UiSettingOptions } from '@/composers/withComposed/withComposed.types';
 import Constants from '@/constants';
 
 import ExampleDataFetching from './ExampleDataFetching.component';
 import ExampleDataFetchingHandlers from './ExampleDataFetching.handlers';
+import type { Props } from './ExampleDataFetching.types';
 
 const { Permissions } = Constants;
 
@@ -33,7 +34,7 @@ export const uiSettings: UiSettingOptions = {
   sidebar: true
 };
 
-export default withPage({
+export default withComposed<Props>({
   props: defaultProps,
   api: [
     {

@@ -1,5 +1,5 @@
-import withPage from '@/composers/withPage';
-import { DefaultPropsOptions, UiSettingOptions } from '@/composers/withPage/withPage.types';
+import withComposed from '@/composers/withComposed';
+import { DefaultPropsOptions, UiSettingOptions } from '@/composers/withComposed/withComposed.types';
 import Constants from '@/constants';
 
 import Dashboard from './Dashboard.component';
@@ -16,7 +16,7 @@ export const uiSettings: UiSettingOptions = {
   sidebar: true
 };
 
-export default withPage({
+export default withComposed({
   props: defaultProps,
   uiSettings
 })(Dashboard);

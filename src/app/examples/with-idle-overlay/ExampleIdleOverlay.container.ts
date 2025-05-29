@@ -1,8 +1,9 @@
-import withPage from '@/composers/withPage';
-import { DefaultPropsOptions, UiSettingOptions } from '@/composers/withPage/withPage.types';
+import withComposed from '@/composers/withComposed';
+import { DefaultPropsOptions, UiSettingOptions } from '@/composers/withComposed/withComposed.types';
 import Constants from '@/constants';
 
 import ExampleIdleOverlay from './ExampleIdleOverlay.component';
+import type { Props } from './ExampleIdleOverlay.types';
 
 const { Permissions } = Constants;
 
@@ -19,7 +20,7 @@ export const uiSettings: UiSettingOptions = {
   }
 };
 
-export default withPage({
+export default withComposed<Props>({
   props: defaultProps,
   uiSettings
 })(ExampleIdleOverlay);

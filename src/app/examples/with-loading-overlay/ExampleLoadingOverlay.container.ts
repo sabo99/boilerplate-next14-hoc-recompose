@@ -1,10 +1,11 @@
-import withPage from '@/composers/withPage';
-import { DefaultPropsOptions, StateOptions, UiSettingOptions } from '@/composers/withPage/withPage.types';
+import withComposed from '@/composers/withComposed';
+import { DefaultPropsOptions, StateOptions, UiSettingOptions } from '@/composers/withComposed/withComposed.types';
 import Constants from '@/constants';
 
 import ExampleLoadingOverlay from './ExampleLoadingOverlay.component';
 import ExampleLoadingOverlayConfig from './ExampleLoadingOverlay.config';
 import ExampleLoadingOverlayHandlers from './ExampleLoadingOverlay.handlers';
+import type { Props } from './ExampleLoadingOverlay.types';
 
 const { Permissions } = Constants;
 const { screenName } = ExampleLoadingOverlayConfig;
@@ -28,7 +29,7 @@ export const uiSettings: UiSettingOptions = {
   }
 };
 
-export default withPage({
+export default withComposed<Props>({
   props: {
     ...defaultProps
     // add another props
