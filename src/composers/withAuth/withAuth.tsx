@@ -22,8 +22,6 @@ export const mapDispatchToProps = {
   clearSelectedRelogAccount: relogActions.clearSelectedRelogAccount
 };
 
-const withAuth = () => {
-  return compose(connect(mapStateToProps, mapDispatchToProps));
-};
+const withAuth = () => compose(connect(mapStateToProps, mapDispatchToProps));
 
 export default withAuth;
