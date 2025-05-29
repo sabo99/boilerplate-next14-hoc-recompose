@@ -2,8 +2,8 @@ import React from 'react';
 import { compose, withState } from 'react-recompose';
 
 import AppIdleSession from '@/components/AppComponents/AppIdleSession';
+import type { StateOptions } from '@/composers/withComposed/withComposed.types';
 
-import type { StateOptions } from '../withPage/withPage.types';
 import WithIdlePopupOverlayConfig from './withIdlePopupOverlay.config';
 import type { Props } from './withIdlePopupOverlay.types';
 
