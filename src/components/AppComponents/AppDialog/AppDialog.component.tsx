@@ -29,6 +29,7 @@ const AppDialog: React.FC<Props> = (props) => {
   } = props;
   const [open, setOpen] = React.useState(isOpen);
 
+  const withContent = renderContent !== undefined;
   const withFooter = !withoutFooter;
   const preventDefault = (event: Event): void => event.preventDefault();
   const withCancelOutside = !cancelableOutside && {
@@ -100,7 +101,7 @@ const AppDialog: React.FC<Props> = (props) => {
           </DialogDescription>
         </DialogHeader>
 
-        {renderContent && renderContent()}
+        {withContent && renderContent()}
 
         {withFooter && renderDialogFooter()}
 

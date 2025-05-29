@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 
 import { MockComponent } from '@/__mocks__/component';
 
@@ -14,9 +14,7 @@ jest
     DialogHeader: jest.fn(MockComponent),
     DialogTitle: jest.fn(MockComponent)
   }))
-  .mock('@/components/ui/button', () => ({
-    Button: jest.fn(MockComponent)
-  }));
+  .mock('@/components/ui/button');
 
 describe('AppDialog', () => {
   let renderResult: ReturnType<typeof render>;
@@ -104,11 +102,49 @@ describe('AppDialog', () => {
       rerender(<AppDialog {...mockProps} />);
 
       expect(queryByText(/Children/i)).toBeTruthy();
+
+    });
+
+    it('should render without footer when props `withoutFooter` is present', () => {
+      const mockProps: any = {
+        ...props,
+        withoutFooter: true
+      };
+
+      const { rerender, queryByTestId } = renderResult;
+      rerender(<AppDialog {...mockProps} />);
+
+      expect(queryByTestId(dialogFooterTestId)).not.toBeInTheDocument();
     });
   });
 
   describe('#onClick', () => {
-    it('should invoke onAfterClose and close the dialog when click dialog close button', () => {
+    it('should called onClick button when button is clicked', () => {
+      const onClickButton = jest.fn();
+      const mockProps: any = {
+        ...props,
+        buttons: [
+          {
+            withCloseDialog: true,
+            type: 'button',
+            onClick: onClickButton
+          },
+          {
+            type: 'button',
+            onClick: onClickButton
+          }
+        ]
+      };
+      const { rerender, queryAllByTestId } = renderResult;
+
+      rerender(<AppDialog {...mockProps} />);
+      fireEvent.click(queryAllByTestId(dialogButtonTestId)[0]);
+      fireEvent.click(queryAllByTestId(dialogButtonTestId)[1]);
+
+      expect(onClickButton).toHaveBeenCalledTimes(2);
+    });
+
+    it('should called onAfterClose and close the dialog when click dialog close button', async () => {
       const onAfterClose = jest.fn();
       const buttonText = 'Custom Button';
       const mockProps = {
@@ -129,5 +165,94 @@ describe('AppDialog', () => {
 
       expect(onAfterClose).toHaveBeenCalled();
     });
+
+    it('should called onClick buttons when props `onAfterClose` is present', () => {
+      const onAfterClose = jest.fn();
+      const onClickButton = jest.fn();
+      const mockProps: any = {
+        ...props,
+        onAfterClose,
+        buttons: [
+          {
+            withCloseDialog: true,
+            type: 'button',
+            onClick: onClickButton
+          },
+          {
+            type: 'button',
+            onClick: onClickButton
+          }
+        ]
+      };
+      const { rerender, queryAllByTestId } = renderResult;
+
+      rerender(<AppDialog {...mockProps} />);
+      fireEvent.click(queryAllByTestId(dialogButtonTestId)[0]);
+      fireEvent.click(queryAllByTestId(dialogButtonTestId)[1]);
+
+      expect(onClickButton).toHaveBeenCalledTimes(2);
+      expect(onAfterClose).not.toHaveBeenCalled();
+    });
+
+    it(`should not called onClick buttons or onAfterClose when
+      buttons props without onClick and props "onAfterClose" is not present`, () => {
+      const onAfterClose = jest.fn();
+      const onClickButton = jest.fn();
+      const mockProps: any = {
+        ...props,
+        buttons: [
+          {
+            withCloseDialog: true,
+            type: 'button'
+          },
+          {
+            type: 'button'
+          }
+        ]
+      };
+      const { rerender, queryAllByTestId } = renderResult;
+
+      rerender(<AppDialog {...mockProps} />);
+      fireEvent.click(queryAllByTestId(dialogButtonTestId)[0]);
+      fireEvent.click(queryAllByTestId(dialogButtonTestId)[1]);
+
+      expect(onClickButton).toHaveBeenCalledTimes(0);
+      expect(onAfterClose).not.toHaveBeenCalled();
+    });
+
+    it('should called handleDialogClose instance of onAfterClose when dialog is closed', async () => {
+      const onAfterClose = jest.fn();
+      const mockProps: any = {
+        ...props,
+        isOpen: false,
+        onAfterClose
+      };
+      const { rerender } = renderResult;
+
+      rerender(<AppDialog {...mockProps} />);
+      act(() => {
+        onAfterClose();
+      });
+
+      await waitFor(() => {
+        expect(onAfterClose).toHaveBeenCalled();
+      });
+    });
+
+    it('should not called onAfterClose when dialog is closed and onAfterClose not provided', async () => {
+      const onAfterClose = jest.fn();
+      const mockProps: any = {
+        ...props,
+        isOpen: false
+      };
+      const { rerender } = renderResult;
+
+      rerender(<AppDialog {...mockProps} />);
+
+      await waitFor(() => {
+        expect(onAfterClose).not.toHaveBeenCalled();
+      });
+    });
+
   });
 });
