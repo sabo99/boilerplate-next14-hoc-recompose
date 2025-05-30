@@ -2,8 +2,9 @@ import React from 'react';
 import { compose, withProps, withState } from 'react-recompose';
 
 import { useApiRequest } from '@/hooks';
+import { ComposedAxiosApiOptions } from '@/types';
 
-import type { Options, Props } from './withAxiosApi.types';
+import type { Props } from './withAxiosApi.types';
 
 const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
   const AxiosApiHOC: React.FC<Props> = (props) => {
@@ -43,7 +44,7 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
   return AxiosApiHOC;
 };
 
-const withAxiosApi = (withAxiosApiOptions: Options) => compose(
+const withAxiosApi = (withAxiosApiOptions: ComposedAxiosApiOptions) => compose(
   withState('response', 'setResponse', {
     loading: true,
     data: null,
