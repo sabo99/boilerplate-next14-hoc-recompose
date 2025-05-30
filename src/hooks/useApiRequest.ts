@@ -2,14 +2,14 @@ import { AxiosError } from 'axios';
 import { get } from 'lodash';
 import React from 'react';
 
-import {
-  AxiosApiOptions,
-  AxiosApiRequestSendParams,
-  AxiosApiResponse,
-  RequestMethod
-} from '@/composers/withAxiosApi/withAxiosApi.types';
 import Config from '@/config';
 import AxiosClient from '@/services/AxiosClient';
+import {
+  AxiosApiOptions,
+  AxiosApiRequestSendArgs,
+  AxiosApiResponse,
+  RequestMethod
+} from '@/types';
 
 type UseApiSenderParams = {
   baseURL?: string;
@@ -62,8 +62,8 @@ export const useApiRequest = (params: UseApiSenderParams) => {
   const axiosClientInstance = new AxiosClient(BASE_URL).getInstance();
 
   return React.useCallback(
-    async (params?: AxiosApiRequestSendParams): Promise<AxiosApiResponse> => {
-      const { payload = {}, apiOptions = {} } = params || {};
+    async (args?: AxiosApiRequestSendArgs): Promise<AxiosApiResponse> => {
+      const { payload = {}, apiOptions = {} } = args || {};
       const axiosOptions = {
         ...options,
         ...apiOptions
