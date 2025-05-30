@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import Providers from '@/app/providers';
 
-import withIdlePopupOverlay from './withIdlePopupOverlay';
+import withIdlePopupOverlay from './withIdlePopupOverlay.composer';
 
 jest
   .mock('@/hooks', () => ({
