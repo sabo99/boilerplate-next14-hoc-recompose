@@ -3,6 +3,7 @@ import {
   DatabaseZapIcon,
   LayoutDashboardIcon,
   LoaderIcon,
+  LogInIcon,
   MonitorDotIcon,
   RefreshCwOffIcon,
   ShieldEllipsisIcon,
@@ -70,6 +71,12 @@ const appSidebarData = {
           url: Paths.Examples.WithDataFetching,
           icon: DatabaseZapIcon,
           permission: 'VIEW_DATA_FETCHING'
+        },
+        {
+          title: 'withAuthentication',
+          url: Paths.Examples.WithAuthentication,
+          icon: LogInIcon,
+          permission: 'VIEW_AUTHENTICATION'
         },
         {
           title: 'withStepUpVerification',

@@ -6,6 +6,7 @@ const Constants =
     'VIEW_LOADING_OVERLAY',
     'VIEW_IDLE_OVERLAY',
     'VIEW_PREVENT_REFRESH',
+    'VIEW_AUTHENTICATION',
     'VIEW_DATA_FETCHING',
     'VIEW_STEP_UP_VERIFICATION'
   ],
@@ -15,6 +16,7 @@ const Constants =
     Examples: {
       WithLoadingOverlay: '/examples/with-loading-overlay',
       WithIdleOverlay: '/examples/with-idle-overlay',
+      WithAuthentication: '/examples/with-authentication',
       WithDataFetching: '/examples/with-data-fetching',
       WithStepUpVerification: '/examples/with-step-up-verification'
     }
