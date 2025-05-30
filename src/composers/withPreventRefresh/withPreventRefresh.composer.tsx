@@ -34,7 +34,6 @@ const withPreventRefresh = (options: Options) => (ComposedComponent: React.Compo
       <div>
         <ComposedComponent {...props} />
         {alertDialogOption && renderAlertDialog()}
-
       </div>
     );
   };

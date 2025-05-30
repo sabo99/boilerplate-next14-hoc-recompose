@@ -2,7 +2,7 @@ import { cleanup, render } from '@testing-library/react';
 import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useBeforeunload } from 'react-beforeunload';
 
-import withPreventRefresh from './withPreventRefresh';
+import withPreventRefresh from './withPreventRefresh.composer';
 
 jest
   .mock('next/navigation', () => ({
