@@ -1,1 +1,1 @@
-export { default } from './withAxiosApi';
+export { default } from './withAxiosApi.composer';
