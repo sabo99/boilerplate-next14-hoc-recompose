@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import Providers from '@/app/providers';
 
-import withLoadingOverlay from './withLoadingOverlay';
+import withLoadingOverlay from './withLoadingOverlay.composer';
 
 describe('withLoadingOverlay', () => {
   let renderResult: ReturnType<typeof render>;
