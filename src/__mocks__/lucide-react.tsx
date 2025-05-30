@@ -19,3 +19,4 @@ export const LogOutIcon = MockIcon;
 export const SparklesIcon = MockIcon;
 export const ShieldEllipsisIcon = MockIcon;
 export const AlertCircleIcon = MockIcon;
+export const LogInIcon = MockIcon;
