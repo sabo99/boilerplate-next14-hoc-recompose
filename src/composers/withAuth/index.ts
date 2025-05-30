@@ -1,1 +1,1 @@
-export { default } from './withAuth';
+export { default } from './withAuth.composer';

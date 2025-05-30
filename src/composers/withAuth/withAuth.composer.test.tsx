@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { actions as authActions } from '@/redux/reducers/Auth';
 import { actions as relogActions } from '@/redux/reducers/Relogin';
 
-import withAuth, { mapDispatchToProps, mapStateToProps } from './withAuth';
+import withAuth, { mapDispatchToProps, mapStateToProps } from './withAuth.composer';
 
 jest.mock('react-recompose')
   .mock('react-redux');
