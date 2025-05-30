@@ -1,9 +1,9 @@
 import { get } from 'lodash';
 
-import { AxiosApiInstance, AxiosApiRequestSendParams } from '@/composers/withAxiosApi/withAxiosApi.types';
 import withComposed from '@/composers/withComposed';
 import type { DefaultPropsOptions, UiSettingOptions } from '@/composers/withComposed/withComposed.types';
 import Constants from '@/constants';
+import type { AxiosApiInstance, AxiosApiRequestSendArgs } from '@/types';
 
 import ExampleDataFetching from './ExampleDataFetching.component';
 import ExampleDataFetchingHandlers from './ExampleDataFetching.handlers';
@@ -22,12 +22,12 @@ export const mapProductToProps = ({ request, response }: AxiosApiInstance) => {
     isLoadingProduct: response.loading,
     errorProduct: get(response, 'error', null),
     products: get(response.data, 'products', []),
-    refetchProducts: (params?: AxiosApiRequestSendParams) => request.send(params)
+    refetchProducts: (params?: AxiosApiRequestSendArgs) => request.send(params)
   };
 };
 
 export const mapAuthToProps = ({ request }: AxiosApiInstance) => ({
-  login: (params: AxiosApiRequestSendParams) => request.send(params)
+  login: (params: AxiosApiRequestSendArgs) => request.send(params)
 });
 
 export const uiSettings: UiSettingOptions = {
