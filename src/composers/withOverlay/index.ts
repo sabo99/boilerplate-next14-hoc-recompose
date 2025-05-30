@@ -1,1 +1,1 @@
-export { default } from './withOverlay';
+export { default } from './withOverlay.composer';

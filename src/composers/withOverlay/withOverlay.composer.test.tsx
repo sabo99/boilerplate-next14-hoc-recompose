@@ -3,7 +3,7 @@ import { compose, withProps } from 'react-recompose';
 import withIdlePopupOverlay from '../withIdlePopupOverlay';
 import withLoadingOverlay from '../withLoadingOverlay';
 import withStepUpVerificationOverlay from '../withStepUpVerificationOverlay';
-import withOverlay from './withOverlay';
+import withOverlay from './withOverlay.composer';
 import { Options } from './withOverlay.types';
 
 jest.mock('react-recompose')
