@@ -1,1 +1,1 @@
-export { default } from './withAxiosApiLifecycle';
+export { default } from './withAxiosApiLifecycle.composer';

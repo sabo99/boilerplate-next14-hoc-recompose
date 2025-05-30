@@ -3,7 +3,7 @@ import { cleanup } from '@testing-library/react';
 import withAxiosApi from '@/composers/withAxiosApi';
 import withLoadingOverlay from '@/composers/withLoadingOverlay';
 
-import withAxiosApiLifecycle from './withAxiosApiLifecycle';
+import withAxiosApiLifecycle from './withAxiosApiLifecycle.composer';
 import type { Options } from './withAxiosApiLifecycle.types';
 
 jest.mock('react-recompose')
