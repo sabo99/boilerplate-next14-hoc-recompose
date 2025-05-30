@@ -2,7 +2,7 @@ import { cleanup, render } from '@testing-library/react';
 
 import { MockComponent } from '@/__mocks__/component';
 
-import withSidebar from './withSidebar';
+import withSidebar from './withSidebar.composer';
 
 jest
   .mock('@/components/AppComponents/AppSidebar', () => jest.fn(MockComponent))
