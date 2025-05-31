@@ -13,15 +13,17 @@ const LoginForm: React.FC<Props> = (props) => {
 
   return (
     <AppForm
-      {...props}>
+      {...props}
+      {...testProps(tid(id))}
+    >
       <InputForm
-        {...testProps(tid(id, 'InputForm', 'Username'))}
         control={form.control}
         screenName={screenName}
         name="username"
         label="Username"
         description="Choose a username that is unique and easy to remember. Example: `emilys`"
         placeholder="Input your username"
+        {...testProps(tid(id, 'InputForm', 'Username'))}
       />
 
       <InputForm
@@ -32,11 +34,12 @@ const LoginForm: React.FC<Props> = (props) => {
         description="Enter a secure password. Example: `emilyspass`"
         placeholder="Input your password"
         type="password"
+        {...testProps(tid(id, 'InputForm', 'Password'))}
       />
 
       <Button
-        {...testProps(tid(id, 'LoginButton'))}
         type="submit"
+        {...testProps(tid(id, 'LoginButton'))}
       >
         Login
       </Button>
