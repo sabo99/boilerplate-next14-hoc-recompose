@@ -234,30 +234,32 @@ describe('withComposed', () => {
   describe('#withAxiosApiLifecycle', () => {
     it('should invoke withAxiosApiLifecycle when `api` is present', () => {
       const options: any = {
-        api: [
-          {
-            url: '/products',
-            method: 'GET',
-            mapProps: jest.fn(),
-            options: {
-              skipApiOnRender: true,
-              params: { limit: 10 }
+        api: {
+          apiRequests: [
+            {
+              url: '/products',
+              method: 'GET',
+              mapProps: jest.fn(),
+              options: {
+                skipApiOnRender: true,
+                params: { limit: 10 }
+              }
+            },
+            {
+              url: '/carts',
+              method: 'GET',
+              mapProps: jest.fn(),
+              options: {
+                headers: { 'Content-Type': 'application/json' }
+              }
             }
-          },
-          {
-            url: '/carts',
-            method: 'GET',
-            mapProps: jest.fn(),
-            options: {
-              headers: { 'Content-Type': 'application/json' }
-            }
-          }
-        ]
+          ]
+        }
       };
 
       withComposed<Props>(options)(Component);
 
-      expect(withAxiosApiLifecycle).toHaveBeenCalledWith({ apiOptions: options.api });
+      expect(withAxiosApiLifecycle).toHaveBeenCalledWith(options.api);
     });
 
     it('should not invoke withAxiosApiLifecycle when `api` is present but empty array', () => {
