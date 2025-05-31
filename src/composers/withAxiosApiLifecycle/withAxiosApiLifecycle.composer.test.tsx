@@ -4,7 +4,6 @@ import withAxiosApi from '@/composers/withAxiosApi';
 import withLoadingOverlay from '@/composers/withLoadingOverlay';
 
 import withAxiosApiLifecycle from './withAxiosApiLifecycle.composer';
-import type { Options } from './withAxiosApiLifecycle.types';
 
 jest.mock('react-recompose')
   .mock('@/composers/withAxiosApi')
@@ -18,9 +17,10 @@ describe('withAxiosApiLifecycle', () => {
   });
 
   describe('#withLoadingOverlay', () => {
-    it('should invoke withLoadingOverlay by default', () => {
-      const options: Options = {
-        apiOptions: [
+    it('should invoke withLoadingOverlay when `loadingOverlay` is true', () => {
+      const options: any = {
+        loadingOverlay: true,
+        apiRequests: [
           {
             method: 'GET',
             url: '/products',
@@ -28,7 +28,6 @@ describe('withAxiosApiLifecycle', () => {
           }
         ]
       };
-
       withAxiosApiLifecycle(options);
 
       expect(withLoadingOverlay).toHaveBeenCalledTimes(1);
@@ -37,9 +36,9 @@ describe('withAxiosApiLifecycle', () => {
   });
 
   describe('#withAxiosApi', () => {
-    it('should invoke withAxiosApi when `options` apiOptions is present', () => {
-      const options: Options = {
-        apiOptions: [
+    it('should invoke withAxiosApi when `apiRequests` is present', () => {
+      const options: any = {
+        apiRequests: [
           {
             url: '/products',
             method: 'GET',
@@ -62,8 +61,8 @@ describe('withAxiosApiLifecycle', () => {
 
       withAxiosApiLifecycle(options);
 
-      expect(withAxiosApi).toHaveBeenNthCalledWith(1, options.apiOptions[0]);
-      expect(withAxiosApi).toHaveBeenNthCalledWith(2, options.apiOptions[1]);
+      expect(withAxiosApi).toHaveBeenNthCalledWith(1, options.apiRequests[0]);
+      expect(withAxiosApi).toHaveBeenNthCalledWith(2, options.apiRequests[1]);
     });
   });
 });

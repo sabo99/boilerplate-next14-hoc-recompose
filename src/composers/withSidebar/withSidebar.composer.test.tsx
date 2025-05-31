@@ -13,10 +13,6 @@ jest
 
 describe('withSidebar', () => {
   let renderResult: ReturnType<typeof render>;
-  const options: any = {
-    screenName: 'TestScreen',
-    permissions: ['VIEW_MENU']
-  };
   const Component = (props: any) => {
     return (
       <div {...props}>
@@ -24,7 +20,7 @@ describe('withSidebar', () => {
       </div>
     );
   };
-  const WrappedComponent = withSidebar(options)(Component);
+  const WrappedComponent = withSidebar()(Component);
 
   beforeEach(() => {
     renderResult = render(<WrappedComponent />);

@@ -1,21 +1,21 @@
 import { compose, withProps } from 'react-recompose';
 
-import withIdlePopupOverlay from '../withIdlePopupOverlay';
-import withLoadingOverlay from '../withLoadingOverlay';
-import withStepUpVerificationOverlay from '../withStepUpVerificationOverlay';
+import withIdlePopupOverlay from '@/composers/withIdlePopupOverlay';
+import withLoadingOverlay from '@/composers/withLoadingOverlay';
+import withStepUpVerificationOverlay from '@/composers/withStepUpVerificationOverlay';
+
 import withOverlay from './withOverlay.composer';
-import { Options } from './withOverlay.types';
 
 jest.mock('react-recompose')
-  .mock('../withIdlePopupOverlay')
-  .mock('../withLoadingOverlay')
-  .mock('../withStepUpVerificationOverlay');
+  .mock('@/composers/withIdlePopupOverlay')
+  .mock('@/composers/withLoadingOverlay')
+  .mock('@/composers/withStepUpVerificationOverlay');
 
 describe('withOverlay', () => {
   const Component = () => <div>Component</div>;
   const composeCallback = jest.fn();
   const composeResult = {};
-  const options: Options = {
+  const options: any = {
     overlayState: 'LOADING',
     loaderType: 'DOTS'
   };
