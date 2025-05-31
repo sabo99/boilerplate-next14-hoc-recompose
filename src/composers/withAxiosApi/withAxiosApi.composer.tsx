@@ -15,16 +15,14 @@ const ComposedAxiosApi = (ComposedComponent: React.ComponentType<Props>) => {
       url,
       method = 'GET',
       mapProps,
-      options = {},
-      setLoadingOverlay
+      options = {}
     } = props;
 
     const sendRequest = useApiRequest({
       url,
       method,
       options,
-      setResponse,
-      setLoading: setLoadingOverlay
+      setResponse
     });
 
     React.useEffect(() => {

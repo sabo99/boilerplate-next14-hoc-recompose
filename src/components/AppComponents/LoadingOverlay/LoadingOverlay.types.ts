@@ -1,10 +1,5 @@
-import { LoadingTypeOptions } from '@/composers/withLoadingOverlay/withLoadingOverlay.types';
+import { ComposedLoadingOverlayProps } from '@/types';
 
-export type Props = {
-  // from defaultProps
+export type Props = ComposedLoadingOverlayProps & {
   screenName: string;
-  // from options
-  loaderType: LoadingTypeOptions,
-  // from composer withLoadingOverlay
-  isLoadingOverlay: boolean;
 };

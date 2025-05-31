@@ -1,16 +1,24 @@
 import type { Options as AppAlertDialogOptions } from '@/components/AppComponents/AppAlertDialog/AppAlertDialog.types';
-import type { DefaultPropsOptions } from '@/composers/withComposed/withComposed.types';
+import type { ComposedDefaultPropsOptions } from '@/types';
 
-export type Props = {
+// ============================
+// Component Props
+// ============================
+
+export interface Props extends ComposedDefaultPropsOptions {
   idleTimeout: number;
-} & DefaultPropsOptions
+}
+
+// ============================
+// Callback Types
+// ============================
 
 export type OnHandleAppAlertDialogCallback = (
   options: AppAlertDialogOptions
 ) => Promise<void>;
 
-type IdleCountdownParams = {
-  timeout: number
+export interface IdleCountdownParams {
+  timeout: number;
 }
 
 export type OnHandleIdleCountdownCallback = (

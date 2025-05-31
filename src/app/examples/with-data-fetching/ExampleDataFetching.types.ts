@@ -1,50 +1,51 @@
 import { UseFormReturn } from 'react-hook-form';
 
-import type { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
-import type { ApiRequestSendCallback } from '@/composers/withAxiosApi/withAxiosApi.types';
-import type { DefaultPropsOptions } from '@/composers/withComposed/withComposed.types';
+import type {
+  AxiosApiRequestCallback,
+  ComposedAuthProps,
+  ComposedDefaultPropsOptions,
+  ComposedLoadingOverlayProps,
+  Product
+} from '@/types';
 
-export type Props = {
-  setEnabledSidebar: React.Dispatch<React.SetStateAction<boolean>>;
-  isLoadingProduct: boolean;
-  errorProduct: any;
-  products: Product[];
-  setLoadingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
-  login: ApiRequestSendCallback;
-  refetchProducts: ApiRequestSendCallback;
-  // Handlers
-  onHandleLogin: OnHandleLoginCallback;
-  onHandleLogout: OnHandleLogoutCallback;
-  onHandleRefetchProducts: OnHandleRefetchProductCallback;
-} & DefaultPropsOptions & withAuthProps
+// ============================
+// Payloads & Forms
+// ============================
 
-type Product = {
-  id: number;
-  title: string;
-  description: string;
-}
-
-type LoginPayload = {
-  username: string;
-  password: string;
-}
-
-type LoginForm = UseFormReturn<LoginPayload, any, undefined>
-
-type LoginOptions = {
-  form: LoginForm;
-}
-
-type RefetchPayload = {
+export interface RefetchPayload {
   limit: number;
 }
 
-type RefetchForm = UseFormReturn<RefetchPayload, any, undefined>
+export type RefetchForm = UseFormReturn<RefetchPayload, any, undefined>;
 
-type RefetchOptions = {
+export interface RefetchOptions {
   form: RefetchForm;
 }
 
-export type OnHandleLoginCallback = (payload: LoginPayload, options: LoginOptions) => Promise<void>;
-export type OnHandleLogoutCallback = (options: LoginOptions) => Promise<void>;
-export type OnHandleRefetchProductCallback = (payload?: RefetchPayload, options?: RefetchOptions) => Promise<void>;
+// ============================
+// Callback Types
+// ============================
+
+export type OnHandleRefetchProductCallback = (
+  payload?: RefetchPayload,
+  options?: RefetchOptions
+) => Promise<void>;
+
+// ============================
+// Component Props
+// ============================
+
+export interface Props extends
+  ComposedDefaultPropsOptions,
+  ComposedAuthProps,
+  ComposedLoadingOverlayProps {
+  // Container
+  isLoadingProduct: boolean;
+  errorProduct: any;
+  products: Product[];
+  login: AxiosApiRequestCallback;
+  refetchProducts: AxiosApiRequestCallback;
+
+  // Handlers
+  onHandleRefetchProducts: OnHandleRefetchProductCallback;
+}

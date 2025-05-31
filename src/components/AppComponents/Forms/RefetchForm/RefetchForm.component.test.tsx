@@ -33,7 +33,7 @@ describe('RefetchForm', () => {
 
   beforeEach(() => {
     renderResult = render(
-      <RefetchForm {...props as any} />
+      <RefetchForm {...props} />
     );
   });
 

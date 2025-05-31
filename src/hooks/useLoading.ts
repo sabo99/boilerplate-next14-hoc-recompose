@@ -1,9 +1,8 @@
-type Props = {
-  setLoadingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
-};
-type OnSubmit = () => Promise<any>;
+import { ComposedLoadingOverlayProps } from '@/types';
 
-export const useSubmitWithLoading = async (props: Props, onSubmit: OnSubmit): Promise<any> => {
+type Props = ComposedLoadingOverlayProps;
+
+export const useSubmitWithLoading = async <T>(props: Props, onSubmit: () => Promise<T>): Promise<T> => {
   const { setLoadingOverlay } = props;
   setLoadingOverlay(true);
 

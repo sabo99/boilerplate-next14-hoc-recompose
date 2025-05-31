@@ -1,7 +1,3 @@
-export type Props = {
-  screenName: string;
-} & Options
-
 type ButtonOption = {
   onClick: () => void;
   text?: string
@@ -26,3 +22,6 @@ type WithoutFooter = BaseOptions & {
 };
 
 export type Options = WithFooter | WithoutFooter;
+export type Props = Options & {
+  screenName: string;
+}

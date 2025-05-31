@@ -33,7 +33,7 @@ describe('LoginForm', () => {
 
   beforeEach(() => {
     renderResult = render(
-      <LoginForm {...props as any} />
+      <LoginForm {...props} />
     );
   });
 

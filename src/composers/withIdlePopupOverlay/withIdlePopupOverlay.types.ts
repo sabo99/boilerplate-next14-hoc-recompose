@@ -1,13 +1,3 @@
-export type Options = {
-  overlayState: 'IDLE';
-}
+import type { ComposedDefaultPropsOptions, ComposedIdlePopupOverlayProps } from '@/types';
 
-export type Props = {
-  // from defaultProps
-  screenName: string;
-  popupTimeout: number;
-  idleTimeout: number,
-  // from (withIdlePopupOverlay state)
-  isIdlePopupOverlay: boolean;
-  setIdlePopupOverlay: React.Dispatch<React.SetStateAction<boolean>>;
-}
+export type Props = ComposedDefaultPropsOptions & ComposedIdlePopupOverlayProps;

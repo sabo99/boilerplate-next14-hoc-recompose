@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import type { Account } from '@/components/AppComponents/AccountInfo/AccountInfo.types';
+import type { Account } from '@/types';
+
 type StateType = {
   session: {
     isAuthenticated: boolean;

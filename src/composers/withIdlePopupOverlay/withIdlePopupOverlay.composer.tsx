@@ -2,7 +2,7 @@ import React from 'react';
 import { compose, withState } from 'react-recompose';
 
 import AppIdleSession from '@/components/AppComponents/AppIdleSession';
-import type { StateOptions } from '@/composers/withComposed/withComposed.types';
+import type { ComposedStateOptions } from '@/types';
 
 import WithIdlePopupOverlayConfig from './withIdlePopupOverlay.config';
 import type { Props } from './withIdlePopupOverlay.types';
@@ -23,7 +23,7 @@ const ComposedIdlePopupOverlay = (ComposedComponent: React.ComponentType<Props>)
   return HOC;
 };
 
-const stateOptions: StateOptions = [
+const stateOptions: ComposedStateOptions[] = [
   ['isIdlePopupOverlay', 'setIdlePopupOverlay', false],
   ['idleTimeout', 'setIdleTimeout', defaultProps.idleTimeout],
   ['popupTimeout', 'setPopupTimeout', defaultProps.popupTimeout]

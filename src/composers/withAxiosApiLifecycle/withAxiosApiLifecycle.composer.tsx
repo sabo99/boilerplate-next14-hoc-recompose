@@ -2,17 +2,18 @@ import { compose } from 'react-recompose';
 
 import withAxiosApi from '@/composers/withAxiosApi';
 import withLoadingOverlay from '@/composers/withLoadingOverlay';
+import type { ComposedAxiosApiLifecycleOptions } from '@/types';
 
-import type { Options } from './withAxiosApiLifecycle.types';
-
-const withAxiosApiLifecycle = (options: Options) => {
-  const { apiOptions } = options;
+const withAxiosApiLifecycle = (options: ComposedAxiosApiLifecycleOptions) => {
+  const { apiRequests, loadingOverlay } = options;
   const enhancers = [];
 
-  enhancers.push(withLoadingOverlay());
+  if (loadingOverlay) {
+    enhancers.push(withLoadingOverlay());
+  }
 
-  apiOptions.forEach((apiOption) => {
-    enhancers.push(withAxiosApi(apiOption));
+  apiRequests.forEach((apiRequest) => {
+    enhancers.push(withAxiosApi(apiRequest));
   });
 
   return compose(...enhancers);

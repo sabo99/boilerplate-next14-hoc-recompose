@@ -1,6 +1,6 @@
 import handlers from './ExampleDataFetching.handlers';
 
-const { onHandleLogin, onHandleLogout, onHandleRefetchProducts } = handlers;
+const { onHandleRefetchProducts } = handlers;
 
 describe('ExampleDataFetchingHandlers', () => {
   const props = {
@@ -84,7 +84,7 @@ describe('ExampleDataFetchingHandlers', () => {
       expect(form.reset).toHaveBeenCalled();
     });
 
-    it('should called refetchProducts with params when searchParams is present', async() =>{
+    it('should called refetchProducts with params when searchParams is present', async () => {
       const searchParams = { limit: 5 };
       const mockProps = {
         ...props,
@@ -97,7 +97,7 @@ describe('ExampleDataFetchingHandlers', () => {
       expect(form.reset).not.toHaveBeenCalled();
     });
 
-    it('should called refetchProducts without params', async()=>{
+    it('should called refetchProducts without params', async () => {
       await onHandleRefetchProducts(props as any)();
 
       expect(props.refetchProducts).toHaveBeenCalled();

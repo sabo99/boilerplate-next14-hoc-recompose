@@ -1,7 +1,7 @@
 import { Sidebar } from '@/components/ui/sidebar';
-import { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
+import { ComposedAuthProps, ComposedDefaultPropsOptions } from '@/types';
 
-export type Props = React.ComponentProps<typeof Sidebar> & {
-  screenName: string;
-  permissions: string[];
-} & withAuthProps;
+export type Props =
+  React.ComponentProps<typeof Sidebar> &
+  ComposedDefaultPropsOptions &
+  ComposedAuthProps;

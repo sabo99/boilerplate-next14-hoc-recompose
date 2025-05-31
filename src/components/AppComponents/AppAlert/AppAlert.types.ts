@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Alert } from '@/components/ui/alert';
 
-export type Props = {
+export interface Props {
   screenName: string;
   className?: string;
   title: string;
@@ -13,7 +13,8 @@ export type Props = {
 }
 
 export type StyledAlertProps = React.ComponentPropsWithoutRef<typeof Alert>;
-export type StyledAlertIconProps = {
+
+export interface StyledAlertIconProps {
   className?: string;
   icon?: LucideIcon;
 }

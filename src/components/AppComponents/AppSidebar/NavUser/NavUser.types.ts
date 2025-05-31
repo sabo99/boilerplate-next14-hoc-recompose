@@ -1,6 +1,5 @@
-import { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
+import { ComposedAuthProps, ComposedDefaultPropsOptions } from '@/types';
 
-export type Props = {
-  screenName: string;
+export type Props = ComposedDefaultPropsOptions & ComposedAuthProps & {
   isMobile: boolean;
-} & withAuthProps
+}

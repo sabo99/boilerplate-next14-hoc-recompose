@@ -10,12 +10,10 @@ describe('useApiRequest', () => {
   const url = '/users';
   const method = 'GET' as any;
   const setResponse = jest.fn();
-  const setLoading = jest.fn();
   const mockArgs = {
     url,
     method,
-    setResponse,
-    setLoading
+    setResponse
   };
   const request = jest.fn();
 
@@ -45,10 +43,8 @@ describe('useApiRequest', () => {
 
       await act(async () => {
         const res = await result.current();
-        expect(setLoading).toHaveBeenNthCalledWith(1, true);
         expect(request).toHaveBeenCalledWith({ url: '/users', method: 'GET', data: {} });
         expect(setResponse).toHaveBeenCalledWith(expectedResult);
-        expect(setLoading).toHaveBeenNthCalledWith(2, false);
         expect(res).toEqual(expectedResult);
       });
     });
@@ -78,9 +74,7 @@ describe('useApiRequest', () => {
 
       await act(async () => {
         const res = await result.current();
-        expect(setLoading).toHaveBeenNthCalledWith(1, true);
         expect(setResponse).toHaveBeenCalledWith(expectedResult);
-        expect(setLoading).toHaveBeenNthCalledWith(2, false);
         expect(res).toEqual(expectedResult);
       });
     });

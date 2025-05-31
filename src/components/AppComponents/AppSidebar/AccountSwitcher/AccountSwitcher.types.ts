@@ -1,5 +1,5 @@
 import { DropdownMenuContent } from '@/components/ui/dropdown-menu';
-import { Props as withAuthProps } from '@/composers/withAuth/withAuth.types';
+import { ComposedAuthProps, ComposedDefaultPropsOptions } from '@/types';
 
 export type StyledDropdownMenuContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuContent>,
@@ -7,8 +7,6 @@ export type StyledDropdownMenuContentProps = Omit<
 > & {
   isMobile?: boolean;
 }
-
-export type Props = {
-  screenName: string;
+export type Props = ComposedDefaultPropsOptions & ComposedAuthProps & {
   isMobile: boolean;
-}& withAuthProps;
+};

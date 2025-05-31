@@ -7,13 +7,14 @@ import withAxiosApiLifecycle from '@/composers/withAxiosApiLifecycle';
 import withOverlay from '@/composers/withOverlay';
 import withPreventRefresh from '@/composers/withPreventRefresh';
 import withSidebar from '@/composers/withSidebar';
-
-import type { Options } from './withComposed.types';
+import type { ComposedOptions } from '@/types';
 
 /**
  * Higher-order component (HOC) that enhances a given component with various options.
  *
  * @param {Options} options - Configuration options for the HOC.
+ * @param {Object} options.withAuthEnabled - State Redux connection of authentication
+ * @param {Object} options.withApiRequestLoading - Using loading overlay
  * @param {Object} options.props - Custom props to be added to the component.
  * @param {Object} options.connect - Redux connection options.
  * @param {Function} options.connect.mapStateToProps - Function to map state to props.
@@ -73,7 +74,7 @@ import type { Options } from './withComposed.types';
  * const EnhancedComponent = withComposed<Props>(options)(PageComponent);
  */
 const withComposed = <T extends object>(
-  options: Options
+  options: ComposedOptions
 ) => (Component: React.ComponentType<T>): React.FC<T> => {
   const {
     withAuthEnabled = false,
@@ -105,7 +106,7 @@ const withComposed = <T extends object>(
   // ✅ 4. Handle state using React-recompose withState
   if (isNonEmptyArray(stateOptions)) {
     stateOptions.forEach((stateOption) => {
-      enhancers.push(withState(...(stateOption as [string, string, any])));
+      enhancers.push(withState(...(stateOption)));
     });
   }
 
@@ -134,9 +135,8 @@ const withComposed = <T extends object>(
   }
 
   // ✅ 6. Handle API Request using withAxiosApi
-  if (isNonEmptyArray(apiOptions) && apiOptions) {
-    const axiosApiLifecyleOptions = { apiOptions };
-    enhancers.push(withAxiosApiLifecycle(axiosApiLifecyleOptions));
+  if (!isEmptyObject(apiOptions) && apiOptions) {
+    enhancers.push(withAxiosApiLifecycle(apiOptions));
   }
 
   // ✅ 7. Handle handlers using React-recompose withHandlers

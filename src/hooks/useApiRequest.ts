@@ -4,20 +4,19 @@ import React from 'react';
 
 import Config from '@/config';
 import AxiosClient from '@/services/AxiosClient';
-import {
+import type {
   AxiosApiOptions,
-  AxiosApiRequestSendArgs,
+  AxiosApiRequestArgs,
   AxiosApiResponse,
   RequestMethod
 } from '@/types';
 
-type UseApiSenderParams = {
+type UseApiRequestParams = {
   baseURL?: string;
   url: string;
   method: RequestMethod;
   options?: AxiosApiOptions;
   setResponse: React.Dispatch<React.SetStateAction<AxiosApiResponse>>;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 /**
@@ -47,14 +46,13 @@ type UseApiSenderParams = {
  * const apiRequest = useApiRequest({ url: '/users', method: 'GET', setResponse, setLoading });
  * const response = await apiRequest();
  */
-export const useApiRequest = (params: UseApiSenderParams) => {
+export const useApiRequest = (params: UseApiRequestParams) => {
   const {
     baseURL,
     url,
     method,
     options,
-    setResponse,
-    setLoading
+    setResponse
   } = params;
   const defaultBaseURL = get(Config.api, 'baseURL', '');
   const BASE_URL = baseURL || defaultBaseURL;
@@ -62,14 +60,12 @@ export const useApiRequest = (params: UseApiSenderParams) => {
   const axiosClientInstance = new AxiosClient(BASE_URL).getInstance();
 
   return React.useCallback(
-    async (args?: AxiosApiRequestSendArgs): Promise<AxiosApiResponse> => {
+    async (args?: AxiosApiRequestArgs): Promise<AxiosApiResponse> => {
       const { payload = {}, apiOptions = {} } = args || {};
       const axiosOptions = {
         ...options,
         ...apiOptions
       };
-
-      setLoading(true);
 
       let axiosApiResponse: AxiosApiResponse = {
         loading: false,
@@ -106,11 +102,10 @@ export const useApiRequest = (params: UseApiSenderParams) => {
         };
       } finally {
         setResponse(axiosApiResponse);
-        setLoading(false);
       }
 
       return axiosApiResponse;
     },
-    [axiosClientInstance, method, options, setLoading, setResponse, url]
+    [axiosClientInstance, method, options, url, setResponse]
   );
 };

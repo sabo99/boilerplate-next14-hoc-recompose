@@ -1,6 +1,6 @@
-import { LoadingTypeOptions } from '@/composers/withLoadingOverlay/withLoadingOverlay.types';
+import { ComposedLoadingTypeOptions } from '@/types';
 
 export type Props = {
   screenName: string;
-  loaderType: LoadingTypeOptions
-}
+  loaderType: ComposedLoadingTypeOptions;
+};

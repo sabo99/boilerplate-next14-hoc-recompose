@@ -1,18 +1,8 @@
-export type Account = {
-  sessionId?: string;
-  id: number;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  email: string;
-  username: string;
-  image: string;
-  // password: string;
-}
+import type { Account } from '@/types';
 
-export type Props = {
+export interface Props {
   screenName: string;
-  user?: Account
+  user?: Account;
   icon?: React.ReactNode;
   avatarFallback?: React.ReactNode;
 }

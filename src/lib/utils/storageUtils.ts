@@ -1,3 +1,5 @@
+import type { StorageType, WebStorageType } from '@/types';
+
 const createNoopStorage = () => {
   return {
     getItem() {
@@ -11,9 +13,6 @@ const createNoopStorage = () => {
     }
   };
 };
-
-type StorageType = 'local' | 'session';
-type WebStorageType = 'localStorage' | 'sessionStorage';
 
 export const createWebStorage = (type: StorageType) => {
   if (typeof window === 'undefined') {

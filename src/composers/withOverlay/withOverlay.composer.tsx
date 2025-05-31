@@ -1,11 +1,11 @@
 import { compose, withProps } from 'react-recompose';
 
-import withIdlePopupOverlay from '../withIdlePopupOverlay';
-import withLoadingOverlay from '../withLoadingOverlay';
-import withStepUpVerificationOverlay from '../withStepUpVerificationOverlay';
-import type { Options } from './withOverlay.types';
+import withIdlePopupOverlay from '@/composers/withIdlePopupOverlay';
+import withLoadingOverlay from '@/composers/withLoadingOverlay';
+import withStepUpVerificationOverlay from '@/composers/withStepUpVerificationOverlay';
+import type { ComposedOverlayOptions } from '@/types';
 
-const withOverlay = (options: Options) => {
+const withOverlay = (options: ComposedOverlayOptions) => {
   const { overlayState } = options;
   const enhancers = [];
 
