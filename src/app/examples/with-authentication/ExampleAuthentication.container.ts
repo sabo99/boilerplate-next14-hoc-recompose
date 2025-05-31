@@ -21,7 +21,7 @@ export const defaultProps: ComposedDefaultPropsOptions = {
 };
 
 export const mapAuthToProps = ({ request }: AxiosApiInstance) => ({
-  login: (params: AxiosApiRequestArgs) => request.send(params)
+  login: (args: AxiosApiRequestArgs) => request.send(args)
 });
 
 export const uiSettings: ComposedUiSettingOptions = {

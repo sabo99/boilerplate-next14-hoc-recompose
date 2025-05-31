@@ -27,12 +27,12 @@ export const mapProductToProps = ({ request, response }: AxiosApiInstance) => {
     isLoadingProduct: response.loading,
     errorProduct: get(response, 'error', null),
     products: get(response.data, 'products', []),
-    refetchProducts: (params?: AxiosApiRequestArgs) => request.send(params)
+    refetchProducts: (args?: AxiosApiRequestArgs) => request.send(args)
   };
 };
 
 export const mapAuthToProps = ({ request }: AxiosApiInstance) => ({
-  login: (params: AxiosApiRequestArgs) => request.send(params)
+  login: (args: AxiosApiRequestArgs) => request.send(args)
 });
 
 export const uiSettings: ComposedUiSettingOptions = {
