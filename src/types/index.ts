@@ -36,6 +36,13 @@ export interface AppDialogOption {
   buttons?: AppDialogButtonOptions[];
 }
 
+export interface AppDialogProps extends AppDialogOption {
+  screenName: string;
+  isOpen: boolean;
+  cancelableOutside?: boolean;
+  onAfterClose?: () => void;
+}
+
 // ============================
 // Composers
 // ============================
