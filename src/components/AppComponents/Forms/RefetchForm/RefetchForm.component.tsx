@@ -8,14 +8,15 @@ import { testProps, tid } from '@/lib/utils';
 import type { Props } from './RefetchForm.types';
 
 const RefetchForm: React.FC<Props> = (props) => {
-    const { screenName, name, form } = props;
-    const id = tid(screenName, name);
+  const { screenName, name, form } = props;
+  const id = tid(screenName, name);
 
   return (
     <AppForm
-      {...props}>
+      {...props}
+      {...testProps(tid(id))}
+    >
       <InputForm
-        {...testProps(tid(id, 'InputForm', 'Limit'))}
         control={form.control}
         screenName={screenName}
         name="limit"
@@ -23,11 +24,12 @@ const RefetchForm: React.FC<Props> = (props) => {
         description="By default limit 10, you can adjust what you want."
         placeholder="Input limit refetch data"
         type="number"
+        {...testProps(tid(id, 'InputForm', 'Limit'))}
       />
 
       <Button
-        {...testProps(tid(id, 'RefetchButton'))}
         type="submit"
+        {...testProps(tid(id, 'RefetchButton'))}
       >
         Refetch Data
       </Button>
