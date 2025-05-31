@@ -2,7 +2,6 @@ import { UseFormReturn } from 'react-hook-form';
 
 import type {
   AxiosApiRequestCallback,
-  ComposedAuthProps,
   ComposedDefaultPropsOptions,
   ComposedLoadingOverlayProps,
   Product
@@ -35,15 +34,19 @@ export type OnHandleRefetchProductCallback = (
 // Component Props
 // ============================
 
+export interface OnHandleRefetchProductProps extends
+  ComposedDefaultPropsOptions,
+  ComposedLoadingOverlayProps {
+  refetchProducts: AxiosApiRequestCallback;
+}
+
 export interface Props extends
   ComposedDefaultPropsOptions,
-  ComposedAuthProps,
   ComposedLoadingOverlayProps {
   // Container
   isLoadingProduct: boolean;
   errorProduct: any;
   products: Product[];
-  login: AxiosApiRequestCallback;
   refetchProducts: AxiosApiRequestCallback;
 
   // Handlers

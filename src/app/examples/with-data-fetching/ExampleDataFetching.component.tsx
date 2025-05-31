@@ -5,9 +5,7 @@ import { useForm } from 'react-hook-form';
 import z from 'zod';
 
 import AppBase from '@/components/AppComponents/AppBase';
-import LoginForm from '@/components/AppComponents/Forms/LoginForm';
 import RefetchForm from '@/components/AppComponents/Forms/RefetchForm';
-import { Button } from '@/components/ui/button';
 import Constants from '@/constants';
 import { pathWithSearchParams, testProps, tid } from '@/lib/utils';
 
@@ -17,59 +15,28 @@ import type { Props } from './ExampleDataFetching.types';
 const { Paths } = Constants;
 
 const {
-  loginSchema, loginFormDefaultValue,
   refetchSchema, refetchFormDefaultValue
 } = ExampleDataFetchingConfig;
 
 const ExampleDataFetching: React.FC<Props> = ({
-  screenName, pageTitle, products, isLoadingProduct, session,
-  onHandleLogin, onHandleRefetchProducts, onHandleLogout
+  screenName, pageTitle, products, isLoadingProduct,
+  onHandleRefetchProducts
 }) => {
   const router = useRouter();
-  const { isAuthenticated = null } = session;
-
-  const loginForm = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: loginFormDefaultValue
-  });
 
   const refetchForm = useForm<z.infer<typeof refetchSchema>>({
     resolver: zodResolver(refetchSchema),
     defaultValues: refetchFormDefaultValue
   });
 
-  React.useEffect(() => {
-    if (isAuthenticated) {
-      onHandleRefetchProducts();
-    }
-  }, [isAuthenticated, onHandleRefetchProducts]);
-
-  const onSubmitLogin = async (payload: z.infer<typeof loginSchema>) => {
-    await onHandleLogin(payload, { form: loginForm });
-    await onHandleRefetchProducts();
-  };
-
-  const onLogout = async () => {
-    await onHandleLogout({ form: loginForm });
-  };
-
   const onSubmitRefetch = async (payload: z.infer<typeof refetchSchema>) => {
     await onHandleRefetchProducts(payload, { form: refetchForm });
     router.push(pathWithSearchParams(Paths.Examples.WithDataFetching, payload));
   };
 
-  const renderAuthenticatedContent = () => (
+  const renderContent = () => (
     <div>
-      <h1>Welcome to the authenticated page!</h1>
-      <p>You are logged in.</p>
-
-      <Button
-        {...testProps(tid(screenName, 'LogoutButton'))}
-        variant="destructive"
-        onClick={onLogout}
-      >
-        Logout
-      </Button>
+      <h1>Welcome to the data fetching page!</h1>
 
       <div className="my-3">
         <RefetchForm
@@ -97,32 +64,14 @@ const ExampleDataFetching: React.FC<Props> = ({
     </div>
   );
 
-  const renderUnauthenticatedContent = () => (
-    <div>
-      <h1 className="mb-4">Please log in to access the page.</h1>
-
-      <LoginForm
-        screenName={screenName}
-        name="LoginForm"
-        form={loginForm}
-        onSubmit={onSubmitLogin}
-      />
-    </div>
-  );
-
-  const content = isAuthenticated
-    ? renderAuthenticatedContent()
-    : renderUnauthenticatedContent();
-
   return (
     <AppBase
       screenName={screenName}
       title={pageTitle}
       description="This is an example of data fetching using Axios."
     >
-      isAuthenticated: {isAuthenticated ? 'true' : 'false'}
       <div {...testProps(tid(screenName, 'MainContainer'))}>
-        {content}
+        {renderContent()}
       </div>
     </AppBase>
   );

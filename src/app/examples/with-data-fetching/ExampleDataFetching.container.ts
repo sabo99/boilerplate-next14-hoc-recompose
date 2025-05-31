@@ -40,19 +40,21 @@ export const uiSettings: ComposedUiSettingOptions = {
 };
 
 export default withComposed<Props>({
-  withLoadingOverlayEnabled: true,
   props: defaultProps,
-  api: [
-    {
-      ...ServiceAPI.productService.fetchProducts(),
-      mapProps: mapProductToProps,
-      options: {
-        skipApiOnRender: true,
-        headers: { 'Content-Type': 'application/json' },
-        params: { limit: 10 }
+  api: {
+    loadingOverlay: true,
+    apiRequests: [
+      {
+        ...ServiceAPI.productService.fetchProducts(),
+        mapProps: mapProductToProps,
+        options: {
+          skipApiOnRender: true,
+          headers: { 'Content-Type': 'application/json' },
+          params: { limit: 10 }
+        }
       }
-    }
-  ],
+    ]
+  },
   handlers: ExampleDataFetchingHandlers,
   uiSettings
 })(ExampleDataFetching);
