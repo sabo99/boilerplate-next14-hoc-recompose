@@ -1,10 +1,10 @@
 import { withProps, withState } from 'react-recompose';
 
-import withStepUpPassword from '@/composers/withStepUpPassword';
+import withStepUp from '@/composers/withStepUp';
 import withStepUpVerificationOverlay from '@/composers/withStepUpVerificationOverlay';
 
 jest.mock('react-recompose')
-  .mock('@/composers/withStepUpPassword');
+  .mock('@/composers/withStepUp');
 
 describe('withStepUpVerificationOverlay', () => {
   const options: any = {
@@ -32,11 +32,11 @@ describe('withStepUpVerificationOverlay', () => {
     });
   });
 
-  describe('#withStepUpPassword', () => {
-    it('should invoke withStepUpPassword when withStepUpVerification called', () => {
+  describe('#withStepUp', () => {
+    it('should invoke withStepUp when withStepUpVerificationOverlay called', () => {
       withStepUpVerificationOverlay(options);
 
-      expect(withStepUpPassword).toHaveBeenCalled();
+      expect(withStepUp).toHaveBeenCalled();
     });
   });
 });

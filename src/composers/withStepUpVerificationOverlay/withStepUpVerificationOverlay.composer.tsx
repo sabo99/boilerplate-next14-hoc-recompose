@@ -1,16 +1,16 @@
 import { compose, withProps, withState } from 'react-recompose';
 
-import withStepUpPassword from '@/composers/withStepUpPassword';
-import type { ComposedStepUpVerificationOptions } from '@/types';
+import withStepUp from '@/composers/withStepUp';
+import type { ComposedStepUpVerificationOverlayOptions } from '@/types';
 
-const withStepUpVerification = (options: ComposedStepUpVerificationOptions) => {
+const withStepUpVerificationOverlay = (options: ComposedStepUpVerificationOverlayOptions) => {
   const enhancers = [];
 
   enhancers.push(withProps(options));
   enhancers.push(withState('stepUpVerification', 'setStepUpVerification', { isOpen: false, type: null }));
-  enhancers.push(withStepUpPassword());
+  enhancers.push(withStepUp());
 
   return compose(...enhancers);
 };
 
-export default withStepUpVerification;
+export default withStepUpVerificationOverlay;

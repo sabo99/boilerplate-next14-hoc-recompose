@@ -9,7 +9,7 @@ export type ComposedOverlayStateOptions = 'IDLE' | 'LOADING' | 'STEP_UP_VERIFICA
 export type ComposedOverlayOptions =
   | ComposedIdlePopupOverlayOptions
   | ComposedLoadingOverlayOptions
-  | ComposedStepUpVerificationOptions;
+  | ComposedStepUpVerificationOverlayOptions;
 export type ComposedStepUpTypeOptions = 'PASSWORD' | 'PIN' | 'OTP';
 export type AxiosApiRequestCallback = (args?: AxiosApiRequestArgs) => Promise<AxiosApiResponse>;
 export type ButtonType = 'submit' | 'button' | 'reset';
@@ -147,7 +147,7 @@ export interface ComposedSidebarProps {
   setEnabledSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// withStepUpVerification
+// withStepUpVerificationOverlay
 // ----------------------------
 export interface ComposedStepUpVerification {
   isOpen: boolean;
@@ -155,11 +155,11 @@ export interface ComposedStepUpVerification {
   appDialogOption?: AppDialogOption;
 }
 
-export interface ComposedStepUpVerificationOptions {
+export interface ComposedStepUpVerificationOverlayOptions {
   overlayState: 'STEP_UP_VERIFICATION';
 }
 
-export interface ComposedStepUpVerificationProps {
+export interface ComposedStepUpVerificationOverlayProps {
   overlayState: 'STEP_UP_VERIFICATION';
   stepUpVerification: ComposedStepUpVerification;
   setStepUpVerification: React.Dispatch<React.SetStateAction<ComposedStepUpVerification>>;
