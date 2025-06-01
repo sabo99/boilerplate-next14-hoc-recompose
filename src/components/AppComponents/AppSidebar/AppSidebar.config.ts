@@ -4,9 +4,9 @@ import {
   LayoutDashboardIcon,
   LoaderIcon,
   LogInIcon,
-  MonitorDotIcon,
+  MonitorPauseIcon,
   RefreshCwOffIcon,
-  ShieldEllipsisIcon,
+  ShieldCheckIcon,
   SquareTerminalIcon,
   ViewIcon
 } from 'lucide-react';
@@ -57,7 +57,7 @@ const appSidebarData = {
         {
           title: 'withIdleOverlay',
           url: Paths.Examples.WithIdleOverlay,
-          icon: MonitorDotIcon,
+          icon: MonitorPauseIcon,
           permission: 'VIEW_IDLE_OVERLAY'
         },
         {
@@ -81,7 +81,7 @@ const appSidebarData = {
         {
           title: 'withStepUpVerification',
           url: Paths.Examples.WithStepUpVerification,
-          icon: ShieldEllipsisIcon,
+          icon: ShieldCheckIcon,
           permission: 'VIEW_STEP_UP_VERIFICATION'
         }
       ]

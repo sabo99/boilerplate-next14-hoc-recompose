@@ -1,15 +1,35 @@
 import { testProps, tid } from '@/lib/utils';
 
+import DashboardConfig from './Dashboard.config';
+
+const { examples } = DashboardConfig;
+
 const Dashboard: React.FC = () => {
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 pt-0" {...testProps(tid('Content'))}>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
+    <section
+      className="flex flex-1 flex-col gap-6 p-6 pt-0"
+      {...testProps(tid('Content'))}
+    >
+      <h2 className="text-xl font-semibold text-foreground">HOCs with Recompose</h2>
+      <div className="grid gap-4 md:grid-cols-2">
+        {examples.map((example, index) => (
+          <div
+            key={index}
+            className="flex items-start gap-4 rounded-xl bg-muted/50 p-4 shadow-sm"
+          >
+            <div className="text-muted-foreground">
+              <example.icon className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="font-medium text-foreground">{example.title}</div>
+              <div className="text-sm text-muted-foreground">
+                {example.description}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-    </div>
+    </section>
   );
 };
 
