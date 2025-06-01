@@ -1,10 +1,10 @@
 import React from 'react';
 
-import type { AppDialogButton } from '@/components/AppComponents/AppDialog/AppDialog.types';
 import AppForm from '@/components/AppComponents/AppForm';
 import InputForm from '@/components/AppComponents/AppForm/InputForm';
 import { Button } from '@/components/ui/button';
 import { testProps, tid } from '@/lib/utils';
+import type { AppDialogButtonOptions } from '@/types';
 
 import type { Props } from './StepUpPasswordForm.types';
 
@@ -18,7 +18,7 @@ const StepUpPasswordForm: React.FC<Props> = (props) => {
   const id = tid(screenName, name);
   const buttons = appDialogOption?.buttons;
 
-  const renderButton = (button: AppDialogButton, index: number) => {
+  const renderButton = (button: AppDialogButtonOptions, index: number) => {
     const { label, ...buttonOption } = button;
     return (
       <Button
@@ -34,11 +34,10 @@ const StepUpPasswordForm: React.FC<Props> = (props) => {
   return (
     <AppForm
       {...props}
-      form={form}
-      name={name}
+      {...testProps(tid(id, 'AppForm'))}
     >
       <InputForm
-        control={form.control as any}
+        control={form.control}
         screenName={screenName}
         autoFocus={false}
         type="password"
@@ -49,10 +48,11 @@ const StepUpPasswordForm: React.FC<Props> = (props) => {
         {...testProps(tid(id, 'InputForm', 'Password'))}
       />
 
-      <div className="flex justify-end gap-3">
-        {buttons && buttons.map(renderButton)}
-      </div>
-
+      {buttons && (
+        <div className="flex justify-end gap-3">
+          {buttons.map(renderButton)}
+        </div>
+      )}
     </AppForm>
   );
 };
