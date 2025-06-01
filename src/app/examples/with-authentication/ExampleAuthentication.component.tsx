@@ -41,9 +41,9 @@ const ExampleAuthentication: React.FC<Props> = (props) => {
       <p>You are logged in.</p>
 
       <Button
-        {...testProps(tid(screenName, 'LogoutButton'))}
         variant="destructive"
         onClick={onLogout}
+        {...testProps(tid(screenName, 'LogoutButton'))}
       >
         Logout
       </Button>
