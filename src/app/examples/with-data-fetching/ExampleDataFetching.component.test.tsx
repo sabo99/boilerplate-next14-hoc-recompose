@@ -1,14 +1,10 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
+import { when } from 'jest-when';
+import { useSearchParams } from 'next/navigation';
 
 import { products } from '@/fixtures';
 
 import ExampleDataFetching from './ExampleDataFetching.component';
-
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn().mockImplementation(() => ({
-    push: jest.fn()
-  }))
-}));
 
 describe('ExampleDataFetching', () => {
   let renderResult: ReturnType<typeof render>;
@@ -31,6 +27,7 @@ describe('ExampleDataFetching', () => {
   });
 
   afterEach(() => {
+    cleanup();
     jest.clearAllMocks();
   });
 
@@ -68,6 +65,39 @@ describe('ExampleDataFetching', () => {
 
       expect(getByText(product.title)).toBeTruthy();
       expect(getByText(product.description)).toBeTruthy();
+    });
+
+    it(`should not call onHandleRefetchProducts and not render products 
+      when query params "limit" is not present`, async () => {
+      const queryLimit = 2;
+      const payload = { limit: queryLimit };
+      const options = { form };
+      const mockGet = jest.fn();
+      when(mockGet).calledWith('limit').mockReturnValue(null);
+      (useSearchParams as jest.Mock).mockReturnValue({ get: mockGet });
+
+      await waitFor(() => {
+        expect(props.onHandleRefetchProducts).not.toHaveBeenCalledWith(payload, options);
+      });
+    });
+
+    it(`should call onHandleRefetchProducts and render products with query limit 
+      when query params "limit" is present`, async () => {
+      const queryLimit = 2;
+      const payload = { limit: queryLimit };
+      const options = { form };
+      const mockGet = jest.fn();
+      when(mockGet).calledWith('limit').mockReturnValue(queryLimit);
+      (useSearchParams as jest.Mock).mockReturnValue({ get: mockGet });
+
+      const { getAllByText } = render(
+        <ExampleDataFetching {...props as any} />
+      );
+
+      await waitFor(() => {
+        expect(props.onHandleRefetchProducts).toHaveBeenCalledWith(payload, options);
+        expect(getAllByText(products[0].title).length).toBeGreaterThanOrEqual(2);
+      });
     });
   });
 

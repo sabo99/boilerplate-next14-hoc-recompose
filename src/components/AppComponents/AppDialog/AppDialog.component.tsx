@@ -11,9 +11,10 @@ import {
   DialogTitle
 } from '@/components/ui/dialog';
 import { testProps, tid } from '@/lib/utils';
+import type { AppDialogButtonOptions } from '@/types';
 
 import Config from './AppDialog.config';
-import type { AppDialogButton, Props } from './AppDialog.types';
+import type { Props } from './AppDialog.types';
 
 const { defaultProps } = Config;
 
@@ -43,7 +44,7 @@ const AppDialog: React.FC<Props> = (props) => {
   };
 
   const renderButton = (button: any, index: number) => {
-    const { withCloseDialog, label, onClick } = button as AppDialogButton;
+    const { withCloseDialog, label, onClick } = button as AppDialogButtonOptions;
     const onClickButton = onClick || handleDialogClose;
     if (withCloseDialog) {
       return (

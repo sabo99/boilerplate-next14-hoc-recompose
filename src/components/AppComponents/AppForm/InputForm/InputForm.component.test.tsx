@@ -21,9 +21,7 @@ jest.mock('react-hook-form', () => ({
     FormDescription: jest.fn(MockComponent),
     FormMessage: jest.fn(MockComponent)
   }))
-  .mock('@/components/ui/input', () => ({
-    Input: jest.fn(MockComponent)
-  }));
+  .mock('@/components/ui/input');
 
 describe('InputForm', () => {
   let renderResult: ReturnType<typeof render>;

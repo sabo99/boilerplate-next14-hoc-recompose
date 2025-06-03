@@ -7,9 +7,6 @@ import { accounts, session } from '@/fixtures';
 import AccountSwitcher from './AccountSwitcher.component';
 
 jest
-  .mock('next/navigation', () => ({
-    useRouter: jest.fn()
-  }))
   .mock('@/components/ui/sidebar', () => ({
     SidebarMenuButton: jest.fn(MockComponent),
     SidebarMenu: jest.fn(MockComponent),
@@ -50,7 +47,7 @@ describe('AccountSwitcher', () => {
     (useRouter as jest.Mock).mockReturnValue(router);
 
     renderResult = render(
-      <AccountSwitcher {...props} />
+      <AccountSwitcher {...props as any} />
     );
   });
   describe('#render', () => {
@@ -75,7 +72,7 @@ describe('AccountSwitcher', () => {
 
     it('should render StyledDropdownMenuContent with side `bottom` when isMobile is true', () => {
       const styledDropdownMenuContentId = `${screenName}_StyledDropdownMenuContent`;
-      const mockProps = {
+      const mockProps: any = {
         ...props,
         isMobile: true
       };
@@ -107,7 +104,7 @@ describe('AccountSwitcher', () => {
 
     it('should render "Add Account" description when accounts are not at maximum limit', () => {
       const description = 'Add Account';
-      const mockProps = {
+      const mockProps: any = {
         ...props,
         accounts: []
       };

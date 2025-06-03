@@ -4,16 +4,6 @@ import { useBeforeunload } from 'react-beforeunload';
 
 import withPreventRefresh from './withPreventRefresh.composer';
 
-jest
-  .mock('next/navigation', () => ({
-    useRouter: jest.fn(),
-    usePathname: jest.fn(),
-    redirect: jest.fn()
-  }))
-  .mock('react-beforeunload', () => ({
-    useBeforeunload: jest.fn()
-  }));
-
 describe('withPreventRefresh', () => {
   const Component = () => <div>Component</div>;
   const options = {

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
@@ -23,6 +23,8 @@ const ExampleDataFetching: React.FC<Props> = ({
   onHandleRefetchProducts
 }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryLimit = searchParams.get('limit');
 
   const refetchForm = useForm<z.infer<typeof refetchSchema>>({
     resolver: zodResolver(refetchSchema),
@@ -33,6 +35,18 @@ const ExampleDataFetching: React.FC<Props> = ({
     await onHandleRefetchProducts(payload, { form: refetchForm });
     router.push(pathWithSearchParams(Paths.Examples.WithDataFetching, payload));
   };
+
+  React.useEffect(() => {
+    async function fetchData() {
+      if (queryLimit) {
+        const payload = {
+          limit: Number.parseInt(queryLimit)
+        };
+        await onHandleRefetchProducts(payload, { form: refetchForm });
+      }
+    }
+    fetchData();
+  }, [queryLimit, onHandleRefetchProducts, refetchForm]);
 
   const renderContent = () => (
     <div>
