@@ -1,8 +1,3 @@
-const crypto = {
-  hashedKey: process.env.CRYPTO_HASHED_KEY as string,
-  encryptedKey: process.env.CRYPTO_ENCRYPTED_KEY as string
-};
-
 const Config = {
   env: process.env.APP_ENV as string,
   api: {
@@ -12,7 +7,10 @@ const Config = {
     accessTokenKey: process.env.NEXT_PUBLIC_AUTH_KEY as string
   },
   secret: {
-    crypto
+    crypto: {
+      hashedKey: process.env.CRYPTO_HASHED_KEY as string,
+      encryptedKey: process.env.CRYPTO_ENCRYPTED_KEY as string
+    }
   }
 };
 
